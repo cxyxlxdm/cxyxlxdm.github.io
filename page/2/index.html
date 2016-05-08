@@ -1,0 +1,1452 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/10/26/">
+                给RecyclerView最纯粹的下拉刷新和上拉加载更多
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-10-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/26/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/26/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>RecyclerView 出现以后，Android 里的下拉刷新和加载更多实现起来就非常容易了。当然，现成的库也有很多，只是总会有不一样的需求，而且我们往往只需要最基本的下拉刷新和加载更多功能，而不需要其他多余的功能。我只需要一个最纯粹的下拉刷新和加载更多。所以，自己动手显然是最好的结果了，也算是个小练习。总结起来，无非两点，一是用 <strong><em>SwipeRefreshLayout</em></strong> 包裹 <strong><em>RecyclerView</em></strong> 实现下拉刷新，二是滑倒底部的时候自动加载实现加载更多。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/26/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RecyclerView/"> #RecyclerView </a>
+          
+            <a href="/tags/下拉刷新/"> #下拉刷新 </a>
+          
+            <a href="/tags/加载更多/"> #加载更多 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/19/">
+                关于“提问”
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-09-19
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/19/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/19/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>就单单从我自己的学习经历来看，也可能确实是在自己的智商实在有限，没有天赋，无论学习什么都很慢，尤其是在 IT 行业做技术，更是如此，一个没有任何基础的人如果想做出一点成绩，除了付出比别人更多的努力，别无他法。而这个行业里，技术圈子里，往往有不少伸手党，把整个圈子的学术氛围搞的很糟糕，以至于许多新人，即使不是伸手党，也容易被人误解为伸手党。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/19/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/"> #学习 </a>
+          
+            <a href="/tags/提问/"> #提问 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/31/">
+                九月
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-08-31
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/随笔/">随笔</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/31/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/31/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>北京的天开始慢慢转凉了。今天是2015年8月的最后一天，也是我的生日。不知不觉，这一年居然已经过去了三分之二，明天就是九月了，这将会是我这一生里相当重要的三十天，因为我要跟女友领证了。其实我一直都有一点恐婚，不过真正结婚之后，心里应该踏实的多吧。这也应该是一种很不错的经历，在这之后，两个人就真正地结合了，再也不用一个人去承担所有的责任了。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/31/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/婚姻/"> #婚姻 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/26/">
+                我的gradle配置和proguard-rules
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/26/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/26/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>这只是一个备份。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/26/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Gradle/"> #Gradle </a>
+          
+            <a href="/tags/Proguard/"> #Proguard </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/25/">
+                微信和QQ授权登录以及微信支付的集成
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/25/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/25/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>微信和 QQ 的文档烂到一种境界，这几乎已经是所有人的共识了，如果希望像友盟那样，按照文档一步步配置集成 SDK 就能实现所想要的功能，基本算是痴心妄想。微信的文档上次更新是在 2012 年，QQ 的文档更新实在 2013 年。其实真正代码实现部分很简单，只是文档实在太烂…这也是我写这篇文章的原因。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/25/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QQ/"> #QQ </a>
+          
+            <a href="/tags/Wechat/"> #Wechat </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/07/12/">
+                给RecyclerView添加多选
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-12
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/12/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><a href="https://github.com/cymcsg/UltimateRecyclerView">UltimateRecyclerView</a> 是一个非常好用的 Android 第三方控件，刚开的新项目里一直在用，配合最新的 API 使用非常完美。这篇文章主要是介绍一下怎么给 UltimateRecyclerView 添加多选功能，多选的问题唯一的难点在于复用，当然方式有很多种，实现方式也都大同小异，之前写过一篇文章 GridView 的多选，那种方式现在看来还是有点太复杂了。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/12/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/UltimateRecyclerView，-多选/"> #UltimateRecyclerView， 多选 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/24/">
+                拥有选择的幸运
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/随笔/">随笔</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/24/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/24/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>在外面飘着，那么的不容易，为什么不回去啊，为什么还要忍受这看不到头的伤痛和无奈？我讲一下这次回家的见闻感受吧。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/24/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/幸运/"> #幸运 </a>
+          
+            <a href="/tags/选择/"> #选择 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/15/">
+                史上最简单的实现状态栏变色的方法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/15/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Android 4.4 之后，Android 通知栏变色再也不只是 iOS 专属了，设置通知栏跟应用标题栏同样的颜色，可以给用户更好的体验，这点是毋庸置疑的。对于 iOS 优秀的特性，我们要大胆借鉴，我觉着这没什么，谁都有追求美的权利嘛。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/15/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/状态栏/"> #状态栏 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/06/">
+                极简构造图文混排消息流
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/06/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/06/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>消息流形式的图文混排，最常见的就是微博类应用了，一般包括几个部分：文字和若干张图片；点击条目查看详情；点击某一张图片，滑动查看所有大图；查看原图等。看上去好像东西也不少，其实实现起来极其简单，今天就来记录一下其具体的实现方式。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/图文混排/"> #图文混排 </a>
+          
+            <a href="/tags/消息流/"> #消息流 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/17/">
+                从业务角度看下拉刷新
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/17/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/17/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>下拉刷新是移动应用里非常常用的一个组件，以前在 Android 里官方是没有提供下拉刷新的组件的，后来也有了，一般下拉刷新还会配合上滑加载更多来使用，最早时候，只有 ListView ，现如今不仅有 ListView ，还有其替代品 RecyclerView ，甚至是 TextView ，ImageView 等各种 View 和 ViewGroup 都可以扩展下拉刷新，当然今天要讨论的仅限于最常用的 ListView 和 RecyclerView 。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/17/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/下拉刷新/"> #下拉刷新 </a>
+          
+            <a href="/tags/业务/"> #业务 </a>
+          
+            <a href="/tags/加载更多/"> #加载更多 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = 'page/2/index.html';
+      var disqus_title = '';
+      var disqus_url = '';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

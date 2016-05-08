@@ -1,0 +1,1031 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="JavaScript,form," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> JavaScript实现简单的表单验证 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              JavaScript实现简单的表单验证
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2013-09-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/其他/">其他</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/09/29/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/09/29/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>最近开始学习一些前端的知识了，主要有HTML、CSS、JavaScript、DOM、XML等，东西都不难，只是这茫茫多的标签、属性、对象、方法…真的是好烦好烦啊~每写一小段都要翻半天W3的帮助文档，因为不熟悉，所以还不一定能找得到，不过总算是能自己写一些简单的小程序出来。稍微有一点逻辑性的东西主要集中在JS了，对这些新东西，还是有必要记录一下。于是就写了一个简单的表单验证，一方面巩固一下学习的东西，一方面以后要用到表单验证，应该能直接拿来用了。</p>
+<p>##用HTML绘出表单##</p>
+<p>既然是表单验证，首先肯定是要创建表单，这部分与JS也没什么关系，主要就是HTML标签的堆砌，主要就考察对标签及其属性的熟练程度了。当然如果对CSS很精通的话，可以做出来非常好看，效果很炫的表单，我压根也就没用CSS，单纯地实现了功能。代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>FormConfirm<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"keywords"</span> <span class="attribute">content</span>=<span class="value">"keyword1,keyword2,keyword3"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"description"</span> <span class="attribute">content</span>=<span class="value">"表单验证"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"content-type"</span> <span class="attribute">content</span>=<span class="value">"text/html; charset=UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"#"</span> <span class="attribute">method</span>=<span class="value">"get"</span> <span class="attribute">onsubmit</span>=<span class="value">"return check()"</span> <span class="attribute">name</span>=<span class="value">"form"</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="title">table</span> <span class="attribute">border</span>=<span class="value">"1px"</span> <span class="attribute">align</span>=<span class="value">"center"</span> <span class="attribute">style</span>=<span class="value">"width:700px"</span> <span class="attribute">cellspacing</span>=<span class="value">'0'</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span> <span class="attribute">colspan</span>=<span class="value">"2"</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>用户名<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">style</span>=<span class="value">"width:200px"</span> <span class="attribute">name</span>=<span class="value">"userName"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>密码<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span>  <span class="attribute">style</span>=<span class="value">"width:200px"</span> <span class="attribute">name</span> = "<span class="attribute">password</span>" /&gt;</span></span><br><span class="line">  			<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>年龄<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">style</span>=<span class="value">"width:200px"</span> <span class="attribute">name</span> = "<span class="attribute">age</span>" /&gt;</span></span><br><span class="line">  			<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>性别<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span> = "<span class="attribute">sex</span>" <span class="attribute">value</span>=<span class="value">"0"</span> <span class="attribute">checked</span>/&gt;</span>男</span><br><span class="line">  				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span> = "<span class="attribute">sex</span>" <span class="attribute">value</span>=<span class="value">"1"</span>/&gt;</span>女</span><br><span class="line">  			<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>爱好<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">	  			<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"hobby"</span>  <span class="attribute">value</span> = "<span class="attribute">0</span>" &gt;</span>阅读</span><br><span class="line">	  			<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"hobby"</span>  <span class="attribute">value</span> = "<span class="attribute">1</span>" &gt;</span>旅行</span><br><span class="line">	  			<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"hobby"</span>  <span class="attribute">value</span> = "<span class="attribute">2</span>" &gt;</span>体育</span><br><span class="line">	  			<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"hobby"</span>  <span class="attribute">value</span> = "<span class="attribute">3</span>" &gt;</span>音乐</span><br><span class="line">	  			<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"hobby"</span>  <span class="attribute">value</span> = "<span class="attribute">4</span>" &gt;</span>电影</span><br><span class="line">	  		<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span>&gt;</span>学历<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"education"</span>&gt;</span></span><br><span class="line">  					<span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">""</span> <span class="attribute">selected</span>&gt;</span>- 请选择 -<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">  					<span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"0"</span> &gt;</span>大专<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">  					<span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"1"</span> &gt;</span>本科<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">  					<span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"2"</span> &gt;</span>硕士<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">  			<span class="tag">&lt;<span class="title">th</span> <span class="attribute">style</span>=<span class="value">"width:200px;height:35px"</span> <span class="attribute">colspan</span>=<span class="value">"2"</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"注册"</span>/&gt;</span></span><br><span class="line">  			<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">  		<span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="undefined"></span><br><span class="line"></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>画出了个模子，接下来就是重头戏了，用JS实现表单的验证。JS代码可以放在html结束标签后面，也可以通过外部引入的方式引入，我这里是直接写在了html结束标签的后面。</p>
+<p>##验证之前的分析##</p>
+<p>在做验证写代码之前，我们先要做一些准备工作，理清思路，然后根据思路去一步步实现。</p>
+<ul>
+<li>首先，我们要明确这表单验证需要验证哪些内容，很明显，这里需要验证“用户名”“密码”“年龄”“性别”“爱好”“学历”，一共是这六项内容；</li>
+<li>然后，明确验证失败后我们得到怎样的提示；</li>
+<li>为了减少工作量，我们可以分析一下这么多的验证里，在实现上某几项有什么共性，如果有共性，怎么把这些共性抽取出来。</li>
+</ul>
+<p>在这里我希望得到的失败提示是在各项的后面出现红色字体的错误提示，其中“爱好”比较特殊，因为是复选框，若失败直接alert弹出错误提示即可；还有“用户名”“密码”“年龄”这三项在鼠标移出输入框就进行判断，如果与期望值不符，就提示错误。明确前面的东西，就很容易想到他们的共性，在“用户名”“密码”“年龄”“学历”验证失败后，都需要在右侧出现红色的错误提示。</p>
+<p>##实现被验证项的共性##</p>
+<p>可以定义一个方法实现错误提示的共性，共性的错误提示中不同之处分别是错误提示出现的位置和错误提示的内容，因此可以将出现的位置（where）和提示内容（what）作为方法的两个参数传进去。红色错误提示即红色文本，可以创建一个font标签再设置其颜色属性来实现。当然，当用户输入正确信息后，要删除这些错误信息，删除错误信息只需要明确错误信息出现的位置（where）即可。明确这些，这个方法就容易写了。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证错误，添加错误信息</span></span><br><span class="line"><span class="function">function <span class="title">addError</span>(<span class="params"><span class="keyword">where</span>,what</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//获取通过父节点的font子节点数组，如果font数组的长度为0，则创建font标签</span></span><br><span class="line">	<span class="keyword">if</span>(!<span class="keyword">where</span>.parentNode.getElementsByTagName(<span class="string">"font"</span>).length)&#123;</span><br><span class="line">		<span class="comment">//创建font标签 并添加提示信息</span></span><br><span class="line">		<span class="keyword">var</span> font  = document.createElement(<span class="string">"font"</span>);</span><br><span class="line">        <span class="comment">//设置font标签的颜色</span></span><br><span class="line">		font.setAttribute(<span class="string">"color"</span>,<span class="string">"red"</span>);</span><br><span class="line">        <span class="comment">//设置font标签的内容</span></span><br><span class="line">		font.innerHTML = what;</span><br><span class="line">		<span class="comment">//将font标签添加到td上</span></span><br><span class="line">		<span class="keyword">where</span>.parentNode.appendChild(font);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//验证正确后，删除错误信息</span></span><br><span class="line"><span class="function">function <span class="title">removeError</span>(<span class="params"><span class="keyword">where</span></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//存在错误信息，获取父节点的子节点数组，此数组只有一个元素，因此font标签为arr[0]</span></span><br><span class="line">	<span class="keyword">var</span> font =  <span class="keyword">where</span>.parentNode.getElementsByTagName(<span class="string">"font"</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">//如果设置错误信息的font标签存在，就删除这个font标签</span></span><br><span class="line">	<span class="keyword">if</span>(font)&#123;</span><br><span class="line">		font.parentNode.removeChild(font);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>OK，到这里，就实现了添加删除错误信息的方法，接下来验证“用户名”“密码”“年龄”“学历”的时候，就可以直接调用这两个方法了。</p>
+<p>##验证用户名##</p>
+<p>验证用户名，其实就是拿用户输入的信息与期望用户输入的信息进行比较，因此首先需要有一个预定义的正则表达式，规定用户必须按照这个正则来输入信息。如果校验通过，就返回true，如果有错误信息，就删除错误信息；如果校验不通过，就返回false，并添加上错误信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证用户名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkUserName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//1 根据验证规则创建正则表达式</span></span><br><span class="line">	<span class="keyword">var</span> nameReg = <span class="regexp">/^[a-zA-Z][a-zA-Z0-9_]&#123;5,14&#125;$/g</span>;</span><br><span class="line">	<span class="comment">//2 获得用户填写的用户名，这里可以直接使用document.form来获取表单对象</span></span><br><span class="line">	<span class="keyword">var</span> userName = <span class="built_in">document</span>.form.userName.value;</span><br><span class="line">	<span class="comment">//3 校验</span></span><br><span class="line">	<span class="keyword">if</span>(nameReg.test(userName))&#123;</span><br><span class="line">    	<span class="comment">//调用removeError方法，传入where方法</span></span><br><span class="line">		removeError(<span class="built_in">document</span>.form.userName);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="comment">//调用addError方法，传入where和what对应的实际参数</span></span><br><span class="line">		addError(<span class="built_in">document</span>.form.userName,<span class="string">"用户名首字母必须为英文,长度必须在6~15之间"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当鼠标移出输入框，即失去输入框焦点时验证输入，调用checkUserName方法</span></span><br><span class="line"><span class="built_in">document</span>.form.userName.onblur =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	checkUserName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##验证密码、年龄和学历##</p>
+<p>实现了用户名的校验，那密码、年龄和学历这三项的验证就简单多了，除了参数跟验证用户名的不一样，其他的基本一样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证密码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkPassWord</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证密码的正则表达式</span></span><br><span class="line">	<span class="keyword">var</span> pwdReg = <span class="regexp">/[a-zA-Z0-9_]&#123;6,15&#125;/g</span>;</span><br><span class="line">	<span class="keyword">var</span> password = <span class="built_in">document</span>.form.password.value;</span><br><span class="line">	<span class="keyword">if</span>(pwdReg.test(password))&#123;</span><br><span class="line">		removeError(<span class="built_in">document</span>.form.password);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		addError(<span class="built_in">document</span>.form.password,<span class="string">"密码长度必须在6~15之间"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.form.password.onblur = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	checkPassWord();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//验证年龄</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkAge</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> age=<span class="built_in">document</span>.form.age.value;</span><br><span class="line">	<span class="keyword">if</span>(+age &gt;= <span class="number">18</span> &amp;&amp; age &lt;= <span class="number">120</span>)&#123;</span><br><span class="line">		removeError(<span class="built_in">document</span>.form.age);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		addError(<span class="built_in">document</span>.form.age,<span class="string">"输入的年龄必须在18~120之间"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.form.age.onblur = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	checkAge();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//验证学历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkEdu</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> index=<span class="built_in">document</span>.form.education.value;</span><br><span class="line">	<span class="keyword">if</span>(index)&#123;</span><br><span class="line">		removeError(<span class="built_in">document</span>.form.education);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		addError(<span class="built_in">document</span>.form.education,<span class="string">"请选择学历"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证学历就不需要再考虑失去焦点时验证的问题了，只需要提交时验证即可。</p>
+<p>##验证爱好##</p>
+<p>只剩下最后一项验证爱好，同样是提交时后验证。由于“爱好”是复选框，有多个name属性，因此无法使用document.form.attribution来获取属性，这时就可以使用JavaScript警告提示框来输出错误信息了，当然获取habit属性也只能使用document的getElementsByName方法了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证爱好</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkHabit</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> habits=<span class="built_in">document</span>.getElementsByName(<span class="string">"habit"</span>);</span><br><span class="line">    <span class="comment">//创建一个计数器</span></span><br><span class="line">	<span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//遍历habits数组</span></span><br><span class="line">	<span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; habits.length; i++) &#123;</span><br><span class="line">    	<span class="comment">//当复选框被选中一个，计数器就加1</span></span><br><span class="line">		<span class="keyword">if</span> (habits[i].checked) &#123;</span><br><span class="line">			count++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//如果计数器大于等于2，就返回true，否则就使用js警告框输出警告信息</span></span><br><span class="line">	<span class="keyword">if</span> (count&gt;=<span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		alert(<span class="string">"请至少选择两个爱好"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##返回验证结果##</p>
+<p>最后一步就是返回验证结果了。调用之前定义的验证各项的方法，任何一项验证不通过都要返回false，即不提交表单。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function check()&#123;</span><br><span class="line">	var <span class="built_in">flag</span>=<span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span>(!checkUserName())&#123;</span><br><span class="line">		<span class="built_in">flag</span>=<span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!checkPassWord())&#123;</span><br><span class="line">		<span class="built_in">flag</span>=<span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!checkAge())&#123;</span><br><span class="line">		<span class="built_in">flag</span>=<span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!checkEdu())&#123;</span><br><span class="line">		<span class="built_in">flag</span>=<span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!checkHabit())&#123;</span><br><span class="line">		<span class="built_in">flag</span>=<span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	return <span class="built_in">flag</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/"> #JavaScript </a>
+          
+            <a href="/tags/form/"> #form </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/10/26/">莫忘初心</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/09/23/">Android添加桌面widget插件</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2013/09/29/';
+      var disqus_title = 'JavaScript实现简单的表单验证';
+      var disqus_url = 'http://www.easydone.cn/2013/09/29/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

@@ -1,0 +1,1059 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="JSON,XML," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> XML和JSON数据解析 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              XML和JSON数据解析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-10-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/10/20/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/20/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>新闻客户端这个项目基本也快完成了,这基本上算是完全自己独立完成的第一个项目了,其中可以总结的东西还是很多的.许多东西总觉得自己掌握的不错,可实际用起来总觉得少点什么,不少看上去很简单的东西,也真的是需要不断地去加强记忆和理解,在学习新知识的同时,绝对不能落下了旧知识.刚好趁今天总结一下关于XML和JSON数据解析相关的一些东西,以后的工作和学习也一定会有不小的帮助.<a id="more"></a></p>
+<p>##XML解析</p>
+<p>###Java里常用的XML解析方式<br>在JavaWeb里常用的就三种解析:</p>
+<ul>
+<li>DOM解析<ul>
+<li>将xml文件解析为DOM树;不能加载大数据的xml文件;可以对xml文件进行CRUD.</li>
+</ul>
+</li>
+<li>SAX解析<ul>
+<li>事件机制;效率很高;只能读取数据.</li>
+</ul>
+</li>
+<li>DOM4J<ul>
+<li>DOM和SAX的集合.可以解决上面两种解析各自的不足,同时兼具其优点,因此用的最广泛.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>###android里XML解析<br>当然,在Android中,局限于硬件资源,上面的方式都不适合,Android里使用的是pull解析,当然也少不了通过对象模型生产XML文件的操作.</p>
+<p>####生产XML文件</p>
+<p>在开发里用的最多的就是处理对象集合,把对象集合以XML的形式保存起来.这里牵涉到两种形式的操作,<strong>序列化</strong>(Serializer,把内存中数据保存起来)和<strong>反序列化</strong>(把文件的内容读取到内存中).</p>
+<p>可能用到以下方法:</p>
+<ol>
+<li>获取生成工具: Xml.newSerializer()</li>
+<li>设置输出流: setOutput()</li>
+<li>开始文档: startDocument()</li>
+<li>结束文档: endDocument()</li>
+<li>开始标签: startTag()</li>
+<li>结束标签: endTag()</li>
+<li>属性: attribute()</li>
+<li>文本: text()</li>
+</ol>
+<p>示例:</p>
+<p>首先创建一个对象模型:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Dog</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Dog</span><span class="params">(<span class="keyword">int</span> id, String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Dog [id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", age="</span> + age + <span class="string">"]"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后将对象模型保存为XML文件:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.xmlpull.v1.XmlSerializer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.Environment;</span><br><span class="line"><span class="keyword">import</span> android.util.Xml;</span><br><span class="line"><span class="keyword">import</span> android.view.Menu;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span> </span>&#123;</span><br><span class="line">		getMenuInflater().inflate(R.menu.activity_main, menu);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(View v)</span></span>&#123;</span><br><span class="line">		<span class="comment">//把对象集合保存成xml 保存在sdcard</span></span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * 1 构建对象集合</span><br><span class="line">		 * 2 使用一个工具API对象集合保存成xml</span><br><span class="line">		 * 3 保存在sdcard Environment  权限</span><br><span class="line">		 */</span></span><br><span class="line">		List&lt;Dog&gt; dogs = <span class="keyword">new</span> ArrayList&lt;Dog&gt;();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">			dogs.add(<span class="keyword">new</span> Dog(i, <span class="string">"哈巴狗"</span>+i, <span class="number">5</span>+i));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//获取xml序列化器</span></span><br><span class="line">			XmlSerializer serializer = Xml.newSerializer();</span><br><span class="line">			File file = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory(), <span class="string">"dogs.xml"</span>);</span><br><span class="line">			FileOutputStream os = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">			<span class="comment">//指定输出流</span></span><br><span class="line">			serializer.setOutput(os, <span class="string">"utf-8"</span>);</span><br><span class="line">			<span class="comment">//开始文档</span></span><br><span class="line">			serializer.startDocument(<span class="string">"utf-8"</span>, <span class="keyword">true</span>);</span><br><span class="line">			serializer.startTag(<span class="keyword">null</span>, <span class="string">"dogs"</span>);</span><br><span class="line">			<span class="keyword">for</span>(Dog dog:dogs)&#123;</span><br><span class="line">				serializer.startTag(<span class="keyword">null</span>, <span class="string">"dog"</span>);</span><br><span class="line">				<span class="comment">//属性</span></span><br><span class="line">				serializer.attribute(<span class="keyword">null</span>, <span class="string">"id"</span>, dog.id+<span class="string">""</span>);</span><br><span class="line">				<span class="comment">//name标签</span></span><br><span class="line">				serializer.startTag(<span class="keyword">null</span>, <span class="string">"name"</span>);</span><br><span class="line">				<span class="comment">//文本值</span></span><br><span class="line">				serializer.text(dog.name);</span><br><span class="line">				serializer.endTag(<span class="keyword">null</span>, <span class="string">"name"</span>);</span><br><span class="line">				<span class="comment">//age标签</span></span><br><span class="line">				serializer.startTag(<span class="keyword">null</span>, <span class="string">"age"</span>);</span><br><span class="line">				<span class="comment">//文本值</span></span><br><span class="line">				serializer.text(dog.age+<span class="string">""</span>);</span><br><span class="line">				serializer.endTag(<span class="keyword">null</span>, <span class="string">"age"</span>);</span><br><span class="line">				serializer.endTag(<span class="keyword">null</span>, <span class="string">"dog"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			serializer.endTag(<span class="keyword">null</span>, <span class="string">"dogs"</span>);</span><br><span class="line">			<span class="comment">//结束文档</span></span><br><span class="line">			serializer.endDocument();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当然,最后<strong>一定不要忘记添加sdcard的访问权限.</strong></p>
+<p>####解析清单文件AndroidManifest.xml文件</p>
+<p>首先,需要根据清单文件里的节点创建对象,MyActivityInfo,MyAppliactionInfo,MyIntentFilter,MyPackageInfo,MyUserSdk,当然,可能还会有其他的节点,这里只举个例子;</p>
+<p>然后就是具体的解析了:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">MyPackageInfo packageInfo = <span class="keyword">null</span>;</span><br><span class="line">MyUserSdk userSdk = <span class="keyword">null</span>;</span><br><span class="line">MyAppliactionInfo applicationInfo = <span class="keyword">null</span>;</span><br><span class="line">MyActivityInfo activityInfo = <span class="keyword">null</span>;</span><br><span class="line">MyIntentFilter intentFiler = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	<span class="comment">// 解析器</span></span><br><span class="line">	XmlPullParser parser = Xml.newPullParser();</span><br><span class="line">	<span class="comment">// 加载文件流</span></span><br><span class="line">	InputStream inputStream = <span class="keyword">this</span>.getClass().getClassLoader().getResourceAsStream(<span class="string">"Manifest.xml"</span>);</span><br><span class="line">	parser.setInput(inputStream, <span class="string">"UTF-8"</span>);</span><br><span class="line">	<span class="keyword">int</span> type = parser.getEventType();</span><br><span class="line">	<span class="keyword">while</span> (type != XmlPullParser.END_DOCUMENT) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (type) &#123;</span><br><span class="line">		<span class="keyword">case</span> XmlPullParser.START_TAG:</span><br><span class="line">			String name = parser.getName();</span><br><span class="line">			<span class="keyword">if</span> (name.equals(<span class="string">"manifest"</span>)) &#123;</span><br><span class="line">				<span class="comment">// 包名</span></span><br><span class="line">				String packageName = parser.getAttributeValue(<span class="number">0</span>);</span><br><span class="line">				<span class="keyword">int</span> versionCode = Integer.parseInt(parser.getAttributeValue(<span class="number">1</span>));</span><br><span class="line">				String versionName = parser.getAttributeValue(<span class="number">2</span>);</span><br><span class="line">				packageInfo = <span class="keyword">new</span> MyPackageInfo();</span><br><span class="line">				packageInfo.packageName = packageName;</span><br><span class="line">				packageInfo.versionCode = versionCode;</span><br><span class="line">				packageInfo.versionName = versionName;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"uses-sdk"</span>)) &#123;</span><br><span class="line">				<span class="keyword">int</span> minSdkVersion = Integer.parseInt(parser.getAttributeValue(<span class="number">0</span>));</span><br><span class="line">				<span class="keyword">int</span> targetSdkVersion = Integer.parseInt(parser.getAttributeValue(<span class="number">1</span>));</span><br><span class="line">				userSdk = <span class="keyword">new</span> MyUserSdk();</span><br><span class="line">				userSdk.minSdkVersion = minSdkVersion;</span><br><span class="line">				userSdk.targetSdkVersion = targetSdkVersion;</span><br><span class="line">				packageInfo.userSdk = userSdk;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"application"</span>)) &#123;</span><br><span class="line">				String icon = parser.getAttributeValue(<span class="number">1</span>).split(<span class="string">"/"</span>)[<span class="number">1</span>];</span><br><span class="line">				String label = parser.getAttributeValue(<span class="number">2</span>).split(<span class="string">"/"</span>)[<span class="number">1</span>];</span><br><span class="line">				applicationInfo = <span class="keyword">new</span> MyAppliactionInfo();</span><br><span class="line">				applicationInfo.icon = icon;</span><br><span class="line">				applicationInfo.lable = label;</span><br><span class="line">				packageInfo.applicationInfo = applicationInfo;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"activity"</span>)) &#123;</span><br><span class="line">				String aname = parser.getAttributeValue(<span class="number">0</span>);</span><br><span class="line">				String label = parser.getAttributeValue(<span class="number">1</span>).split(<span class="string">"/"</span>)[<span class="number">1</span>];</span><br><span class="line">				activityInfo = <span class="keyword">new</span> MyActivityInfo();</span><br><span class="line">				activityInfo.name = aname;</span><br><span class="line">				activityInfo.lable = label;</span><br><span class="line">				applicationInfo.activityInfo = activityInfo;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"intent-filter"</span>)) &#123;</span><br><span class="line">				intentFiler = <span class="keyword">new</span> MyIntentFilter();</span><br><span class="line">				activityInfo.intentFilter = intentFiler;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"action"</span>)) &#123;</span><br><span class="line">				String action = parser.getAttributeValue(<span class="number">0</span>);</span><br><span class="line">				intentFiler.action = action;</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(<span class="string">"category"</span>)) &#123;</span><br><span class="line">				String category = parser.getAttributeValue(<span class="number">0</span>);</span><br><span class="line">				intentFiler.category = category;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> XmlPullParser.END_TAG:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		type = parser.next();</span><br><span class="line">	&#125;</span><br><span class="line">	Log.i(TAG, packageInfo.toString());</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>说实在话,关于pull解析,这些都是模板代码,只需要对于具体场景,直接往里面套就行了,真没什么好讲的…</p>
+<p>##JSON解析</p>
+<p>###Gson框架</p>
+<p>说实话,Android里的JSON解析我是没搞明白,也没具体使用过,也确实非常的复杂,平时都是用的google提供的一个Gson框架来对JSON解析.</p>
+<p>首先,说一下工作里用到的Gson解析吧.Gson框架用起来非常方便,刚好最在做的新闻客户端就用到Gson解析,就以新闻客户端里的JSON数据为例介绍一下吧:</p>
+<ul>
+<li><p>根据JSON节点创建对象,这点跟XML那部分是一样的.必须要注意下面两点:</p>
+<ul>
+<li>网络请求获取的JSON数据对应的对象模型</li>
+<li>注意:所有的变量都必须与JSON的节点一一对应</li>
+</ul>
+</li>
+<li><p>使用Gson框架解析数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">analysisJSONData</span><span class="params">(String result)</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 使用Gson框架解析JSON数据</span><br><span class="line">	 */</span></span><br><span class="line">	Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">	NewsCenterBean mNewsCenterBean = gson.fromJson(result, NewsCenterBean.class);</span><br><span class="line">	<span class="comment">//初始化侧滑菜单数据</span></span><br><span class="line">	List&lt;MenuItem&gt; menuItemsList = mNewsCenterBean.data;</span><br><span class="line">	((MainUI) mContext).getLeftMenuFragment();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>OK,it’s over!创建对象成了唯一复杂的一部分,就是Android提供的JSON解析中最简单的一部分.</p>
+<p>至于Android提供的JSON解析还是留待以后有需要的时候慢慢研究吧.</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JSON/"> #JSON </a>
+          
+            <a href="/tags/XML/"> #XML </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/11/03/">永远相信美好的事情即将发生</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/10/16/">Windows下部署hexo环境</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2014/10/20/';
+      var disqus_title = 'XML和JSON数据解析';
+      var disqus_url = 'http://www.easydone.cn/2014/10/20/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

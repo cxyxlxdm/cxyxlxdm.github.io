@@ -1,0 +1,1008 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="Android,Gradle,Proguard," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> 我的gradle配置和proguard-rules // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              我的gradle配置和proguard-rules
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/26/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/26/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>这只是一个备份。<a id="more"></a></p>
+<p>build.gradle<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">22</span></span><br><span class="line">    buildToolsVersion <span class="string">"22.0.1"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">"cn.easydone.demo"</span></span><br><span class="line">        minSdkVersion <span class="number">11</span></span><br><span class="line">        targetSdkVersion <span class="number">22</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0.0"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// dex突破65535的限制</span></span><br><span class="line">        multiDexEnabled <span class="keyword">true</span></span><br><span class="line">        manifestPlaceholders = [channel_param: <span class="string">"official"</span>]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    packagingOptions &#123;</span><br><span class="line">        <span class="keyword">exclude</span> <span class="string">'META-INF/LICENSE.txt'</span></span><br><span class="line">        <span class="keyword">exclude</span> <span class="string">'META-INF/NOTICE.txt'</span></span><br><span class="line">        <span class="keyword">exclude</span> <span class="string">'.readme'</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    lintOptions &#123;</span><br><span class="line">        abortOnError <span class="keyword">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">sourceSets</span> &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            java.srcDir <span class="string">"src/main/java"</span></span><br><span class="line">            res.srcDir <span class="string">"src/main/res"</span></span><br><span class="line">            jniLibs.srcDirs = [<span class="string">'libs'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        debug &#123;</span><br><span class="line">            storeFile <span class="keyword">file</span>(<span class="string">"/Users/liang/.android/debug.keystore"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            storeFile <span class="keyword">file</span>(<span class="string">"***.jks"</span>)</span><br><span class="line">            storePassword <span class="string">"***"</span></span><br><span class="line">            keyAlias <span class="string">"***"</span></span><br><span class="line">            keyPassword <span class="string">"***"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        debug &#123;</span><br><span class="line">            <span class="comment">// 显示Log</span></span><br><span class="line">            buildConfigField <span class="string">"boolean"</span>, <span class="string">"LOG_DEBUG"</span>, <span class="string">"true"</span></span><br><span class="line"></span><br><span class="line">            versionNameSuffix <span class="string">"-debug"</span></span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            zipAlignEnabled <span class="keyword">false</span></span><br><span class="line">            shrinkResources <span class="keyword">false</span></span><br><span class="line">            signingConfig signingConfigs.debug</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="comment">// 不显示Log</span></span><br><span class="line">            buildConfigField <span class="string">"boolean"</span>, <span class="string">"LOG_DEBUG"</span>, <span class="string">"false"</span></span><br><span class="line">            <span class="comment">// 移除无用的resource文件</span></span><br><span class="line">            shrinkResources <span class="keyword">true</span></span><br><span class="line">            <span class="comment">//混淆</span></span><br><span class="line">            minifyEnabled <span class="keyword">true</span></span><br><span class="line">            <span class="comment">//Zipalign优化</span></span><br><span class="line">            zipAlignEnabled <span class="keyword">true</span></span><br><span class="line">            <span class="comment">//前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">            <span class="comment">//签名</span></span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.<span class="keyword">each</span> &#123; output -&gt;</span><br><span class="line">            <span class="keyword">def</span> outputFile = output.outputFile</span><br><span class="line">            <span class="keyword">if</span> (outputFile != <span class="keyword">null</span> &amp;&amp; outputFile.name.endsWith(<span class="string">'.apk'</span>)) &#123;</span><br><span class="line">                <span class="keyword">def</span> fileName = outputFile.name.replace(<span class="string">".apk"</span>, <span class="string">"-$&#123;defaultConfig.versionName&#125;.apk"</span>)</span><br><span class="line">                output.outputFile = <span class="keyword">new</span> <span class="keyword">File</span>(outputFile.parent, fileName)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    flavors()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> flavors() &#123;</span><br><span class="line">    <span class="keyword">def</span> path = <span class="string">'./channels.txt'</span> <span class="comment">//channels.txt的路径，需要创建一个 channels.txt文件，把所要打包的渠道写进去</span></span><br><span class="line">    <span class="keyword">file</span>(path).<span class="keyword">eachLine</span> &#123;</span><br><span class="line">        line -&gt;</span><br><span class="line">            <span class="keyword">if</span> (!line.startsWith(<span class="string">"//"</span>)) &#123;</span><br><span class="line">                <span class="comment">//动态创建productFlavor</span></span><br><span class="line">                android.productFlavors.create(line, &#123;</span><br><span class="line">                    manifestPlaceholders = [channel_param: name]</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.android.support:appcompat-v7:22.2.1'</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.android.support:design:22.2.1'</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.android.support:cardview-v7:22.2.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>channels.txt的格式如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">offical&#10;yingyongbao&#10;wandoujia</span><br></pre></td></tr></table></figure></p>
+<p>proguard-rules.pro<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Add project specific ProGuard rules here.&#10;# By default, the flags in this file are appended to flags specified&#10;# in /Users/liang/Documents/android-sdk-macosx/tools/proguard/proguard-android.txt&#10;# You can edit the include path and order by changing the proguardFiles&#10;# directive in build.gradle.&#10;#&#10;# For more details, see&#10;#   http://developer.android.com/guide/developing/tools/proguard.html&#10;&#10;# Add any project specific keep options here:&#10;&#10;# If your project uses WebView with JS, uncomment the following&#10;# and specify the fully qualified class name to the JavaScript interface&#10;# class:&#10;#-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;&#10;#   public *;&#10;#&#125;&#10;#&#25351;&#23450;&#20195;&#30721;&#30340;&#21387;&#32553;&#32423;&#21035;&#10;-optimizationpasses 5&#10;#&#21253;&#26126;&#19981;&#28151;&#21512;&#22823;&#23567;&#20889;&#10;-dontusemixedcaseclassnames&#10;#&#19981;&#21435;&#24573;&#30053;&#38750;&#20844;&#20849;&#30340;&#24211;&#31867;&#10;-dontskipnonpubliclibraryclasses&#10;#&#20248;&#21270;  &#19981;&#20248;&#21270;&#36755;&#20837;&#30340;&#31867;&#25991;&#20214;&#10;-dontoptimize&#10;#&#39044;&#26657;&#39564;&#10;-dontpreverify&#10;#&#28151;&#28102;&#26102;&#26159;&#21542;&#35760;&#24405;&#26085;&#24535;&#10;-verbose&#10;# &#28151;&#28102;&#26102;&#25152;&#37319;&#29992;&#30340;&#31639;&#27861;&#10;-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*&#10;#&#20445;&#25252;&#27880;&#35299;&#10;-keepattributes *Annotation*&#10;#&#20445;&#25345;&#21738;&#20123;&#31867;&#19981;&#34987;&#28151;&#28102;&#10;-keep public class * extends android.app.Application&#10;-keep public class * extends android.app.AppCompatActivity&#10;-keep public class * extends android.app.Activity&#10;-keep public class * extends android.app.Fragment&#10;&#10;-keepclassmembers class * &#123;&#10;   public &#60;init&#62;(org.json.JSONObject);&#10;&#125;&#10;&#10;#&#24573;&#30053;&#35686;&#21578;&#10;-ignorewarning&#10;##&#35760;&#24405;&#29983;&#25104;&#30340;&#26085;&#24535;&#25968;&#25454;,gradle build&#26102;&#22312;&#26412;&#39033;&#30446;&#26681;&#30446;&#24405;&#36755;&#20986;##&#10;#apk &#21253;&#20869;&#25152;&#26377; class &#30340;&#20869;&#37096;&#32467;&#26500;&#10;-dump class_files.txt&#10;#&#26410;&#28151;&#28102;&#30340;&#31867;&#21644;&#25104;&#21592;&#10;-printseeds seeds.txt&#10;#&#21015;&#20986;&#20174; apk &#20013;&#21024;&#38500;&#30340;&#20195;&#30721;&#10;-printusage unused.txt&#10;#&#28151;&#28102;&#21069;&#21518;&#30340;&#26144;&#23556;&#10;-printmapping mapping.txt&#10;########&#35760;&#24405;&#29983;&#25104;&#30340;&#26085;&#24535;&#25968;&#25454;&#65292;gradle build&#26102; &#22312;&#26412;&#39033;&#30446;&#26681;&#30446;&#24405;&#36755;&#20986;-end######&#10;&#10;#&#22914;&#26524;&#24341;&#29992;&#20102;v4&#25110;&#32773;v7&#21253;&#10;-dontwarn android.support.**&#10;&#10;#####&#28151;&#28102;&#20445;&#25252;&#33258;&#24049;&#39033;&#30446;&#30340;&#37096;&#20998;&#20195;&#30721;&#20197;&#21450;&#24341;&#29992;&#30340;&#31532;&#19977;&#26041;jar&#21253;library#######&#10;##&#30334;&#24230;&#22320;&#22270;&#10;#-libraryjars libs/baidumapapi_v3_5_0.jar&#10;-keep class com.baidu.** &#123;*;&#125;&#10;-keep class vi.com.gdi.bgl.android.**&#123;*;&#125;&#10;-dontwarn com.baidu.**&#10;&#10;-keep class com.umeng.**&#123;*;&#125;&#10;-keep class com.alimama.**&#123;*;&#125;&#10;&#10;# # -------------------------------------------&#10;# #  ######## butterknife&#28151;&#28102;  ##########&#10;# # -------------------------------------------&#10;-keep class butterknife.** &#123; *; &#125;&#10;-dontwarn butterknife.internal.**&#10;-keep class **$$ViewBinder &#123; *; &#125;&#10;-keepclasseswithmembernames class * &#123;&#10;    @butterknife.* &#60;fields&#62;;&#10;&#125;&#10;-keepclasseswithmembernames class * &#123;&#10;    @butterknife.* &#60;methods&#62;;&#10;&#125;&#10;&#10;## GreenRobot EventBus specific rules ##&#10;-keepclassmembers class ** &#123;&#10;    public void onEvent*(**);&#10;&#125;&#10;## Only required if you use AsyncExecutor&#10;#-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent &#123;&#10;#    public &#60;init&#62;(java.lang.Throwable);&#10;#&#125;&#10;-dontwarn de.greenrobot.event.util.*$Support&#10;-dontwarn de.greenrobot.event.util.*$SupportManagerFragment&#10;&#10;# # -------------------------------------------&#10;# #  ######## picasso&#28151;&#28102;  ##########&#10;# # -------------------------------------------&#10;-dontwarn com.squareup.okhttp.**&#10;&#10;# # -------------------------------------------&#10;# #  ######## fastJson&#28151;&#28102;  ##########&#10;# # -------------------------------------------&#10;-dontwarn com.alibaba.fastjson.**&#10;-keep class com.alibaba.fastjson.** &#123; *; &#125;&#10;-keepclassmembers class * &#123;&#10;    public &#60;methods&#62;;&#10;&#125;&#10;&#10;# # -------------------------------------------&#10;# #  ######## greenDao Generator&#28151;&#28102;  ##########&#10;# # -------------------------------------------&#10;# GreenDao Generator rules&#10;#&#10;-keepclassmembers class * extends de.greenrobot.dao.AbstractDao &#123;&#10;    public static java.lang.String TABLENAME;&#10;&#125;&#10;-keep class **$Properties&#10;&#10;# # -------------------------------------------&#10;# #  ######## greenDao&#28151;&#28102;  ##########&#10;# # -------------------------------------------&#10;# GreenDao rules&#10;#&#10;-keepclassmembers class * extends de.greenrobot.dao.AbstractDao &#123;&#10;    public static java.lang.String TABLENAME;&#10;&#125;&#10;-keep class **$Properties&#10;&#10;## ----------------------------------&#10;##   ########## Gson&#28151;&#28102;    ##########&#10;## ----------------------------------&#10;-keepattributes Signature&#10;-keep class sun.misc.Unsafe &#123; *; &#125;&#10;-keep class com.google.gson.examples.android.model.** &#123; *; &#125;&#10;&#10;&#10;-keep public class * extends android.view.View &#123;&#10;      public &#60;init&#62;(android.content.Context);&#10;      public &#60;init&#62;(android.content.Context, android.util.AttributeSet);&#10;      public &#60;init&#62;(android.content.Context, android.util.AttributeSet, int);&#10;      public void set*(...);&#10;&#125;&#10;&#10;#&#20445;&#25345; native &#26041;&#27861;&#19981;&#34987;&#28151;&#28102;&#10;-keepclasseswithmembernames class * &#123;&#10;    native &#60;methods&#62;;&#10;&#125;&#10;&#10;#&#20445;&#25345;&#33258;&#23450;&#20041;&#25511;&#20214;&#31867;&#19981;&#34987;&#28151;&#28102;&#10;-keepclasseswithmembers class * &#123;&#10;    public &#60;init&#62;(android.content.Context, android.util.AttributeSet);&#10;&#125;&#10;&#10;#&#20445;&#25345;&#33258;&#23450;&#20041;&#25511;&#20214;&#31867;&#19981;&#34987;&#28151;&#28102;&#10;-keepclasseswithmembers class * &#123;&#10;    public &#60;init&#62;(android.content.Context, android.util.AttributeSet, int);&#10;&#125;&#10;#&#20445;&#25345;&#33258;&#23450;&#20041;&#25511;&#20214;&#31867;&#19981;&#34987;&#28151;&#28102;&#10;-keepclassmembers class * extends android.app.Activity &#123;&#10;   public void *(android.view.View);&#10;&#125;&#10;&#10;#&#20445;&#25345; Parcelable &#19981;&#34987;&#28151;&#28102;&#10;-keep class * implements android.os.Parcelable &#123;&#10;  public static final android.os.Parcelable$Creator *;&#10;&#125;&#10;&#10;#&#20445;&#25345; Serializable &#19981;&#34987;&#28151;&#28102;&#10;-keepnames class * implements java.io.Serializable&#10;&#10;#&#20445;&#25345; Serializable &#19981;&#34987;&#28151;&#28102;&#24182;&#19988;enum &#31867;&#20063;&#19981;&#34987;&#28151;&#28102;&#10;-keepclassmembers class * implements java.io.Serializable &#123;&#10;    static final long serialVersionUID;&#10;    private static final java.io.ObjectStreamField[] serialPersistentFields;&#10;    !static !transient &#60;fields&#62;;&#10;    !private &#60;fields&#62;;&#10;    !private &#60;methods&#62;;&#10;    private void writeObject(java.io.ObjectOutputStream);&#10;    private void readObject(java.io.ObjectInputStream);&#10;    java.lang.Object writeReplace();&#10;    java.lang.Object readResolve();&#10;&#125;&#10;&#10;#&#20445;&#25345;&#26522;&#20030; enum &#31867;&#19981;&#34987;&#28151;&#28102; &#22914;&#26524;&#28151;&#28102;&#25253;&#38169;&#65292;&#24314;&#35758;&#30452;&#25509;&#20351;&#29992;&#19978;&#38754;&#30340; -keepclassmembers class * implements java.io.Serializable&#21363;&#21487;&#10;-keepclassmembers enum * &#123;&#10;    public static **[] values();&#10;    public static ** valueOf(java.lang.String);&#10;&#125;&#10;&#10;#&#19981;&#28151;&#28102;&#36164;&#28304;&#31867;&#10;-keepclassmembers class **.R$* &#123;&#10;    public static &#60;fields&#62;;&#10;&#125;&#10;&#10;#&#33150;&#35759;&#10;-keep class com.tencent.open.TDialog$*&#10;-keep class com.tencent.open.TDialog$* &#123;*;&#125;&#10;-keep class com.tencent.open.PKDialog&#10;-keep class com.tencent.open.PKDialog &#123;*;&#125;&#10;-keep class com.tencent.open.PKDialog$*&#10;-keep class com.tencent.open.PKDialog$* &#123;*;&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Gradle/"> #Gradle </a>
+          
+            <a href="/tags/Proguard/"> #Proguard </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/31/">九月</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/25/">微信和QQ授权登录以及微信支付的集成</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2015/07/26/';
+      var disqus_title = '我的gradle配置和proguard-rules';
+      var disqus_url = 'http://www.easydone.cn/2015/07/26/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

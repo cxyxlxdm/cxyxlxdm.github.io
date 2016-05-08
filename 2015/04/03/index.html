@@ -1,0 +1,1021 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="Android,GridView,多选," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> GridView实现点击多选 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              GridView实现点击多选
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-04-03
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/03/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/03/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>##功能需求<br>最近项目里有个需求，要实现一个标签多选的功能，标签用 GridView 展示，点击 GridView 的条目，选中标签，可以多选，就像下面图片里展示的效果。<a id="more"></a><br><img src="http://easydone.qiniudn.com/muti_choose_01.jpg" alt=""><br><img src="http://easydone.qiniudn.com/muti_choose_02.jpg" alt=""><br><img src="http://easydone.qiniudn.com/muti_choose_03.jpg" alt=""><br>点击左侧的井号，控制下方的标签列表显示和隐藏，点击条目选中，如果选中一条，则直接在井号右边列出来条目内容，如果选中两条以上，则显示选中了多少条。</p>
+<p>##再造轮子的缘由<br>本来以为是一个很简单的功能，调用 API 里的方法就完了，就像下面这样：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);<span class="comment">// 设置为多选模式</span></span><br><span class="line">mGridView.setMultiChoiceModeListener(<span class="keyword">this</span>);<span class="comment">// 设置多选模式监听器</span></span><br></pre></td></tr></table></figure></p>
+<p>真正开始做的时候才发现，原来在 Android 3.0 之前是没有 MultiChoiceMode 的方法的，而且 3.0 之后的多选也是需要长按才能进入多选模式，与项目需求也不符合。这时候才想起来，之前做图片选择上传的时候，也纠结过这个问题，当时就是自己又手动实现了多选的功能。既然是第二次碰到，干脆记录下来。也就是说，在这个例子里实现了文字的多选，如果想要实现图片的多选，方法过程都是一样的，只需要将其中的对应参数替换即可。</p>
+<p>##方案制定<br>其实具体怎么去实现，方案有很多种，实现起来也都比较简单，每个人喜好都不一样，从我个人角度来讲，我更倾向于用 Fragment 去实现下面的标签列表，这个页面本身是一个 Activity ，Fragment 和 Activity 之间数据传递也比较方便，更重要的是，通过控制 Fragment 的显示和隐藏，操作起来非常流畅。类似的界面，我也试过用普通的 View 和 PopupWindow 去实现，但是用 View 去实现，每次显示都需要初始化 View ，会很卡；而用 PopupWindow ，则其图层视图时在页面之上的，不符合这样的使用场景。</p>
+<p>##标签列表的实现</p>
+<p>###如何设计点击多选<br>我们知道 GridView 跟 ListView 一样，又条目点击事件，调用 setOnItemClickListener 并实现对应借口即可。但是，这只是单选事件，点击了一个条目，如果再点击另一个条目，焦点就跳去另一个条目了，如果要实现多选，我们需要保持前面被点击的条目的状态不变。这个时候，就需要一个开关了， CheckBox 就闪亮登场了。通过 CheckBox 去设置 Item 的状态，然后跟 OnItemClick 的事件一样，通过接口回调，设置 setOnItemClickListener 事件，相当于单击事件方法的重载，当然要传入其他的一些参数。</p>
+<p>###条目的布局设置<br>通过上面的分析，我们发现需要一个 TextView 去展示标签，并显式地展现条目的被点击和取消点击，同时还需要一个 CheckBox ，去记录条目的状态并设置和改变条目状态。当然， CheckBox 是要 gone 掉的，下面就是条目的布局：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/tv_tags_item"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"@drawable/tags_bg_color_seletor"</span></span><br><span class="line">        <span class="attribute">android:gravity</span>=<span class="value">"center"</span></span><br><span class="line">        <span class="attribute">android:paddingBottom</span>=<span class="value">"3dip"</span></span><br><span class="line">        <span class="attribute">android:paddingLeft</span>=<span class="value">"5dp"</span></span><br><span class="line">        <span class="attribute">android:paddingRight</span>=<span class="value">"5dp"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"3dip"</span></span><br><span class="line">        <span class="attribute">android:textColor</span>=<span class="value">"@drawable/tags_text_color_seletor"</span></span><br><span class="line">        <span class="attribute">android:textSize</span>=<span class="value">"15sp"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">TextView</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">CheckBox</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/tags_checkbox"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_alignEnd</span>=<span class="value">"@id/tv_tags_item"</span></span><br><span class="line">        <span class="attribute">android:layout_alignRight</span>=<span class="value">"@id/tv_tags_item"</span></span><br><span class="line">        <span class="attribute">android:layout_alignTop</span>=<span class="value">"@id/tv_tags_item"</span></span><br><span class="line">        <span class="attribute">android:checked</span>=<span class="value">"false"</span></span><br><span class="line">        <span class="attribute">android:clickable</span>=<span class="value">"false"</span></span><br><span class="line">        <span class="attribute">android:focusable</span>=<span class="value">"false"</span></span><br><span class="line">        <span class="attribute">android:visibility</span>=<span class="value">"gone"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>###GridView 适配器的创建<br>在适配器里，getCount() ，getItem() ，getItemId() ，getView() ，这些方法自不必说，既然是要写 OnItemClick 的重载方法，就必须要重新设计接口，将多出来的 CheckBox 作为参数传进去。同时，还需要设置条目的点击事件，因此要在 getView() 里，设置 convertView.setOnClickListener() ，至于参数，当然就是多选点击接口的实现类对象。因此，在 adapter 里需要一个内部类去实现多选的接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.annotation.SuppressLint;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"><span class="keyword">import</span> android.widget.BaseAdapter;</span><br><span class="line"><span class="keyword">import</span> android.widget.CheckBox;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.R;</span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.entity.ColumnsInfo;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 选择标签的适配器</span><br><span class="line"> */</span></span><br><span class="line"><span class="annotation">@SuppressLint</span>(<span class="string">"InflateParams"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TagsAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> List&lt;ColumnsInfo&gt; tagList;</span><br><span class="line">	<span class="keyword">private</span> Context context;</span><br><span class="line">	<span class="keyword">private</span> TagHolder mHolder = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> clickTemp = -<span class="number">1</span>;</span><br><span class="line">	OnItemClickClass onItemClickClass;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TagsAdapter</span><span class="params">(List&lt;ColumnsInfo&gt; tagList, Context context, OnItemClickClass onItemClickClass)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.tagList = tagList;</span><br><span class="line">		<span class="keyword">this</span>.context = context;</span><br><span class="line">		<span class="keyword">this</span>.onItemClickClass = onItemClickClass;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSelection</span><span class="params">(<span class="keyword">int</span> choiceCount)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.clickTemp = choiceCount;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> tagList.size();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> tagList.get(position);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> position;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (convertView == <span class="keyword">null</span>) &#123;</span><br><span class="line">			convertView = LayoutInflater.from(context).inflate(R.layout.tags_item, <span class="keyword">null</span>);</span><br><span class="line">			mHolder = <span class="keyword">new</span> TagHolder();</span><br><span class="line">			mHolder.textView = (TextView) convertView.findViewById(R.id.tv_tags_item);</span><br><span class="line">			mHolder.checkBox = (CheckBox) convertView.findViewById(R.id.tags_checkbox);</span><br><span class="line">			convertView.setTag(mHolder);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			mHolder = (TagHolder) convertView.getTag();</span><br><span class="line">		&#125;</span><br><span class="line">		mHolder.textView.setText(tagList.get(position).getCatename());</span><br><span class="line">		mHolder.checkBox.setVisibility(View.GONE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置被选中和取消选中条目的状态</span></span><br><span class="line">		<span class="keyword">if</span> (clickTemp == position) &#123;</span><br><span class="line">			mHolder.textView.setSelected(<span class="keyword">true</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			mHolder.textView.setSelected(<span class="keyword">false</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		convertView.setOnClickListener(<span class="keyword">new</span> OnTextClick(position, mHolder.checkBox, mHolder.textView));</span><br><span class="line">		<span class="keyword">return</span> convertView;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TagHolder</span> </span>&#123;</span><br><span class="line">		TextView textView;</span><br><span class="line">		CheckBox checkBox;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** 点击多选的接口 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnItemClickClass</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnItemClick</span><span class="params">(View v, <span class="keyword">int</span> Position, CheckBox checkBox, TextView textView)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** 多选的接口实现类 */</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">OnTextClick</span> <span class="keyword">implements</span> <span class="title">OnClickListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> position;</span><br><span class="line">		CheckBox checkBox;</span><br><span class="line">		TextView tvSelected = <span class="keyword">null</span>;</span><br><span class="line">		TextView textView = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">OnTextClick</span><span class="params">(<span class="keyword">int</span> position, CheckBox checkBox)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.position = position;</span><br><span class="line">			<span class="keyword">this</span>.checkBox = checkBox;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">OnTextClick</span><span class="params">(<span class="keyword">int</span> position, CheckBox checkBox, TextView textView)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.position = position;</span><br><span class="line">			<span class="keyword">this</span>.checkBox = checkBox;</span><br><span class="line">			<span class="keyword">this</span>.textView = textView;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (tagList != <span class="keyword">null</span> &amp;&amp; onItemClickClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">				onItemClickClass.OnItemClick(v, position, checkBox, textView);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，要展示条目选中前后的状态变化，我做了一个选择器，设置一个标识，下面是我的选择器：</p>
+<p>背景的选择器：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/** tags_bg_color_seletor */</span><br><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">selector</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_selected</span>=<span class="value">"true"</span> <span class="attribute">android:drawable</span>=<span class="value">"@drawable/tags_select_shape"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_pressed</span>=<span class="value">"true"</span> <span class="attribute">android:drawable</span>=<span class="value">"@drawable/tags_select_shape"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_selected</span>=<span class="value">"false"</span> <span class="attribute">android:drawable</span>=<span class="value">"@drawable/tags_not_select_shape"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">selector</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>被选中的条目背景<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/** tags_select_shape */</span><br><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">gradient</span> <span class="attribute">android:angle</span>=<span class="value">"90"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">solid</span> <span class="attribute">android:color</span>=<span class="value">"@color/orange"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>未被选中的条目的背景<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/** tags_not_select_shape */</span><br><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">shape</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">gradient</span> <span class="attribute">android:angle</span>=<span class="value">"90"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">solid</span> <span class="attribute">android:color</span>=<span class="value">"@color/white"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">shape</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>文字颜色的选择器<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">selector</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_selected</span>=<span class="value">"true"</span> <span class="attribute">android:color</span>=<span class="value">"@color/white"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_pressed</span>=<span class="value">"true"</span> <span class="attribute">android:color</span>=<span class="value">"@color/white"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">item</span> <span class="attribute">android:state_selected</span>=<span class="value">"false"</span> <span class="attribute">android:color</span>=<span class="value">"@color/black"</span>&gt;</span><span class="tag">&lt;/<span class="title">item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">selector</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>###标签列表的展示<br>接下来就比较简单了，主要就是在 Fragment 里实现 Adapter 里的接口，实现多选即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"><span class="keyword">import</span> android.widget.CheckBox;</span><br><span class="line"><span class="keyword">import</span> android.widget.GridView;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.R;</span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.adapter.TagsAdapter;</span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.entity.ColumnsInfo;</span><br><span class="line"><span class="keyword">import</span> com.ihuiben.ihuiben.manager.BaseApplication;</span><br><span class="line"><span class="keyword">import</span> com.lidroid.xutils.DbUtils;</span><br><span class="line"><span class="keyword">import</span> com.lidroid.xutils.db.sqlite.Selector;</span><br><span class="line"><span class="keyword">import</span> com.lidroid.xutils.exception.DbException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 选择标签的 Fragment</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TagsFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> View view;</span><br><span class="line">	<span class="keyword">private</span> TextView tvComplete;</span><br><span class="line">	<span class="keyword">private</span> GridView gvTags;</span><br><span class="line">	<span class="keyword">private</span> TagsAdapter mAdapter;</span><br><span class="line">	List&lt;ColumnsInfo&gt; tvSelectedList = <span class="keyword">new</span> ArrayList&lt;ColumnsInfo&gt;();</span><br><span class="line">	<span class="keyword">private</span> TagsFragmentCallBack mTagsFragmentCallBack;</span><br><span class="line">	<span class="keyword">private</span> DbUtils db = BaseApplication.db;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TagsFragmentHolder</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> TagsFragment INSTANCE = <span class="keyword">new</span> TagsFragment();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">TagsFragment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> TagsFragment <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> TagsFragmentHolder.INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		view = inflater.inflate(R.layout.choose_tags, container, <span class="keyword">false</span>);</span><br><span class="line">		tvComplete = (TextView) view.findViewById(R.id.tv_complete_choose_tags);</span><br><span class="line">		gvTags = (GridView) view.findViewById(R.id.gv_tags);</span><br><span class="line">		<span class="keyword">return</span> view;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line">		tvComplete.setVisibility(View.GONE);</span><br><span class="line">		<span class="comment">//此处时我们项目的需求，从缓存里获取数据并展示，使用了 xUtils 里的数据库框架，实际应用里，将数据替换为自己需要的即可。</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			List&lt;ColumnsInfo&gt; columnsInfos = db.findAll(Selector.from(ColumnsInfo.class).where(<span class="string">"_columnid"</span>, <span class="string">"="</span>, <span class="string">"3"</span>).orderBy(<span class="string">"orders"</span>));</span><br><span class="line">			mAdapter = <span class="keyword">new</span> TagsAdapter(columnsInfos, getActivity(), onItemClickClass);</span><br><span class="line">			gvTags.setAdapter(mAdapter);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (DbException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(android.app.Activity activity)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onAttach(activity);</span><br><span class="line">		<span class="keyword">if</span> (!(activity <span class="keyword">instanceof</span> TagsFragmentCallBack)) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"TagsFragmentCallBack所在的Activity必须实现TagsFragmentCallBack接口"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		mTagsFragmentCallBack = (TagsFragmentCallBack) activity;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onDetach();</span><br><span class="line">		mTagsFragmentCallBack = <span class="keyword">null</span>;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** 实现接口，点击选中或者取消选中，并获取其被选中的集合 */</span></span><br><span class="line">	TagsAdapter.OnItemClickClass onItemClickClass = <span class="keyword">new</span> TagsAdapter.OnItemClickClass() &#123;</span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnItemClick</span><span class="params">(View v, <span class="keyword">int</span> position, CheckBox checkBox, TextView textView)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (checkBox.isChecked()) &#123;</span><br><span class="line">					checkBox.setChecked(<span class="keyword">false</span>);</span><br><span class="line">					textView.setBackgroundColor(getActivity().getResources().getColor(R.color.white));</span><br><span class="line">					textView.setTextColor(getActivity().getResources().getColor(R.color.black));</span><br><span class="line">					<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tvSelectedList.size(); i++) &#123;</span><br><span class="line">						<span class="keyword">if</span> (textView.getText().toString().equals(tvSelectedList.get(i).getCatename())) &#123;</span><br><span class="line">							tvSelectedList.remove(i);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					ColumnsInfo mColumnsInfo = <span class="keyword">new</span> ColumnsInfo();</span><br><span class="line">					mColumnsInfo = db.findFirst(Selector.from(ColumnsInfo.class).where(<span class="string">"catename"</span>, <span class="string">"="</span>, textView.getText().toString()));</span><br><span class="line">					checkBox.setChecked(<span class="keyword">true</span>);</span><br><span class="line">					textView.setBackgroundColor(getActivity().getResources().getColor(R.color.orange));</span><br><span class="line">					textView.setTextColor(getActivity().getResources().getColor(R.color.white));</span><br><span class="line">					tvSelectedList.add(mColumnsInfo);</span><br><span class="line">				&#125;</span><br><span class="line">                	<span class="comment">//调用接口回传数据给 Acitivty</span></span><br><span class="line">				mTagsFragmentCallBack.onItemSelected(position, tvSelectedList);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (DbException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** 在此处设计接口给 Fragment 所在的 Activity 传递数据 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TagsFragmentCallBack</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(<span class="keyword">int</span> index, List&lt;ColumnsInfo&gt; tvSelectedList)</span></span>;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>##将 Fragment 选择的标签数据回传给 Activity<br>Fragment 和 Activity 之间的数据传递是一个非常常用的概念，一般从 Acitivty 往 Fragment 传递数据有两种方式，一种是通过构造参数，另一种是设置 Bundle ，而官方推荐的是使用 Bundle ；从 Fragment 往 Activity 里传递数据，一般就通过接口。在这里，我使用了接口，将 Fragment 里选择的标签数据回传给 Acitivty ，如上代码最后几行，即是给 Acitivty 回传数据的接口，当然，必须要在实现点击事件里的方法里去调用这个接口的方法。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 回传数据接口方法的实现 */</span></span><br><span class="line"><span class="keyword">private</span> List&lt;ColumnsInfo&gt; columnsInfoList = <span class="keyword">new</span> ArrayList&lt;ColumnsInfo&gt;();</span><br><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> onItemSelected(<span class="built_in">int</span> index, List&lt;ColumnsInfo&gt; tvSelectedList) &#123;</span><br><span class="line">	<span class="keyword">this</span>.columnsInfoList = tvSelectedList;</span><br><span class="line">	Log.e(<span class="string">"onItemSelected"</span>, columnsInfoList.<span class="built_in">size</span>() + <span class="string">""</span>);</span><br><span class="line">	<span class="keyword">if</span> (tvSelectedList.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">		chooseTagsCount.setVisibility(View.INVISIBLE);</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tvSelectedList.<span class="built_in">size</span>() == <span class="number">1</span>) &#123;</span><br><span class="line">		chooseTagsCount.setVisibility(View.VISIBLE);</span><br><span class="line">		chooseTagsCount.setText(tvSelectedList.<span class="built_in">get</span>(<span class="number">0</span>).getCatename());</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		chooseTagsCount.setVisibility(View.VISIBLE);</span><br><span class="line">		chooseTagsCount.setText(<span class="string">"已选择"</span> + tvSelectedList.<span class="built_in">size</span>() + <span class="string">"个标签"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样，上面的方法里成员变量 columnsInfoList 里就存储了 Fragment 里回传过来的数据。通过点击标签条目，即可实现多选，并且是实时的展示：当不选择时，没有提示；当选择一个条目时，展示选择的内容；当选择两个以上条目时，就展示选择条目的数量。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/GridView/"> #GridView </a>
+          
+            <a href="/tags/多选/"> #多选 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/07/">成为自己想要成为的人</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/26/">仿新浪微博加＃话题的EditText实现</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2015/04/03/';
+      var disqus_title = 'GridView实现点击多选';
+      var disqus_url = 'http://www.easydone.cn/2015/04/03/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

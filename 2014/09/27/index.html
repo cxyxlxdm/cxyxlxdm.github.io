@@ -1,0 +1,1026 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="AChartEngine,Android,框架," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> 报表框架achart的使用 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              报表框架achart的使用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-09-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/09/27/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/09/27/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>AChartEngine是为android应用而设计的绘图工具库，使用它可以很方便地完成各种图形的绘制，官网地址是<a href="https://code.google.com/p/achartengine/" target="_blank" rel="external">AChartEngine</a>，由于是比较早的项目，所以项目主业放在了GoogleCode上，不过在GitHub上也有镜像。<a id="more"></a>目前官方最新版本是1.1.0，现在已经支持的图标样式如下：</p>
+<ul>
+<li>line chart</li>
+<li>area chart</li>
+<li>scatter chart</li>
+<li>time chart</li>
+<li>bar chart</li>
+<li>pie chart</li>
+<li>bubble chart</li>
+<li>doughnut chart</li>
+<li>range (high-low) bar chart</li>
+<li>dial chart / gauge</li>
+<li>combined (any combination of line, cubic line, scatter, bar, range bar, bubble) chart</li>
+<li>cubic line chart</li>
+</ul>
+<p>部分效果图如下：<br><img src="http://easydone.qiniudn.com/achart-01.png" alt=""><br><img src="http://easydone.qiniudn.com/achart-02.png" alt=""><br><img src="http://easydone.qiniudn.com/achart-03.png" alt=""><br><img src="http://easydone.qiniudn.com/achart-04.png" alt=""><br><img src="http://easydone.qiniudn.com/achart-05.png" alt=""></p>
+<p>当然如果想完全搞明白框架的实现逻辑，会非常的困难，也没什么必要，实际上只需要会用即可，官方的API文档也非常的详细。接下来，就记录一下自己实际项目里实现的一个绘制<strong>饼状图（Pie Chart）</strong>的小demo.</p>
+<p>首先，当然需要先导入<strong>achartengine-1.1.0.jar</strong>这个jar包，然后可以将官方提供的demo中的布局文件xy_chat.xml拿出来直接使用，我们看到AChartEngine在实现了如此之多的图形绘制的前提下，只有一个布局文件，可见这个框架是多么地精致严谨，其对代码的抽取简直已经达到了极致。当然，对应的string值也需要修改一下，不再赘述。下面是我修改过的布局文件：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line"><span class="label">	android:</span>orientation=<span class="string">"vertical"</span> <span class="string">android:</span>layout_width=<span class="string">"fill_parent"</span></span><br><span class="line"><span class="label">	android:</span>layout_height=<span class="string">"fill_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">	&lt;TextView <span class="string">android:</span>layout_width=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span></span><br><span class="line"><span class="label">		android:</span>text=<span class="string">"add_values"</span> /&gt;	</span><br><span class="line"></span><br><span class="line">	&lt;TableLayout <span class="string">android:</span>orientation=<span class="string">"vertical"</span></span><br><span class="line"><span class="label">		android:</span>layout_width=<span class="string">"fill_parent"</span></span><br><span class="line"><span class="label">		android:</span>layout_height=<span class="string">"wrap_content"</span>&gt;</span><br><span class="line"></span><br><span class="line">	&lt;TableRow&gt;</span><br><span class="line">		&lt;TextView <span class="string">android:</span>layout_width=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> </span><br><span class="line"><span class="label">			android:</span>text=<span class="string">"x"</span> <span class="string">android:</span>padding=<span class="string">"5dip"</span>/&gt; </span><br><span class="line">		&lt;EditText <span class="string">android:</span>id=<span class="string">"@+id/xValue"</span>  <span class="string">android:</span>layout_width=<span class="string">"wrap_content"</span></span><br><span class="line"><span class="label">			android:</span>layout_height=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_weight=<span class="string">"1"</span> <span class="string">android:</span>enabled=<span class="string">"false"</span>/&gt;</span><br><span class="line">		&lt;TextView <span class="string">android:</span>layout_width=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> </span><br><span class="line"><span class="label">			android:</span>text=<span class="string">"y"</span> <span class="string">android:</span>padding=<span class="string">"5dip"</span>/&gt;</span><br><span class="line">		&lt;EditText <span class="string">android:</span>id=<span class="string">"@+id/yValue"</span>  <span class="string">android:</span>layout_width=<span class="string">"wrap_content"</span></span><br><span class="line"><span class="label">			android:</span>layout_height=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_weight=<span class="string">"1"</span> <span class="string">android:</span>enabled=<span class="string">"false"</span>/&gt;</span><br><span class="line">		&lt;Button <span class="string">android:</span>id=<span class="string">"@+id/add"</span> <span class="string">android:</span>text=<span class="string">"add"</span></span><br><span class="line"><span class="label">			android:</span>layout_width=<span class="string">"wrap_content"</span>	<span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> <span class="string">android:</span>enabled=<span class="string">"false"</span>/&gt;</span><br><span class="line">	&lt;/TableRow&gt;</span><br><span class="line">	&lt;/TableLayout&gt;</span><br><span class="line"></span><br><span class="line">	&lt;LinearLayout <span class="string">android:</span>id=<span class="string">"@+id/chart"</span> <span class="string">android:</span>orientation=<span class="string">"horizontal"</span></span><br><span class="line"><span class="label">		android:</span>layout_width=<span class="string">"fill_parent"</span> <span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> <span class="string">android:</span>layout_weight=<span class="string">"1"</span> /&gt;</span><br><span class="line"></span><br><span class="line">	&lt;LinearLayout <span class="string">android:</span>orientation=<span class="string">"horizontal"</span></span><br><span class="line"><span class="label">		android:</span>layout_width=<span class="string">"fill_parent"</span> <span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> &gt;</span><br><span class="line">		&lt;Button <span class="string">android:</span>id=<span class="string">"@+id/new_series"</span> <span class="string">android:</span>text=<span class="string">"new_series"</span></span><br><span class="line"><span class="label">			android:</span>layout_width=<span class="string">"wrap_content"</span>	<span class="string">android:</span>layout_height=<span class="string">"wrap_content"</span> /&gt;</span><br><span class="line">	&lt;/LinearLayout&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后，如果要实现一个饼状图，在官方demo里也有对应的代码实例，下图展示了现有的代码实例，其中<strong>PieChartBuilder.java</strong>就是饼状图的代码实例，可以直接拿来用。<br><img src="http://easydone.qiniudn.com/achart-06.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Copyright (C) 2009, 2010 SC 4ViewSoft SRL</span><br><span class="line"> *  </span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *  </span><br><span class="line"> *      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *  </span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">package</span> cn.easydone.achartdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.achartengine.ChartFactory;</span><br><span class="line"><span class="keyword">import</span> org.achartengine.GraphicalView;</span><br><span class="line"><span class="keyword">import</span> org.achartengine.model.CategorySeries;</span><br><span class="line"><span class="keyword">import</span> org.achartengine.model.SeriesSelection;</span><br><span class="line"><span class="keyword">import</span> org.achartengine.renderer.DefaultRenderer;</span><br><span class="line"><span class="keyword">import</span> org.achartengine.renderer.SimpleSeriesRenderer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.graphics.Color;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup.LayoutParams;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.EditText;</span><br><span class="line"><span class="keyword">import</span> android.widget.LinearLayout;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PieChartBuilder</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TYPE = <span class="string">"type"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//颜色，官方的提供了四种颜色，也就是说最多添加四个类别，如果实际项目里要添加更多类别，在这里添加即可</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[] COLORS = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; Color.GREEN, Color.BLUE, Color.MAGENTA, Color.CYAN &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//要绘制的是什么图形  线性图   饼状图   树状图</span></span><br><span class="line">  <span class="keyword">private</span> CategorySeries mSeries = <span class="keyword">new</span> CategorySeries(<span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> DefaultRenderer mRenderer = <span class="keyword">new</span> DefaultRenderer();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String mDateFormat;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Button mAdd;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> EditText mX;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//显示的控件</span></span><br><span class="line">  <span class="keyword">private</span> GraphicalView mChartView;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRestoreInstanceState(savedState);</span><br><span class="line">    mSeries = (CategorySeries) savedState.getSerializable(<span class="string">"current_series"</span>);</span><br><span class="line">    mRenderer = (DefaultRenderer) savedState.getSerializable(<span class="string">"current_renderer"</span>);</span><br><span class="line">    mDateFormat = savedState.getString(<span class="string">"date_format"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">    outState.putSerializable(<span class="string">"current_series"</span>, mSeries);</span><br><span class="line">    outState.putSerializable(<span class="string">"current_renderer"</span>, mRenderer);</span><br><span class="line">    outState.putString(<span class="string">"date_format"</span>, mDateFormat);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.xy_chart);</span><br><span class="line">    mX = (EditText) findViewById(R.id.xValue);</span><br><span class="line">    <span class="comment">//设置显示效果</span></span><br><span class="line">    mRenderer.setApplyBackgroundColor(<span class="keyword">true</span>);</span><br><span class="line">    mRenderer.setBackgroundColor(Color.argb(<span class="number">100</span>, <span class="number">50</span>, <span class="number">50</span>, <span class="number">50</span>));</span><br><span class="line">    mRenderer.setChartTitleTextSize(<span class="number">20</span>);</span><br><span class="line">    mRenderer.setLabelsTextSize(<span class="number">15</span>);</span><br><span class="line">    mRenderer.setLegendTextSize(<span class="number">15</span>);</span><br><span class="line">    mRenderer.setMargins(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">20</span>, <span class="number">30</span>, <span class="number">15</span>, <span class="number">0</span> &#125;);</span><br><span class="line">    mRenderer.setZoomButtonsVisible(<span class="keyword">true</span>);</span><br><span class="line">    mRenderer.setStartAngle(<span class="number">90</span>);</span><br><span class="line"></span><br><span class="line">    mAdd = (Button) findViewById(R.id.add);</span><br><span class="line">    mAdd.setEnabled(<span class="keyword">true</span>);</span><br><span class="line">    mX.setEnabled(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    mAdd.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> x = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          x = Double.parseDouble(mX.getText().toString());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">          mX.requestFocus();</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mSeries.add(<span class="string">"Series "</span> + (mSeries.getItemCount() + <span class="number">1</span>), x);</span><br><span class="line">        SimpleSeriesRenderer renderer = <span class="keyword">new</span> SimpleSeriesRenderer();</span><br><span class="line">        renderer.setColor(COLORS[(mSeries.getItemCount() - <span class="number">1</span>) % COLORS.length]);</span><br><span class="line">        mRenderer.addSeriesRenderer(renderer);</span><br><span class="line">        mX.setText(<span class="string">""</span>);</span><br><span class="line">        mX.requestFocus();</span><br><span class="line">        <span class="keyword">if</span> (mChartView != <span class="keyword">null</span>) &#123;</span><br><span class="line">          mChartView.repaint();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    <span class="keyword">if</span> (mChartView == <span class="keyword">null</span>) &#123;</span><br><span class="line">      LinearLayout layout = (LinearLayout) findViewById(R.id.chart);</span><br><span class="line">      mChartView = ChartFactory.getPieChartView(<span class="keyword">this</span>, mSeries, mRenderer);</span><br><span class="line">      mRenderer.setClickEnabled(<span class="keyword">true</span>);</span><br><span class="line">      mRenderer.setSelectableBuffer(<span class="number">10</span>);</span><br><span class="line">      mChartView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">          SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();</span><br><span class="line">          <span class="keyword">if</span> (seriesSelection == <span class="keyword">null</span>) &#123;</span><br><span class="line">            Toast</span><br><span class="line">                .makeText(PieChartBuilder.<span class="keyword">this</span>, <span class="string">"No chart element was clicked"</span>, Toast.LENGTH_SHORT)</span><br><span class="line">                .show();</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Toast.makeText(</span><br><span class="line">                PieChartBuilder.<span class="keyword">this</span>,</span><br><span class="line">                <span class="string">"Chart element data point index "</span> + seriesSelection.getPointIndex()</span><br><span class="line">                    + <span class="string">" was clicked"</span> + <span class="string">" point value="</span> + seriesSelection.getValue(),</span><br><span class="line">                Toast.LENGTH_SHORT).show();</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      mChartView.setOnLongClickListener(<span class="keyword">new</span> View.OnLongClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onLongClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">          SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();</span><br><span class="line">          <span class="keyword">if</span> (seriesSelection == <span class="keyword">null</span>) &#123;</span><br><span class="line">            Toast.makeText(PieChartBuilder.<span class="keyword">this</span>, <span class="string">"No chart element was long pressed"</span>,</span><br><span class="line">                Toast.LENGTH_SHORT);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// no chart element was long pressed, so let something</span></span><br><span class="line">            <span class="comment">// else handle the event</span></span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Toast.makeText(PieChartBuilder.<span class="keyword">this</span>, <span class="string">"Chart element data point index "</span></span><br><span class="line">                + seriesSelection.getPointIndex() + <span class="string">" was long pressed"</span>, Toast.LENGTH_SHORT);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">// the element was long pressed - the event has been</span></span><br><span class="line">            <span class="comment">// handled</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      layout.addView(mChartView, <span class="keyword">new</span> LayoutParams(LayoutParams.FILL_PARENT,</span><br><span class="line">          LayoutParams.FILL_PARENT));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      mChartView.repaint();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终效果如下：<br><img src="http://easydone.qiniudn.com/achart-07.png" alt=""><br><img src="http://easydone.qiniudn.com/achart-08.png" alt=""></p>
+<p>如果需要绘制其他的图形，在官方demo中的其他代码中修改就是。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AChartEngine/"> #AChartEngine </a>
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/框架/"> #框架 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/12/">Android搜索框架</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/23/">Linux配置DNS服务器实例</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2014/09/27/';
+      var disqus_title = '报表框架achart的使用';
+      var disqus_url = 'http://www.easydone.cn/2014/09/27/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

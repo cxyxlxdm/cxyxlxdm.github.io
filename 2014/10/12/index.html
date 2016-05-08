@@ -1,0 +1,1038 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="Android,Search," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Android搜索框架 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Android搜索框架
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-10-12
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/10/12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/12/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>在Android的官方文档里提供了一个搜索框架,如果要实现搜索功能,只需严格按照此框架步骤实现即可.需要注意的是必须是<strong>严格</strong>按照此框架介绍实现,有时候甚至是一个空格的缺失都有可能造成整个搜索功能的失效.<a id="more"></a></p>
+<p>下面就以一个短信应用项目里的短信搜索为例,对搜索功能的实现进行总结.</p>
+<p>##激活搜索对话框<br>首先,需要在清单文件里配置,添加显示搜索结果的Activity;同时需要增加meta-data属性,配置对应的provider,让项目里所有的Activity都具有搜索能力;根据项目需要,在搜索框输入字符后,需要根据模糊匹配提供搜索建议,因此也需要在清单文件里配置搜索建议列表的内容提供者.</p>
+<p>当然,下面的代码也是官方文档提供的模板,接下来的操作,我们只需要根据这里的配置,再进行不断的完善即可.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">!</span> 配置搜索结果<span class="attribute">activity</span> <span class="attribute">--</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".SearchableActivity"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"搜索结果"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.SEARCH"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"android.app.searchable"</span></span><br><span class="line">        <span class="attribute">android:resource</span>=<span class="value">"@xml/searchable"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 让所有的Activity都有能力执行搜索 (如果需要让特定的Activity具有搜索能力,则需将该标签放置在该特定Activity里) --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">"android.app.default_searchable"</span></span><br><span class="line">    <span class="attribute">android:value</span>=<span class="value">".SearchableActivity"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 搜索建议列表的内容提供者 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">provider</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">"cn.easydone.smartsms.provider.MySuggestionProvider"</span></span><br><span class="line">    <span class="attribute">android:authorities</span>=<span class="value">"cn.easydone.smartsms.provider.MySuggestionProvider"</span></span><br><span class="line">    <span class="attribute">android:exported</span>=<span class="value">"true"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">provider</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在SearchableActivity的配置里,intent-filter里的action和meta-data的名称都必须是代码里指定的值,在meta-data元数据里还有一个resource资源,在这里需要新建这样的一个xml资源,资源类型选择searchable,内容如下:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">searchable</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/app_label"</span></span><br><span class="line">    <span class="attribute">android:hint</span>=<span class="value">"@string/search_hint"</span></span><br><span class="line">    <span class="attribute">android:searchSuggestAuthority</span>=<span class="value">"cn.easydone.smartsms.provider.MySuggestionProvider"</span></span><br><span class="line">    <span class="attribute">android:searchSuggestSelection</span>=<span class="value">" ?"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">searchable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>label和hint都需要在values里的strings.xml里进行配置,下面的两行都是关于搜索建议的,有其需要注意的是,搜索建议条件必须是<strong>“ ?”</strong>,这个空格一定不能少.</p>
+<p>完成了配置,接着就需要创建SearchableActivity,继承ListActivity,用以显示搜索结果,点击搜索按钮之后的一系列操作和显示都要在这个Activity里完成.当然,这都需要根据<strong>具体的业务</strong>进行相应的处理.</p>
+<p>接着就是激活搜索对话框,需要在Options Menu或者UI layout里调用onSearchRequested()方法.<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onSearchRequested()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>##处理搜索结果界面<br>处理搜索结果,其实就是在SearchableActivity的onCreate()方法里调用doMySearch()方法,并且需要把意图里查询关键字传递过去.当然doMySearch()方法需要自己来实现.<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">	adapter = <span class="keyword">new</span> MyAdapter(<span class="keyword">this</span>, <span class="keyword">null</span>);</span><br><span class="line">	setListAdapter(adapter);</span><br><span class="line">    <span class="comment">//获取意图,并把关键字"query"作为参数传递给方法doMySearch()</span></span><br><span class="line">    Intent intent = getIntent();</span><br><span class="line">    <span class="keyword">if</span> (Intent.ACTION_SEARCH.equals(intent.getAction())) &#123;</span><br><span class="line">    <span class="comment">//String android.app.SearchManager.QUERY = "query"</span></span><br><span class="line">      <span class="keyword">String</span> query = intent.getStringExtra(SearchManager.QUERY);</span><br><span class="line">      doMySearch(query);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> doMySearch(<span class="keyword">String</span> query) &#123;</span><br><span class="line">	QueryHandler mQueryHandler = <span class="keyword">new</span> QueryHandler(getContentResolver());</span><br><span class="line">	Uri uri = Uri.parse(<span class="string">"content://sms"</span>);</span><br><span class="line">	<span class="keyword">String</span> selection = <span class="string">"body like ?"</span>;</span><br><span class="line">	<span class="keyword">String</span>[] selectionArgs = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;<span class="string">"%"</span>+query+<span class="string">"%"</span>&#125;;</span><br><span class="line">	mQueryHandler.startQuery(<span class="number">0</span>, adapter, uri, projection, selection, selectionArgs, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> class MyAdapter extends CursorAdapter&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> MyAdapter(Context context, Cursor c) &#123;</span><br><span class="line">		<span class="keyword">super</span>(context, c);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 实例化条目的布局</span><br><span class="line">	 * Xutils是一个工具类,getDisplayName()是根据号码查询联系人名字的方法,formatTime()是格式化时间的方法</span><br><span class="line"> 	* 如果短信时间为今天,就显示短信发送接收时刻;如果不是今天,就显示短信发送接收的日期</span><br><span class="line">	 */</span></span><br><span class="line">	@Override</span><br><span class="line">	<span class="keyword">public</span> View newView(Context context, Cursor <span class="built_in">cursor</span>, ViewGroup parent) &#123;</span><br><span class="line">		View view = getLayoutInflater().inflate(R.layout.activity_conversation_list_item, <span class="keyword">null</span>);</span><br><span class="line">		ViewHolder holder = <span class="keyword">new</span> ViewHolder();</span><br><span class="line">		holder.iv = (ImageView) view.findViewById(R.id.iv);</span><br><span class="line">		holder.tv_name = (TextView) view.findViewById(R.id.tv_name);</span><br><span class="line">		holder.tv_body = (TextView) view.findViewById(R.id.tv_body);</span><br><span class="line">		holder.tv_date = (TextView) view.findViewById(R.id.tv_date);</span><br><span class="line">		view.setTag(holder);</span><br><span class="line">		<span class="keyword">return</span> view;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把cursor里面的值绑定给控件  cursor系统已经帮你移动到了指定的位置</span></span><br><span class="line">	@Override</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> bindView(View view, Context context, Cursor <span class="built_in">cursor</span>) &#123;</span><br><span class="line">		ViewHolder holder = (ViewHolder) view.getTag();</span><br><span class="line">		<span class="comment">//取值</span></span><br><span class="line">		<span class="keyword">String</span> address = <span class="built_in">cursor</span>.getString(ADDRESS_COLUM_INDEX);</span><br><span class="line">		<span class="keyword">String</span> body = <span class="built_in">cursor</span>.getString(BODY_COLUM_INDEX);</span><br><span class="line">		<span class="keyword">long</span> date = <span class="built_in">cursor</span>.getLong(DATE_COLUM_INDEX);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">String</span> displayName = Xutils.getDisplayName(address, context);</span><br><span class="line">		<span class="keyword">if</span>(TextUtils.isEmpty(displayName))&#123;</span><br><span class="line">			<span class="comment">//处理图片</span></span><br><span class="line">			holder.iv.setImageResource(R.drawable.ic_unknow_contact_picture);</span><br><span class="line">			holder.tv_name.setText(address);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			Bitmap bitmap = Xutils.getContactPhoto(address, context);</span><br><span class="line">			<span class="keyword">if</span>(bitmap != <span class="keyword">null</span>)&#123;</span><br><span class="line">				holder.iv.setImageBitmap(bitmap);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				holder.iv.setImageResource(R.drawable.ic_contact_picture);</span><br><span class="line">			&#125;</span><br><span class="line">			holder.tv_name.setText(displayName);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//短信内容</span></span><br><span class="line">		holder.tv_body.setText(body);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//时间</span></span><br><span class="line">        <span class="keyword">String</span> dateStr = Xutils.formatTime(date, context);</span><br><span class="line">		holder.tv_date.setText(date);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> class ViewHolder&#123;</span><br><span class="line">	ImageView iv;</span><br><span class="line">	TextView tv_name;</span><br><span class="line">	TextView tv_body;</span><br><span class="line">	TextView tv_date;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的QueryHandler继承了AsyncQueryHandler类,这是一个非常有用的类.查询内容提供者时,如果加载的数据比较多,就会是耗时操作,Android提供了AsyncQueryHandler这个API,使用这个API可以进行内容的异步查询操作.</p>
+<p>mQueryHandler执行了startQuery()方法后,会执行onQueryComplete()方法.这里面需要创建MyAdapter类,继承CursorAdapter,然后实例化,将adapter作为startQuery()的一个参数传进去,同时在onQueryComplete()方法中,将参cookie数强转为adapter,然后再将参数cursor传给adapter.这个cursor就是查询的结果,最终会显示在ListView中.</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.content.<span class="type">AsyncQueryHandler</span>;</span><br><span class="line"><span class="keyword">import</span> android.content.<span class="type">ContentResolver</span>;</span><br><span class="line"><span class="keyword">import</span> android.database.<span class="type">Cursor</span>;</span><br><span class="line"><span class="keyword">import</span> android.widget.<span class="type">CursorAdapter</span>;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">QueryHandler</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">AsyncQueryHandler</span> &#123;</span></span><br><span class="line">	public <span class="type">QueryHandler</span>(<span class="type">ContentResolver</span> cr) &#123;</span><br><span class="line">		<span class="keyword">super</span>(cr);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> void onQueryComplete(int token, <span class="type">Object</span> cookie, <span class="type">Cursor</span> cursor) &#123;</span><br><span class="line">		<span class="keyword">super</span>.onQueryComplete(token, cookie, cursor);</span><br><span class="line">		<span class="type">CursorAdapter</span> adapter = (<span class="type">CursorAdapter</span>) cookie;</span><br><span class="line">		adapter.changeCursor(cursor);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##处理搜索建议列表<br>添加搜索建议,首先需要创建一个内容提供者MySuggestionProvider,这个我们在上面的清单文件里,已经配置过了,而且也在xml资源文件里添加了搜索建议的相关属性.同时,这个内容提供者要继承SearchRecentSuggestionsProvider,内容提供者一定要对其进行授权处理,授权使用其全类名.</p>
+<p>而且,非常重要的一点是,内容提供者的授权,以下三个地方都必须一致:</p>
+<ul>
+<li>MySuggestionProvider</li>
+<li>AndroidManifest.xml</li>
+<li>searchable.xml</li>
+</ul>
+<p>同时,这里需要自己手动处理query()方法,搜索框架会把参数selectionArgs带到该方法中.</p>
+<p>还有一点,由于搜索结果的cursor对于数据列名有要求,必须是一些特定列名的数据才能被识别,如果是从其他地方获取的数据,则需要将其格式化.能够识别的列名常用的,也是官方API列出的有以下几种(当然也有其他的一些):</p>
+<ul>
+<li>_ID</li>
+<li>SUGGEST_COLUMN_TEXT_1</li>
+<li>SUGGEST_COLUMN_TEXT_2</li>
+<li>SUGGEST_COLUMN_ICON_1</li>
+<li>SUGGEST_COLUMN_ICON_2</li>
+<li>SUGGEST_COLUMN_INTENT_ACTION</li>
+<li>SUGGEST_COLUMN_INTENT_DATA</li>
+<li>SUGGEST_COLUMN_INTENT_DATA_ID</li>
+<li>SUGGEST_COLUMN_INTENT_EXTRA_DATA</li>
+<li>SUGGEST_COLUMN_QUERY</li>
+<li>SUGGEST_COLUMN_SHORTCUT_ID</li>
+<li>SUGGEST_COLUMN_SPINNER_WHILE_REFRESHING</li>
+</ul>
+<p>下面是具体的代码实现:<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.example.smsmanager.utils.Constants;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.SearchManager;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentResolver;</span><br><span class="line"><span class="keyword">import</span> android.content.SearchRecentSuggestionsProvider;</span><br><span class="line"><span class="keyword">import</span> android.database.Cursor;</span><br><span class="line"><span class="keyword">import</span> android.database.MatrixCursor;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.provider.BaseColumns;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> class MySuggestionProvider extends SearchRecentSuggestionsProvider &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">String</span> AUTHORITY = <span class="string">"cn.easydone.smartsms.provider.MySuggestionProvider"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="built_in">int</span> MODE = DATABASE_MODE_QUERIES | DATABASE_MODE_2LINES;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> MySuggestionProvider() &#123;</span><br><span class="line">        setupSuggestions(AUTHORITY, MODE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span>[]  projectionIn = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;<span class="string">"_id"</span>,<span class="string">"address"</span>,<span class="string">"body"</span>&#125;;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> Cursor query(Uri uri, <span class="keyword">String</span>[] projection, <span class="keyword">String</span> selection,</span><br><span class="line">    		<span class="keyword">String</span>[] selectionArgs, <span class="keyword">String</span> sortOrder) &#123;</span><br><span class="line">    	System.out.<span class="built_in">println</span>(selectionArgs[<span class="number">0</span>]);<span class="comment">//搜索框架携带的参数</span></span><br><span class="line">    	<span class="comment">//手动的查询短信的内容提供者</span></span><br><span class="line">    	ContentResolver cr = getContext().getContentResolver();</span><br><span class="line">    	<span class="keyword">String</span> where = <span class="string">"body like ?"</span>;</span><br><span class="line">    	<span class="keyword">String</span>[] whereArgs = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;<span class="string">"%"</span>+selectionArgs[<span class="number">0</span>]+<span class="string">"%"</span>&#125;;</span><br><span class="line">    	Cursor <span class="built_in">cursor</span> = cr.query(Uri.parse(<span class="string">"content://sms"</span>), projectionIn, where, whereArgs, <span class="keyword">null</span>);</span><br><span class="line">    	<span class="keyword">return</span> CreateCursor(<span class="built_in">cursor</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//cursor新的列</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span>[] columnNames = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;BaseColumns._ID,</span><br><span class="line">    		SearchManager.SUGGEST_COLUMN_TEXT_1,</span><br><span class="line">    		SearchManager.SUGGEST_COLUMN_TEXT_2,</span><br><span class="line">    		SearchManager.SUGGEST_COLUMN_QUERY<span class="comment">//传值</span></span><br><span class="line">    		&#125;;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 组拼新的cursor</span><br><span class="line">     * @param cursor 只要是一行一行的的数据,都可以组拼成cursor</span><br><span class="line">     * @return</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> Cursor CreateCursor(Cursor <span class="built_in">cursor</span>)&#123;</span><br><span class="line">    	MatrixCursor mc = <span class="keyword">new</span> MatrixCursor(columnNames);</span><br><span class="line">    	<span class="comment">//迭代老的cursor</span></span><br><span class="line">    	<span class="keyword">while</span>(<span class="built_in">cursor</span>.moveToNext())&#123;</span><br><span class="line">    		<span class="comment">//取值 取的一行值</span></span><br><span class="line">    		<span class="keyword">Object</span>[] columnValues = <span class="keyword">new</span> <span class="keyword">Object</span>[]&#123;</span><br><span class="line">    				<span class="built_in">cursor</span>.getInt(<span class="number">0</span>),</span><br><span class="line">    				<span class="built_in">cursor</span>.getString(<span class="number">1</span>),</span><br><span class="line">    				<span class="built_in">cursor</span>.getString(<span class="number">2</span>),</span><br><span class="line">    				<span class="built_in">cursor</span>.getString(<span class="number">2</span>)</span><br><span class="line">    		&#125;;</span><br><span class="line">    		<span class="comment">//添加给新的cursor</span></span><br><span class="line">    		mc.addRow(columnValues);</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="built_in">cursor</span>.close();</span><br><span class="line">    	<span class="keyword">return</span> mc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Search/"> #Search </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/16/">Windows下部署hexo环境</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/27/">报表框架achart的使用</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2014/10/12/';
+      var disqus_title = 'Android搜索框架';
+      var disqus_url = 'http://www.easydone.cn/2014/10/12/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

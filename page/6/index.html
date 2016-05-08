@@ -1,0 +1,1718 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/20/">
+                Nginx日志切割
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-02-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Server/">Server</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/02/20/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/20/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Nginx日志切割，其必要性也没必要说那么多了，主要记录几种Nginx日志切割的方法，其实原理都大同小异，主要还是通过每天把日志按照日期备份的方式，使用kill -USR1指令重新生成新的日志。可以完全通过Shell脚本实现，也可以通过Shell+Cron定时任务实现，还可以使用logrotate日志轮询来进行分割。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/02/20/#more">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nginx/"> #Nginx </a>
+          
+            <a href="/tags/log/"> #log </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/16/">
+                使用expect脚本实现SSH登录管理
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-02-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/02/16/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/16/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>expect是一个免费的编程工具语言，用来实现自动和交互式任务进行通信，而无需人的干预。expect的作者Don Libes在1990年开始编写expect时对expect做有如下定义：expect是一个用来实现自动交互功能的软件套件(expect is a software suite for automating interactive tools)。使用它，系统管理员可以创建脚本来对命令或程序进行输入，而这些命令和程序是期望从终端（terminal）得到输入，一般来说这些输入都需要手工输入进行的。expect则可以根据程序的提示模拟标准输入提供给程序需要的输入来实现交互程序执行。甚至可以实现简单的BBS聊天机器人。 </p>
+<p>expect是不断发展的，随着时间的流逝，其功能越来越强大，已经成为系统管理员的的一个强大助手。expect需要Tcl编程语言的支持，要在系统上运行expect必须首先安装Tcl。</p>
+</blockquote>
+<p>好了，以上内容全部来自于<a href="http://baike.baidu.com/subview/1604222/5864353.htm#viewPageContent" target="_blank" rel="external">百度百科</a>，说一千道一万，expect最常用的还是作为Linux脚本管理服务器，处理一些批量任务。当然，最最常用的还是SSH登录远程服务器执行操作命令，网上也到处都是类似的脚本，好记性总不如烂笔头，我也记录一下自己的所接触的一些应用实例及学习体悟吧。</p>
+<p>设想一下这样的场景，所有的服务器都在内网，公网访问管理服务器都要通过OpenVPN登录到跳板机，然后再由跳板机登录到相应的服务器进行操作，跳板机与服务器的连接都是内网地址。而服务器的Root用户是全部禁止远程登录的，跳板机与服务器间做了非Root用户的SSH-Key信任关系。但是实际生产环境中，一些操作必须要sudo才能完成，单台服务器，直接登录然后sudo就行了，但是很多台怎么办呢？这时候expect就派上用场了。</p>
+<p>废话这么多，还是直接上代码分析直观些。当然，这所有一切的前提都是要先安装expect：<strong>sudo yum install expect -y</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#!/usr/bin/expect</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> timeout <span class="number">3</span>        <span class="preprocessor">#设置超时时间，单位是秒</span></span><br><span class="line">spawn ssh test@<span class="number">192.168</span><span class="number">.10</span><span class="number">.110</span>    <span class="preprocessor">#发送SSH请求，spawn是expect的一个内建命令，用来传递交互指令，只有安装了expect之后，才会有这个命令</span></span><br><span class="line">expect     <span class="preprocessor">#返回信息匹配，expect也是expect的一个内建命令，判断上一个指令输入之后的得到输出结果是否包含<span class="string">""</span>双引号里的字符串</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"yes/no"</span> &#123; send <span class="string">"yes\r"</span>; exp_continue&#125;    <span class="preprocessor">#如果是第一次登录，会出现<span class="string">"yes/no"</span>的字符串，就发送（send）指令<span class="string">"yes\r"</span>，然后继续（exp_continue）</span></span><br><span class="line">    <span class="string">"192.168.10.120"</span> &#123; send <span class="string">"sudo touch /etc/file\r"</span> &#125;    <span class="preprocessor">#承接上个指令，出现登录的IP，发送创建文件指令</span></span><br><span class="line">&#125;</span><br><span class="line">expect <span class="string">"password:"</span>    <span class="preprocessor">#出现密码提示</span></span><br><span class="line">send <span class="string">"test\r"</span>        <span class="preprocessor">#发送密码</span></span><br><span class="line">expect eof            <span class="preprocessor">#在远程服务器上执行完命令，然后退出远程服务器</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>以上就是远程登录单台服务器执行指令的脚本，若是要在N台服务器上批量执行相同的命令，就用万能句式<strong>for i in $IP</strong>，把上面的192.168.10.110换成$IP就行了当然用户名密码得一样。<strong>注意：末尾\r一定不能漏！</strong></p>
+<p>如果是要在执行完指令后保持交互状态，停留在远程终端上，就把最后两行代码换成<strong>interact</strong>。</p>
+<p>很显然，expect还有很多的使用场景，也就不一一列举，大致的使用方法也就上面写的那么多。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Shell/"> #Shell </a>
+          
+            <a href="/tags/expect/"> #expect </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/12/">
+                zsh安装
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-02-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/02/12/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/12/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>实在忍不了了，每次新装完Linux系统，都要重新搭一次使用环境，其实对于我而言也很简单，只需要安装几个软件就可以了，其实说白了，也就是用zsh替换系统默认的bash，其他几个软件有的是安装zsh必须的，有的是配合zsh使用起来会更爽。但是却也真的懒得去记那些安装步骤，还是记录下来了事，以后也方便查阅。</p>
+<p>我的使用环境必须包含下面几个软件：</p>
+<ul>
+<li>Vim</li>
+<li>git</li>
+<li>zsh</li>
+<li>oh-my-zsh</li>
+<li>autojump</li>
+</ul>
+<p>只有以上五个，甚至连gcc，make都可以暂时没有，但是没有上面这五个软件，系统使用起来会让我非常难受。安装过程也很简单，我也主要用CentOS和elementary OS，前者属于RedHat系的，yum即可；后者输入Ubuntu系的，使用apt-get就可以。</p>
+<p>####安装Vim<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> vim           <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> vim       <span class="comment">#elementary OS</span></span><br></pre></td></tr></table></figure></p>
+<p>####安装git<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> git           <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> git       <span class="comment">#elementary OS</span></span><br></pre></td></tr></table></figure></p>
+<p>###安装zsh<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> zsh        <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> zsh    <span class="comment">#elementary OS</span></span><br><span class="line">chsh -s /bin/zsh            <span class="comment">#修改系统默认Shell为zsh</span></span><br></pre></td></tr></table></figure></p>
+<p>###安装配置oh-my-zsh<br><a href="https://github.com/robbyrussell/oh-my-zsh/" target="_blank" rel="external">oh-my-zh</a>是zsh的一款主题，这真是一个牛叉到让人无语的项目，废话也不多说了，可以选择多种安装方法。</p>
+<p>####via curl<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/robbyrussell/oh-my-zsh/master/tools/install.<span class="keyword">sh</span> | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>####via wget<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/robbyrussell/oh-my-zsh/master/tools/install.<span class="keyword">sh</span> -O - | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>以上都是自动安装方式，当然，也可以选择手动安装方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git:<span class="comment">//github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span></span><br><span class="line">cp ~/<span class="class">.zshrc</span> ~/<span class="class">.zshrc</span><span class="class">.orig</span></span><br><span class="line">cp ~/.oh-my-zsh/templates/zshrc<span class="class">.zsh-template</span> ~/.zshrc</span><br></pre></td></tr></table></figure></p>
+<p>安装完成之后就是配置了。</p>
+<p>根据个人喜好，修改为自己喜欢的主题即可。我使用的是example这个主题。修改文件~/.zshrc，找到<strong>ZSH_THEME</strong>，修改为：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">ZSH_THEME=<span class="value"><span class="string">"example"</span></span></span></span><br></pre></td></tr></table></figure></p>
+<p>还有一个配置就是插件的添加和修改，在文件~/.zshrc里找到<strong>plugins</strong>，把需要的插件添加上即可，就像下面这样：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=<span class="list">(<span class="keyword">git</span> autojump)</span></span><br></pre></td></tr></table></figure></p>
+<p>其中git和autojump就是两个插件。</p>
+<p>###安装autojump<br><a href="https://github.com/joelthelion/autojump/tree/master" target="_blank" rel="external">autojump</a>与zsh配合使用不仅能极大提高工作效率，还能使人的心情非常的愉悦。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//github.com/downloads/joelthelion/autojump/autojump_v21.1.2.tar.gz</span></span><br><span class="line">tar zxvf autojump_v21<span class="number">.1</span><span class="number">.2</span>.tar.gz</span><br><span class="line">cd autojump_v21<span class="number">.1</span><span class="number">.2</span></span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure></p>
+<p>然后将一下代码粘贴到~/.zshrc里<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[[ -s ~/.autojump/etc/profile.d/autojump.sh ]]</span> &amp;&amp; . ~/.autojump/etc/profile.d/autojump.sh</span><br></pre></td></tr></table></figure></p>
+<p>如此，这样，就大功告成了。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/"> #git </a>
+          
+            <a href="/tags/zsh/"> #zsh </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/11/">
+                回家过年
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-02-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/随笔/">随笔</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/02/11/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/11/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>##假期开始</p>
+<p>29号下午六点下班，那时候整个办公室只剩下我一个人了，我心里闪出了无数个情境：在火车站等车；回到家里，围着火炉和爸妈边斗地主边看春晚；初二去外婆家里拜年；第一次去见未来丈母娘……总之，思绪怎么也平静不下来。回到住的地方，也只剩下我一个人了，空荡荡的屋子，很静。</p>
+<p>由于是早上五点钟的火车，我也不敢睡觉，也没有一开始想的那么激动，还挺平静，收拾了东西，打了一会儿DotA，看了一会儿电影，熬到了凌晨1点，再也坐不住了，就准备撤了。到外面，第一次用微信打车，确实挺方便。一个小插曲，打车到火车站要50块，我的银行卡里钱不够了，结果我用微信只付了10块钱，其余的都用现金支付了，反正微信赠送的10块钱算是赚到了。然后就是一直等一直等，中间也没什么好说的，直到回到郑州。</p>
+<p>到了郑州火车站，一下火车，猛然发现郑州火车站改造了，更新更干净的地下通道让人不由地心情愉悦，一眼看上去各种高大上！除了站发现又多了个西北广场，然后就不知道该怎么走了……接着就是各种摩的粉墨登场，他们不会告诉你有公交车可以只打客运总站，只会说过年了，很多公交车都停运了，你只能坐我的摩的！而当你拒绝他们之后，各种不带脏字的埋汰和讥讽就扑面而来，让你有种想杀人的冲动。我发现跟我一样摸不着头脑的人还很多，结果不知所措的人们一个个在广场彻底放空。</p>
+<p>郑州这个城市就是有这种魔力：总能让人稍微对它有一点好感之后，立马就对它产生厌恶之极的情绪。寄希望于这个城市会突然摆脱各种低级趣味的人，恐怕会一次又一次地失望，在这里，任何一次浮于表面的进步都会更加彰显人性的罪恶。不管你喜不喜欢，这就是我的家乡，这就是郑州。</p>
+<p>好在，我也不用在这看不到希望的旮旯停留太久，赶紧回到家，我的假期也就真正开始了，我的心情也会马上好起来！</p>
+<p>##我的外公</p>
+<p>回到家第一顿饭就是爸妈包的饺子，实在是太香了！我太爱这种味道了！我恨不得每一顿都吃爸妈包的饺子！大年初一在家呆了一天，大二就去了外公外婆家拜年。</p>
+<p>外公家里条件不错，前些年外公身体好的时候，在工作单位也很吃的开，权利挺大的，也挣了不少钱，随着年岁增大，外公也退休了，退休之后的生活也听滋润。直到去年，外公生病了，一直也没治好，从那之后，所有的事情都变了。</p>
+<p>我妹妹和小表弟在外面玩耍，怎么也不愿进屋跟外公聊聊天，我平时本就不愿动，就留在屋里跟外公说说话。帮他倒开水，扶着他走路，聊聊工作，聊聊对象，看着外公吃力的样子，自己心里也挺不是滋味，可是却也无能为力。突然，外公就哭起来了，埋怨起来自己一身的病，搞的我也不知所措了，我劝他想开一点。说来说去，也就那么几句话，最后，我也没什么话说了，就不自觉地想掏出手机……来回反复好几次，都没掏出手机来。</p>
+<p>后来，我另一个小表弟也来了，越来越热闹了，我和两个表弟开始打闹玩儿了，很开心。突然，外公又开口了，矛头直指大表弟……莫名其妙地骂了他一顿，我们都愕然了……表弟也搞的很郁闷，很不开心，边上我二姨抱怨了一句，结果外公又哭起来了，说二姨不孝顺……这下，我总算明白为什么妹妹和表弟为什么不愿跟外公聊天了。唉，这事说起来也确实闹心，老人家现在这个模样，身体上的病治不好了，心上的病却更加严重。平日里总说心病心病，感觉挺稀松平常的一件事，真遇上了，还真不知道该怎么办。只希望外公能看开一些。</p>
+<p>最近外公最经常跟我和我爸妈提的一件事就是我的婚事，总说我再不结婚，他就看不到我结婚那一天了……</p>
+<p>##拜见未来丈母娘</p>
+<p>从外公家离开，我们一大家子就直接奔赴城里了，我爸妈、妹妹、二姨、三姨、各种表弟表妹，主要任务就是给我买衣服，为了第二天我能够穿的体面一些去未来丈母娘家。最恶心跟一群半老妇女一起买衣服，他们总是用自己低于人类平均水平的恶俗品味，高于物品实际价值N倍的价格，买来一堆仅仅足够沾沾自喜却丝毫不考虑当事人感受的垃圾。可是，我真是无能为力，只好由着他们了。</p>
+<p>第二天凌晨四点钟我就被母亲大人叫起来了，听我妈说她两点就起来了……为了我一个人，一家人都这么折腾，想想都心酸……四点多我们从家里出发，五点钟在登封跟大伯汇合，大概六点多一点到了许昌，然后就遇到了大雾，高速公路被封了，幸亏我的手机是诺基亚，我只能说诺基亚手机的GPS实在是太特么地给力了！HERE地图和HERE驾车真是神器！安卓手机怎么都搜不到GPS信号，NOKIA一出手，立马见效，即使在一些没有手机信号的地方，也能导航！</p>
+<p>最后经历各种波折，走了十个小时，总算到了未来丈母娘家里。本来以为以我这种闷葫芦的性格，见了面之后会不知道怎么办，气氛会比较尴尬，结果还好些，没跟丈母娘说话，丈母娘一直在忙着做菜，好招待我们。我爸、大伯和我跟女友她哥哥们坐在一起聊了起来，虽然还是会有尴尬，不知道说什么，不过好在都能理解，也都在找话题，聊着聊着就该吃饭了。我只能说女友的哥哥都太热情了，太好客了！得亏我多番推脱，否则真要把我灌醉了……</p>
+<p>呆到大概四点钟，我们看时间差不多了，就准备撤了。来这一趟，总的来说，收获还是蛮大的，我觉得我给他们留的印象应该还不错，他们也都非常的热情，不像是那种矫情小气的人。也难怪，否则我也不会有这么好的女朋友啊。</p>
+<p>##和女友在一起的日子</p>
+<p>从丈母娘离开，顺带也把她老人家的女儿给拐了回家。接下来，分别数月的我们终于可以开始缠绵悱恻的日子了。</p>
+<p>我们在家又呆了两天，由于第四天有暴雪，如果不提前走的话，就麻烦大了。而我们在家也实在是没什么事情做，所以在第三天就离开家了，跟女友一起去郑州享受二人世界了。回想起来，我们在一起两年多了，时间不算长，住在一起的时候，整日里吵吵闹闹，嘻嘻哈哈，有开心，也有烦恼，在一起经历了这么多的事，感觉这两年像是挺久一样。她也不止一次说过要和我分手，每次我都感觉也许我们真的要分开了，每次也都是我不同意，然后不知怎么地，慢慢就又和好了。</p>
+<p>动不动就提分手，还很固执，总是坚持自己的错误，因此我觉得她挺任性的；对任何事，包括她的一些事，都是一副无所谓的态度，总是不愿在一些她认为很重要的事情上花时间，还老是在公共场合对她发脾气，因此她总认为我不在乎她……这就是我们对彼此的认识。</p>
+<p>然后，然后，然后，一直到现在，我们还在一起，而且闹矛盾的次数越来越少，越来越珍惜在一起的时光。都说两个人在一起久了，爱情会变成亲情，我觉得我们的爱情不仅幻化成了亲情，而且还长大了。我经常说她太依赖我了，而我又何尝不依赖她呢？一想到她，脑海里浮现的都是她带给我的一些小感动，都是和她一起度过的艰难的日子，都是带给彼此的伤心，我想这就真的是爱吧！人生第一次，我发觉我是这么地爱一个人。虽然我非常不喜欢对她说，我爱你。</p>
+<p>今生今世，遇到你，我真幸运。</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/holidays/"> #holidays </a>
+          
+            <a href="/tags/love/"> #love </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/29/">
+                开始使用Hexo写博客
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/教程/">教程</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/29/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/29/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>之前一直在WordPress上写博客，后来无意中发现了<strong>Jekyll</strong>这个静态博客引擎，突然觉得静态博客这个概念很有意思。看到很多人都开始使用Markdown了，对比了一下各自的优缺点，就想转过去。无奈自己几乎就是个前端文盲，对前端的东西简直是一窍不通啊，连Html标签都记不全，也是在懒得去花时间折腾。于是，暂时就放下了。前几天，把自己的电脑重做了系统，装了虚拟机，又突然冒出搭建静态博客的想法了。随便搜了一下，发现有人推荐<a href="https://github.com/tommy351/hexo" target="_blank" rel="external">Hexo</a>，就试着安装了，花了两天时间总算是搞定了。<strong>Hexo</strong>的作者在这儿——<a href="http://zespia.tw/" target="_blank" rel="external">tommy351</a>，首先必须要感谢tommy！</p>
+<p>##安装环境<br>虽说部署<strong>Hexo</strong>有Windows解决方案，但是心理上总觉得搞这东西用Windows实在是不纯粹，这是我的环境：</p>
+<ul>
+<li>Hexo: 2.4.5</li>
+<li>OS: Linux 2.6.32-431.3.1.el6.x86_64 linux x64</li>
+<li>http_parser: 1.0</li>
+<li>node: 0.10.25</li>
+<li>v8: 3.14.5.9</li>
+<li>ares: 1.9.0-DEV</li>
+<li>uv: 0.10.23</li>
+<li>zlib: 1.2.3</li>
+<li>modules: 11</li>
+<li>openssl: 1.0.1e</li>
+</ul>
+<p>首先，先说<strong>Hexo</strong>的安装吧！题外话：我始终觉得安装操作系统一定要选择<strong>Software Development Workstation</strong>，以前总自作聪明选择最小化安装，结果也就不提了，俩字：巨坑！</p>
+<p>##安装过程</p>
+<p>###安装node<br>安装node之前，首先要确认自己的Python版本是否支持，如果是较低版本的Python，推荐2.7版本则要先下载编译安装Python：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum install bzip2* -y              <span class="preprocessor">#nodejs模块必须的</span></span><br><span class="line">wget http:<span class="comment">//python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz</span></span><br><span class="line">tar -zxvf Python-<span class="number">2.7</span><span class="number">.6</span>.tar.xz</span><br><span class="line">cd Python-<span class="number">2.7</span><span class="number">.6</span></span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">/usr/local/bin/python2<span class="number">.7</span> -V     <span class="preprocessor">#查看Python版本</span></span><br></pre></td></tr></table></figure></p>
+<p>编译安装完成，但是如果不修改软链接指向的话，系统默认的Python版本依然是2.4，而yum必须要有Python2.4才能工作的，所以必须保证2.4和2.7共存，这时候要做的就是修改软链接指向：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /usr/bin</span><br><span class="line">mv <span class="keyword">python</span> python2.<span class="number">4</span></span><br><span class="line"><span class="keyword">ln</span> -<span class="keyword">s</span> /usr/local/bin/python2.<span class="number">7</span> /usr/bin/<span class="keyword">python</span></span><br><span class="line"><span class="keyword">python</span> -<span class="keyword">v</span>                                #查看Python版本</span><br></pre></td></tr></table></figure></p>
+<p>然后就是修复修改了默认Python版本yum不能工作问题：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">vi</span> /usr/<span class="keyword">bin/yum</span><br><span class="line"></span>/usr/<span class="keyword">bin/python————→/usr/bin/python2.4 </span> #将—————→左边的用右边的替换</span><br></pre></td></tr></table></figure></p>
+<p>接下来就是安装Node了：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://nodejs.org/dist/v0.<span class="number">10.25</span>/<span class="keyword">node</span><span class="identifier"></span><span class="title">-v0</span>.<span class="number">10.25</span>.tar.gz</span><br><span class="line">tar zxvf <span class="keyword">node</span><span class="identifier"></span><span class="title">-v0</span>.<span class="number">10.25</span>.tar.gz</span><br><span class="line">cd <span class="keyword">node</span><span class="identifier"></span><span class="title">-v0</span>.<span class="number">10.25</span></span><br><span class="line">./configure --<span class="variable">prefix=</span>/opt/application/<span class="keyword">node</span><span class="identifier"></span><br><span class="line"></span><span class="title">make</span> &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<p>将Node添加进环境变量，我的Shell环境是Zsh，只需要在<em>export PATH</em>后面添加如下路径即可：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">:/opt/application/node/bin</span></span><br></pre></td></tr></table></figure></p>
+<p>###安装使用Hexo<br>安装<a href="http://zespia.tw/hexo/" target="_blank" rel="external">Hexo</a>非常简单，这是Hexo的<a href="http://zespia.tw/hexo/docs/" target="_blank" rel="external">说明文档</a><br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g hexo</span><br><span class="line">hexo init HexoSource        <span class="comment">#根据个人实际情况把HexoSource替换为自己想要设置的目录名</span></span><br></pre></td></tr></table></figure></p>
+<p>进入文件夹HexoSource，可以看到配置文件<strong>_config.yml</strong>，在这里主要配置需要上传到github或者其他托管网站的路径，安装一些<a href="http://zespia.tw/hexo/docs/migration.html" target="_blank" rel="external">插件</a>和主题。<strong>需要特别注意的是，_config.yml里面的配置项类似于key: value的形式，这个冒号后面的空格一定不能少！</strong></p>
+<p>####配置Hexo<br>安装主题需要制作或者下载自己所需要的主题，然后放在根目录下的<strong>theme</strong>文件夹下，然后在<strong>_config.yml</strong>里将默认的landscape修改为自己的主题名即可。</p>
+<p>安装插件，在<a href="http://zespia.tw/hexo/docs/migration.html" target="_blank" rel="external">这里</a>可以看到各种插件，然后用下面的命令下载即可：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> &lt;<span class="keyword">plugin</span>-<span class="keyword">name</span>&gt; <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure></p>
+<p>安装完成之后，要在<strong>_config.yml</strong>里启用：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins:</span><br><span class="line">-<span class="ruby"> hexo-generator-feed</span><br><span class="line"></span>-<span class="ruby"> hexo-generator-sitemap</span></span><br></pre></td></tr></table></figure></p>
+<p>配置博客托管项目地址，在<strong>_config.yml</strong>最后找到<strong>deploy</strong>，接下来的配置项就是了，下面是我的示例：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: github</span><br><span class="line">  <span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:liangzhitao/liangzhitao.github.io.git</span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
+<p>如果要绑定自定义域名的话，就需要新建一个<strong>CNAME</strong>文件放在根目录下的<strong>source</strong>文件夹下；这个目录就主要是放置博客内容的了；如果需要的话，可以建一个404页面，同样放在这个目录下，但是404页面需要顶级域名才支持，下面是腾讯的<strong>公益404</strong>页面代码。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">title</span>&gt;</span>404<span class="tag">&lt;/<span class="title">title</span>&gt;</span>                                                                                                                                       </span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">h1</span>&gt;</span>404 Page Not Found<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"http://www.qq.com/404/search_children.js"</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>####生成博客<br>这样，Hexo就部署完成了，接下来就是生成博客了，博客的生成也很简单：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d                <span class="comment">#这条命令自动把博客内容同步到github上去</span></span><br></pre></td></tr></table></figure></p>
+<p>Hexo使用的4000端口，生成之后，就可以本地查看调试了，浏览器打开<a href="http://$IP:4000查看效果。" target="_blank" rel="external">http://$IP:4000查看效果。</a></p>
+<p>###配置主题<br>我使用的主题是<a href="https://github.com/A-limon/pacman" target="_blank" rel="external">pacman</a>，这里必须要要感谢<a href="http://yangjian.me/" target="_blank" rel="external">Alimon</a>同学的辛勤付出和无私奉献！主题介绍，猛戳<a href="http://yangjian.me/workspace/introducing-pacman-theme/" target="_blank" rel="external">这里</a>，说的都比较详细了，我只大概介绍功能和<strong>Alimon</strong>没有提到的部分吧。</p>
+<p>在主题配置里需要修改的主要有以下几个方面：</p>
+<ul>
+<li>menu           #配置页面</li>
+<li>widgets        #添加插件</li>
+<li>rss                #添加rss页面</li>
+<li>duoshuo       #开启多说评论</li>
+</ul>
+<p><strong>配置在博客主页显示新浪微博</strong>：</p>
+<ol>
+<li>在<a href="http://app.weibo.com/tool/weiboshow" target="_blank" rel="external">微博秀</a>页面获取微博秀代码；</li>
+<li>在themes/pacman/layout/_widget目录下新建<strong>weibo.ejs</strong>文件，并将刚才获取的代码粘贴进去；</li>
+<li>修改themes/pacman目录下的<strong>_config.yml</strong>文件，添加以下代码：<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">widgets:</span><br><span class="line"><span class="bullet">- </span>weibo</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>添加多说评论</strong></p>
+<p>注册<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>，获取多说评论代码；将下面的代码粘贴到themes/pacman/layout/_partial/post/comment.ejs里；<br><figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span>&lt;%<span class="ruby"> <span class="keyword">if</span> (theme.duoshuo.enable &amp;&amp; page.comments)&#123; </span>%&gt;<span class="xml"></span><br><span class="line"><span class="tag">&lt;<span class="title">section</span> <span class="attribute">class</span>=<span class="value">"comment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"ds-thread"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br><span class="line"></span>&lt;%<span class="ruby"> &#125; </span>%&gt;<span class="xml"></span></span><br></pre></td></tr></table></figure></p>
+<p>修改themes/pacman/layout/_partial/post/article.ejs，找到<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="preprocessor">%</span>- partial<span class="comment">('comment')</span> <span class="preprocessor">%</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>修改为<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="preprocessor">%</span> <span class="keyword">if</span> <span class="comment">(!index)</span> &#123; <span class="preprocessor">%</span>&gt;</span><br><span class="line">  &lt;<span class="preprocessor">%</span>- partial<span class="comment">('comment')</span> <span class="preprocessor">%</span>&gt;</span><br><span class="line">&lt;<span class="preprocessor">%</span> &#125; <span class="preprocessor">%</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>修改主题配置文件themes/pacman/_config.yml：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">duoshuo:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="built_in">enable</span>  </span><br><span class="line">  short_name: ailurus           <span class="comment">#duoshuo short name</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>导航栏添加关于页面</strong><br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> page <span class="string">"about"</span></span><br></pre></td></tr></table></figure></p>
+<p>将想要添加的内容写进source/about/index.md里；</p>
+<p>将themes/pacman/_config.yml相关内容修改如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">menu</span>:</span><br><span class="line">  <span class="attribute">Home</span>: /</span><br><span class="line">  <span class="attribute">Archives</span>: /archives</span><br><span class="line">  <span class="attribute">About</span>: /about</span><br></pre></td></tr></table></figure></p>
+<p>要写新文章，只需一个命令：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">"my new post"</span></span><br></pre></td></tr></table></figure></p>
+<p>格式如下：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 开始使用Hexo写博客</span><br><span class="line">date: 2014-01-29 15:43:10</span><br><span class="line">tags:</span><br><span class="line"><span class="header">categories:</span><br><span class="line">---</span></span><br></pre></td></tr></table></figure></p>
+<p>这样，基于Hexo的博客就完成了！</p>
+<p>PS：Markdown是很漂亮，可是写起来感觉好累啊……</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/"> #Hexo </a>
+          
+            <a href="/tags/Node/"> #Node </a>
+          
+            <a href="/tags/blog/"> #blog </a>
+          
+            <a href="/tags/markdown/"> #markdown </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/28/">
+                Android中的测试
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-28
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/28/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/28/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>##测试分类##<br>是否有源码：</p>
+<ul>
+<li>白盒测试：对源代码进行测试；</li>
+<li>黑盒测试：无需测试源代码</li>
+</ul>
+<p>根据时间分类：</p>
+<ul>
+<li>单元测试：程序员自己写一个小测试模块，对自己写的源代码进行测试</li>
+<li>集成测试：程序员小团队内部进程集体测试</li>
+<li>系统测试：由专业的测试工程师完成</li>
+<li>回归测试：由专业的测试工程师完成</li>
+</ul>
+<p>根据压力程度：</p>
+<ul>
+<li>猴子测试</li>
+<li>冒烟测试</li>
+</ul>
+<p>##安卓单元测试##</p>
+<p>对业务单元进行测试，主要集中在dao层和service层</p>
+<p>举例说明：<br>假如要测试cn.easydone.hello这个包中PersonService这个业务类中的add(int x, int y)这个方法。</p>
+<p>步骤：<br>1）在AndroidManifest.xml清单文件的application节点里添加以下节点内容，引入测试的类库<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-library android:<span class="property">name</span>=<span class="string">"android.test.runner"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>2）在AndroidManifest.xml清单文件的application节点的外面添加以下节点内容，配置测试启动类，指定要测试的包<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">instrumentation</span> <span class="attribute">android:name</span>=<span class="value">"android.test.InstrumentationTestRunner"</span></span><br><span class="line">        <span class="attribute">android:targetPackage</span>=<span class="value">"cn.easydone.hello"</span>&gt;</span><span class="tag">&lt;/<span class="title">instrumentation</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>3）创建cn.easydone.hello.test这个包，创建PersonServiceTest这个类，并且要继承AndroidTestCase这个类，在这个测试类中编写测试方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> throws Exception</span>&#123;</span><br><span class="line">    PersonService ps = <span class="keyword">new</span> PersonService();</span><br><span class="line">    ps.add(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4）在outline窗口找到对应的方法以<strong>『android junit test』</strong>的方式运行该方法即可。</p>
+<p>这里面有几个需要注意的点：</p>
+<ul>
+<li>业务类一定要放在业务包里</li>
+<li>测试类一定要放在测试包里</li>
+<li>测试方法的命名规则是在测试方法前面加上test的驼峰命名法<br>这几个需要注意的点都不是强制性的规定，但是都是一些良好的编程习惯，一个优秀的程序员一定会遵循的规范。</li>
+</ul>
+<p>##断言测试##</p>
+<p>一般测试主要完成两方面的工作：</p>
+<ul>
+<li>对业务逻辑执行的是否正常进行测试</li>
+<li>对业务方法的返回值是否正确进行测试<br>上面的第二项测试内容也叫做<strong>断言测试</strong>。断言测试其实调用了安卓提供的一个方法<strong>『Assert.assertEquals(expected, actual)』</strong></li>
+</ul>
+<p>依然是上面的例子：<br>首先准备一个业务方法：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后写测试方法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> throws Exception</span>&#123;</span><br><span class="line">	PersonService ps = <span class="keyword">new</span> PersonService();</span><br><span class="line">	<span class="keyword">int</span> actual = ps.add(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">	<span class="comment">//断言测试</span></span><br><span class="line">	Assert.assertEquals(<span class="number">2</span>, actual);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就搞定了！</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/Test/"> #Test </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/23/">
+                域名那点事
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-23
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/教程/">教程</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/23/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/23/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>  这两天一直在整域名的事，走了很多弯路，折腾的很，搞的很郁闷啊！本来想在godaddy上申请购买www.easydone.com的域名，godaddy也提示域名没被占用，可以购买，但是点击加入购物车的时候，又弹出一堆单词，大意是说他们的商务代表会随后跟我联系，跟他们谈过之后才可以买，真他妈蛋疼！这种情况，以前从没遇到过，估计遇到过这种情况的人也很少吧……最后还是放弃了，退而求其次，只好在国内的买了，结果国内还没有卖www.easydone.com这个域名的，只有cn了，对比了各家之后，大概算了一下，长期购买还是万网便宜一些。于是，就在万网搞了！</p>
+<p>买了域名之后，接下来要做的就是把OpenShift的二级域名绑定为新域名了，由于之前没接触过，就网上搜资料，搜到一篇教程，大概流程就是用SSH登录OpenShift空间（SSH登录OpenShift空间也是要证书的，用Xshell生成证书，然后添加内容到OpenShift后台即可），生成证书，然后上传到OpenShift后台，然后在设置alias别名。由于众所周知的原因，国内SSH登录OpenShift空间非常卡，甚至经常登录不了，所以虽然教程看起来不复杂，但是依然很折腾，搞的很郁闷！最后绑定域名后，登录OpenShift后台，我才发现原来特么的根本不用这么折腾，在<strong>OpenShift</strong>后台本来就用添加别名的按钮，直接点击，把新域名填上就可以了……</p>
+<p>然后就是搞域名解析和CDN加速了。本来域名解析我是选了DNSPOD，CDN选了Incapsula的，搞了一半，突然想起来了百度加速乐，结果就贱兮兮地把DNSPOD抛在一边，用了百度加速乐和Incapsula的方案。这两部做完之后，访问网站，发现图片都不见了，点击任何一篇文章，又会自动跳转到原来的二级域名下，又经过一番折腾，发现<strong>WordPress后台没有把域名改过来，而且域名一定要加上http</strong>！紧接着又遇到另外一个问题，由于WordPress默认admin文件夹被强制加了SSL认证，但是免费版的Incapsula是不提供SSL证书的，于是又<strong>SSH进入OpenShift空间，修改了wp-config.php，把admin文件夹的SSL认证参数改成了false，</strong>然后访问就没问题了。</p>
+<p>由于加速乐除了域名解析外，也有CDN的功能，这部分与Incapsula功能是重复的，但是加速乐需要备案。加速乐有审核，在审核通过之前，一切都看起来很完美，我试着ping了一下，结果延时降到了不到200，心里美滋滋的。但是加速乐审核完成后，貌似这时候才开启了加速乐的CDN缓存，我猜想可能加速乐的CDN和Incapsula的CDN冲突了，反正最终的结果就是网站直接400了。</p>
+<p>这时候，我慌了……于是我又删除了在加速乐上添加的域名，换回了DNSPOD的解析，与此同时还要回到万网修改DNS，修改DNS生效时间也比较长，接下来就是等了。结果等了一天，我ping新域名www.easydone.cn，已经获取到了Incapsula提供的IP，说明解析已经生效，但是网站怎么还是400啊？起初我猜测可能是加速乐的缓存，很快我否定了这个设想，因为我已经在加速乐上删除了添加的域名，新解析生效后，与加速乐没有任何关系了！于是我试了很多方法，都搞不定，心里很烦躁！</p>
+<p>这时候，只好使出杀手锏了！我直接越过Incapsula即CDN，把<strong>原先的二级域名作为CNAME添加到DNSPOD，直接解析到新域名www.easydone.cn</strong>，然后惊喜的发现，正常访问了！很显然，问题出在了Incapsula上，加速乐的缓存和Incapsula的缓存冲突了！于是，我进入Incapsula后台删除了域名之后重新添加，再到DNSPOD重新解析Incapsula提供的新IP和CNAME。最终，完美解决！</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/"> #DNS </a>
+          
+            <a href="/tags/Incapsula/"> #Incapsula </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/15/">
+                Nagios+NRPE+PNP4Nagios配置详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/15/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/15/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>##<strong>简介</strong> </p>
+<p><a href="http://www.nagios.org/" target="_blank" rel="external">Nagios</a>是一个监视系统运行状态和网络信息的监视系统，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。Nagios可运行在Linux/Unix平台之上，同时提供一个可选的基于浏览器的WEB界面以方便系统管理人员查看网络状态，各种系统问题，以及日志等等。 </p>
+<p>##<strong>功能介绍</strong> </p>
+<p>Nagios 可以监控的服务和状态主要包括以下几个方面： </p>
+<ol>
+<li>监控网络服务（SMTP、POP3、HTTP、NNTP、PING等）； </li>
+<li>监控主机资源（处理器负荷、磁盘利用率等）； </li>
+<li>简单地插件设计使得用户可以方便地扩展自己服务的检测方法； </li>
+<li>并行服务检查机制； </li>
+<li>具备定义网络分层结构的能力，用”parent”主机定义来表达网络主机间的关系，这种关系可被用来发现和明晰主机宕机或不可达状态； </li>
+<li>当服务或主机问题产生与解决时将告警发送给联系人（通过EMail、短信、用户定义方式）； </li>
+<li>可以定义一些处理程序，使之能够在服务或者主机发生故障时起到预防作用； </li>
+<li>自动的日志滚动功能； </li>
+<li>可以支持并实现对主机的冗余监控； </li>
+<li>可选的WEB界面用于查看当前的网络状态、通知和故障历史、日志文件等。</li>
+</ol>
+<p>##<strong>服务器环境</strong> </p>
+<p><img src="http://easydone.qiniudn.com/nagios-01.png" alt=""><br>    <strong>注：nagios要选择3.x版本，实际应用过程中发现4.x版本的nagios，pnp4nagios无法进行适配兼容，这个问题在pnp4nagios的社区论坛上有人专门问过，暂时还没解决。</strong> </p>
+<p>##<strong>监控服务端安装</strong> </p>
+<p>###安装基础软件<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">yum</span> <span class="comment">install</span> <span class="comment">gd</span> <span class="comment">fontconfig</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">libjpeg</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">libpng</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">gd</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">perl</span><span class="literal">-</span><span class="comment">GD</span> <span class="comment">openssl</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">httpd</span> <span class="comment">php</span> <span class="comment">mailx</span> <span class="comment">postfix</span> <span class="comment">cpp</span> <span class="comment">gcc</span> <span class="comment">gcc</span><span class="literal">-</span><span class="comment">c</span><span class="literal">+</span><span class="literal">+</span> <span class="comment">libstdc</span><span class="literal">+</span><span class="literal">+</span> <span class="comment">glib2</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">libtool</span><span class="literal">-</span><span class="comment">ltdl</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">perl</span><span class="literal">-</span><span class="comment">devel</span> <span class="literal">-</span><span class="comment">y</span></span><br></pre></td></tr></table></figure></p>
+<p>###创建用户和用户组<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">groupadd -<span class="keyword">g</span> 6000 nagios</span><br><span class="line">useradd -<span class="keyword">u</span> 6000 -<span class="keyword">g</span> nagios -c <span class="string">"Nagios Admin"</span> -s /sbin/nologin nagios</span><br></pre></td></tr></table></figure></p>
+<p>###编译安装nagios </p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nagios-<span class="number">3.5</span>.<span class="number">1</span>.tar.gz</span><br><span class="line"><span class="keyword">cd</span> nagios</span><br><span class="line">./configure --prefix=/usr/local/nagios --with-nagios-user=nagios --with-nagios-group=nagios --with-<span class="keyword">command</span>-user=nagios --enable-event-broker --enable-nanosleep --enable-embedded-<span class="keyword">perl</span> --with-perlcache</span><br><span class="line"><span class="keyword">make</span> <span class="keyword">all</span>           </span><br><span class="line"><span class="keyword">make</span> install        </span><br><span class="line"><span class="keyword">make</span> install-init     </span><br><span class="line"><span class="keyword">make</span> install-commandmode  </span><br><span class="line"><span class="keyword">make</span> install-webconf   </span><br><span class="line"><span class="keyword">make</span> install-config</span><br></pre></td></tr></table></figure>
+<p>###配置Apache<br>①增加Apache的PHP支持<br>在/etc/httpd/conf/httpd.conf里找到下面一行<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DirectoryIndex index<span class="class">.html</span> index<span class="class">.html</span><span class="class">.var</span></span><br></pre></td></tr></table></figure></p>
+<p>将其修改为如下<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DirectoryIndex <span class="keyword">index</span>.html <span class="keyword">index</span>.php</span><br></pre></td></tr></table></figure></p>
+<p>并增加下面一行<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType <span class="type">application</span>/x-httpd-php .php</span><br></pre></td></tr></table></figure></p>
+<p>②增加Nagios的WEB访问控制<br>在编译安装完成nagios之后，可以看到在/etc/httpd/conf.d下生成了文件nagios.conf，内容如下<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SAMPLE CONFIG SNIPPETS FOR APACHE WEB SERVER</span></span><br><span class="line"><span class="comment"># Last Modified: 11-26-2005</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This file contains examples of entries that need</span></span><br><span class="line"><span class="comment"># to be incorporated into your Apache web server</span></span><br><span class="line"><span class="comment"># configuration file.  Customize the paths, etc. as</span></span><br><span class="line"><span class="comment"># needed to fit your system.</span></span><br><span class="line">ScriptAlias /nagios/cgi-bin <span class="string">"/usr/local/nagios/sbin"</span></span><br><span class="line">    Directory <span class="string">"/usr/local/nagios/sbin"</span></span><br><span class="line"><span class="comment">#  SSLRequireSSL</span></span><br><span class="line">   Options ExecCGI</span><br><span class="line">   AllowOverride None</span><br><span class="line">   <span class="keyword">Order</span> <span class="title">allow</span>,<span class="operator">deny</span></span><br><span class="line">   Allow from all</span><br><span class="line"><span class="comment">#  Order deny,allow</span></span><br><span class="line"><span class="comment">#  Deny from all</span></span><br><span class="line"><span class="comment">#  Allow from 127.0.0.1</span></span><br><span class="line">   AuthName <span class="string">"Nagios Access"</span></span><br><span class="line">   AuthType Basic</span><br><span class="line">   AuthUserFile /usr/local/nagios/etc/htpasswd.users</span><br><span class="line">   Require valid-<span class="keyword">user</span></span><br><span class="line">    <span class="title">/Directory</span></span><br><span class="line">Alias /nagios <span class="string">"/usr/local/nagios/share"</span></span><br><span class="line">    Directory <span class="string">"/usr/local/nagios/share"</span></span><br><span class="line"><span class="comment">#  SSLRequireSSL</span></span><br><span class="line">   Options None</span><br><span class="line">   AllowOverride None</span><br><span class="line">   <span class="keyword">Order</span> <span class="title">allow</span>,<span class="operator">deny</span></span><br><span class="line">   Allow from all</span><br><span class="line"><span class="comment">#  Order deny,allow</span></span><br><span class="line"><span class="comment">#  Deny from all</span></span><br><span class="line"><span class="comment">#  Allow from 127.0.0.1</span></span><br><span class="line">   AuthName <span class="string">"Nagios Access"</span></span><br><span class="line">   AuthType Basic</span><br><span class="line">   AuthUserFile /usr/local/nagios/etc/htpasswd.users</span><br><span class="line">   Require valid-<span class="keyword">user</span></span><br><span class="line">    <span class="title">/Directory</span></span><br><span class="line">````    </span><br><span class="line">文件/usr/local/nagios/etc/htpasswd.users里存储了WEB端访问nagios的用户名和密码 </span><br><span class="line"></span><br><span class="line">使用下面的命令创建用户名密码</span><br></pre></td></tr></table></figure></p>
+<p>htpasswd -c /usr/local/nagios/etc/htpasswd.users nagios<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">③设置权限</span><br></pre></td></tr></table></figure></p>
+<p>chown nagios /usr/local/nagios/etc/htpasswd.users<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">然后重启Apache，在WEB页面上即可访问到nagios，但是此时的nagios只是空有一个框架，还不能进行任何监控，nagios的监控需要通过各种插件（<span class="variable">$NAGIOS</span>/libexec下的各种脚本）来实现。 </span><br><span class="line"></span><br><span class="line"><span class="preprocessor">###安装nagios插件Nagios-Plugin</span></span><br></pre></td></tr></table></figure></p>
+<p>tar zxvf nagios-plugin-1.4.14<br>cd nagios-plugin-1.4.14<br>./configure –with-nagios-user=nagios –with-nagios-group=nagios –with-command-user=nagios –prefix=/usr/local/nagios<br>make all<br>make install<br>chmod 755 /usr/local/nagios<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nagios-plugin安装完成，此时在目录<span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec下就生成了各种监控脚本，如下图</span><br><span class="line">![](http:<span class="comment">//easydone.qiniudn.com/nagios-02.png)</span></span><br><span class="line">###防火墙配置 </span><br><span class="line">①禁用selinux</span><br></pre></td></tr></table></figure></p>
+<p>setenforce 0<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编辑<span class="regexp">/etc/</span>selinux<span class="regexp">/config，修改selinux参数如下</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="This-file-controls-the-state-of-SELinux-on-the-system"><a href="#This-file-controls-the-state-of-SELinux-on-the-system" class="headerlink" title="This file controls the state of SELinux on the system."></a>This file controls the state of SELinux on the system.</h1><h1 id="SELINUX-can-take-one-of-these-three-values"><a href="#SELINUX-can-take-one-of-these-three-values" class="headerlink" title="SELINUX= can take one of these three values:"></a>SELINUX= can take one of these three values:</h1><h1 id="enforcing-SELinux-security-policy-is-enforced"><a href="#enforcing-SELinux-security-policy-is-enforced" class="headerlink" title="enforcing - SELinux security policy is enforced."></a>enforcing - SELinux security policy is enforced.</h1><h1 id="permissive-SELinux-prints-warnings-instead-of-enforcing"><a href="#permissive-SELinux-prints-warnings-instead-of-enforcing" class="headerlink" title="permissive - SELinux prints warnings instead of enforcing."></a>permissive - SELinux prints warnings instead of enforcing.</h1><h1 id="disabled-No-SELinux-policy-is-loaded"><a href="#disabled-No-SELinux-policy-is-loaded" class="headerlink" title="disabled - No SELinux policy is loaded."></a>disabled - No SELinux policy is loaded.</h1><p>SELINUX=disabled</p>
+<h1 id="SELINUXTYPE-can-take-one-of-these-two-values"><a href="#SELINUXTYPE-can-take-one-of-these-two-values" class="headerlink" title="SELINUXTYPE= can take one of these two values:"></a>SELINUXTYPE= can take one of these two values:</h1><h1 id="targeted-Targeted-processes-are-protected"><a href="#targeted-Targeted-processes-are-protected" class="headerlink" title="targeted - Targeted processes are protected,"></a>targeted - Targeted processes are protected,</h1><h1 id="mls-Multi-Level-Security-protection"><a href="#mls-Multi-Level-Security-protection" class="headerlink" title="mls - Multi Level Security protection."></a>mls - Multi Level Security protection.</h1><p>SELINUXTYPE=targeted<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">②编辑/etc/sysconfig/iptables，增加下面一行，以放开httpd的<span class="number">80</span>端口</span><br></pre></td></tr></table></figure></p>
+<p>-A INPUT -m state –state NEW -m tcp -p tcp –dport 80 -j ACCEPT<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">##<span class="id">#nagios</span>目录和配置文件说明 </span><br><span class="line">①<span class="tag">nagios</span>目录的名称和作用 </span><br><span class="line">!<span class="attr_selector">[]</span>(<span class="attribute">http</span>:<span class="comment">//easydone.qiniudn.com/nagios-03.png)</span></span><br><span class="line">②nagios配置文件及其作用 </span><br><span class="line">![](<span class="attribute">http</span>:<span class="comment">//easydone.qiniudn.com/nagios-04.png)</span></span><br><span class="line">###nagios的WEB配置 </span><br><span class="line">**cgi.cfg** </span><br><span class="line">完成以上步骤后，重启nagios和apache，会发现已经可以在WEB页面上打开进行浏览了，但是点到具体的标签项目，会出现下面的错误提示 </span><br><span class="line">![](<span class="attribute">http</span>:<span class="comment">//easydone.qiniudn.com/nagios-05.png)</span></span><br></pre></td></tr></table></figure></p>
+<p>It appears as though you do not have permission to view information for any of the services you requested…<br>If you believe this is an error, check the HTTP server authentication requirements for accessing this CGI<br>and check the authorization options in your CGI configuration file.<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此时就需要对<span class="tag">cgi</span><span class="class">.cfg</span>进行配置，找到下面的内容</span><br></pre></td></tr></table></figure></p>
+<p>use_authentication=1<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将1修改为0即可。 </span><br><span class="line"></span><br><span class="line">此时在WEB页面上打开nagios，已经可以看到已经监控到服务端本身的一些服务，使用的监控模板就是默认的<span class="keyword">*</span><span class="keyword">*</span>templates.cfg<span class="keyword">*</span><span class="keyword">*</span>，带参监控命令配置文件是默认的<span class="keyword">*</span><span class="keyword">*</span>commands.cfg<span class="keyword">*</span><span class="keyword">*</span>，定义的监控本机服务配置文件默认的<span class="keyword">*</span><span class="keyword">*</span>localhost.cfg<span class="keyword">*</span><span class="keyword">*</span>，在<span class="keyword">*</span><span class="keyword">*</span>contacts.cfg<span class="keyword">*</span><span class="keyword">*</span>里填上邮箱，即在遇到警告、故障、故障恢复可发送报警邮件到指定邮箱。根据实际需求可以对这些文件进行修改。 </span><br><span class="line"></span><br><span class="line">以上步骤虽然实现nagios监控，但是只是对服务端本机进行监控，还无法实现对远程服务器的监控和柱状绘图展现监控结果，对于远程服务器的监控是通过NRPE来实现的，柱状绘图展现监控结果是通过PNP4Nagios实现的，其中绘图部分有RRDTool完成。 </span><br><span class="line"></span><br><span class="line"><span class="comment">###用PNP4Nagios和RRDTool实现绘图 </span></span><br><span class="line">①PNP4Nagios的安装</span><br></pre></td></tr></table></figure></p>
+<p>yum install rrdtool -y<br>tar zxvf pnp4nagios-0.6.21.tar.gz<br>cd pnp4nagios-0.6.21<br>./configure –with-nagios-user=nagios –with-nagios-group=nagios –with-rrdtool=/usr/local/rrdtool/bin/rrdtool –with-perfdata-dir=/usr/local/nagios/share/perfdata<br>make all<br>make install<br>make install-config<br>make install-init<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">②开启PNP4Nagios的日志调试功能，在文件process_perfdata.cfg中查找字符串LOG_LEVEL，将<span class="number">0</span>改为<span class="number">2</span>；</span><br><span class="line"> </span><br><span class="line">③增加Nagios绘图活动图标，点击图标即可进入柱状图显示新页面，即在Nagios监控页面增加柱状图显示入口 </span><br><span class="line"></span><br><span class="line">修改templates.cfg，增加如下内容</span><br></pre></td></tr></table></figure></p>
+<p>define host {<br>                name       host-pnp<br>                action_url              /pnp4nagios/graph?host=$HOSTNAME$<br>                register   0<br>                process_perf_data               1<br>        }</p>
+<p>define service {<br>                name       services-pnp<br>                action_url              /pnp4nagios/graph?host=$HOSTNAME$&amp;srv=$SERVICEDESC$<br>                register   0<br>                process_perf_data               1<br>        }<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> **注：其中<span class="tag">graph</span>字符串，在<span class="tag">PNP4Nagios</span>的0<span class="class">.6</span>*版本之前是<span class="tag">index</span><span class="class">.php</span>，0<span class="class">.6</span>版本之后都换成了<span class="tag">graph</span>.**</span><br><span class="line"> </span><br><span class="line">④修改<span class="tag">nagios</span><span class="class">.cfg</span>，以使<span class="tag">nagios</span>将绘图数据输出，在<span class="tag">nagios</span><span class="class">.cfg</span>中查找以下几项，修改后的信息如下</span><br></pre></td></tr></table></figure></p>
+<p>process_performance_data=1<br>host_perfdata_command=process-host-perfdata<br>service_perfdata_command=process-service-perfdata<br>enable_environment_macros=1<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">⑤修改绘图命令，在<span class="tag">commands</span><span class="class">.cfg</span>中增加以下内容</span><br></pre></td></tr></table></figure></p>
+<h1 id="‘process-host-perfdata’-command-definition"><a href="#‘process-host-perfdata’-command-definition" class="headerlink" title="‘process-host-perfdata’ command definition"></a>‘process-host-perfdata’ command definition</h1><p>define command{<br>        command_name    process-host-perfdata<br>        command_line    /usr/local/pnp4nagios/libexec/process_perfdata.pl -d HOSTPERFDATA<br>        }</p>
+<h1 id="‘process-service-perfdata’-command-definition"><a href="#‘process-service-perfdata’-command-definition" class="headerlink" title="‘process-service-perfdata’ command definition"></a>‘process-service-perfdata’ command definition</h1><p>define command{<br>        command_name    process-service-perfdata<br>        command_line    /usr/local/pnp4nagios/libexec/process_perfdata.pl<br>        }<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#9317;&#20026;&#27599;&#19968;&#20010;&#34987;&#30417;&#25511;&#30340;&#26412;&#22320;&#26381;&#21153;&#22686;&#21152;&#32472;&#22270;&#21151;&#33021;&#65292;&#21482;&#38656;&#25353;&#29031;&#22914;&#19979;&#26684;&#24335;&#22312;&#39044;&#23450;&#20041;&#30340;&#26381;&#21153;&#21517;&#21518;&#38754;&#21152;&#19978;&#23383;&#31526;&#20018;**services-pnp**&#21363;&#21487;&#65292;&#22312;&#39044;&#23450;&#20041;&#30340;&#26381;&#21153;&#22120;&#21517;&#21518;&#21152;&#19978;&#23383;&#31526;&#20018;**host-pnp&#65292;**&#27492;&#22788;&#30340;host-pnp&#21644;services-pnp&#26159;&#19982;&#19978;&#38754;&#30340;templates.cfg&#37324;&#23450;&#20041;host-pnp&#21644;services-pnp&#23545;&#24212;&#30340;&#12290;</span><br></pre></td></tr></table></figure></p>
+<p>#services-pnp<br>define service{<br>        use                             local-service,services-pnp<br>        host_name                       nagios<br>        service_description             PING<br>        check_command                   check_ping!100.0,20%!500.0,60%<br>        }</p>
+<p>#host-pnp<br>define host{<br>        use                     nagios,host-pnp<br>        host_name               nagios server<br>        alias                   nagios server<br>        address                 127.0.0.1<br>        }<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">⑦安装完PNP4Nagios后，在Apache配置文件包含目录/etc/httpd/<span class="keyword">conf</span>.<span class="keyword">d</span>里会生成PNP4Nagios的Apache支持配置文件pnp4nagios.<span class="keyword">conf</span>，具体内容如下</span><br></pre></td></tr></table></figure></p>
+<h1 id="SAMPLE-CONFIG-SNIPPETS-FOR-APACHE-WEB-SERVER"><a href="#SAMPLE-CONFIG-SNIPPETS-FOR-APACHE-WEB-SERVER" class="headerlink" title="SAMPLE CONFIG SNIPPETS FOR APACHE WEB SERVER"></a>SAMPLE CONFIG SNIPPETS FOR APACHE WEB SERVER</h1><p>Alias /pnp4nagios “/usr/local/pnp4nagios/share”<br>    Directory “/usr/local/pnp4nagios/share”<br>       AllowOverride None<br>       Order allow,deny<br>       Allow from all<br>       #</p>
+<pre><code>   # Use the same value as defined in nagios.conf
+   #
+   AuthName &quot;Nagios Access&quot;
+   AuthType Basic
+   AuthUserFile /usr/local/nagios/etc/htpasswd.users
+   Require valid-user
+    IfModule mod_rewrite.c
+    # Turn on URL rewriting
+    RewriteEngine On
+    Options symLinksIfOwnerMatch
+    # Installation directory
+    RewriteBase /pnp4nagios/
+    # Protect application and system files from being viewed
+    RewriteRule &quot;^(?:application|modules|system)/&quot; - [F]
+    # Allow any files or directories that exist to be displayed directly
+    RewriteCond &quot;%{REQUEST_FILENAME}&quot; !-f
+    RewriteCond &quot;%{REQUEST_FILENAME}&quot; !-d
+    # Rewrite all other URLs to index.php/URL
+    RewriteRule &quot;^.*$&quot; &quot;index.php/$0&quot; [PT]
+    /IfModule
+/Directory
+</code></pre><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">至此对Nagios监控服务端自身监控的配置完成，效果如下图 </span><br><span class="line">![](http:<span class="comment">//easydone.qiniudn.com/nagios-06.png) </span></span><br><span class="line"></span><br><span class="line">![](http:<span class="comment">//easydone.qiniudn.com/nagios-07.png)</span></span><br><span class="line"></span><br><span class="line">![](http:<span class="comment">//easydone.qiniudn.com/nagios-08.png)</span></span><br><span class="line">##**远程被监控端的配置** </span><br><span class="line">Nagios对远程主机的监控是通过插件Nrpe来实现的。可以这样理解，Nagios服务端使用Nrpe通过SSL的方式与客户端的Nrpe进行通信，客户端的Nrpe再发指令给Nagios-<span class="keyword">Plugin</span>运行监控命令监控客户端的服务。这就是用Nrpe进行远程监控的原理，根据此，说明在客户端也必须要安装Nagios-<span class="keyword">Plugin</span>，服务端也需要安装Nrpe. </span><br><span class="line"></span><br><span class="line">①在Nagios服务端安装Nrpe</span><br></pre></td></tr></table></figure>
+<p>tar zxvf nrpe-2.12.tar.gz<br>cd nrpe-2.12<br>./configure &amp;&amp; make all<br>make install-plugin<br>make install-daemon<br>make install-daemon-config<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务端需要定义<span class="command"><span class="keyword">command</span>发出指令到<span class="title">Nrpe</span>，在<span class="title">commands</span>.<span class="title">cfg</span>里增加如下内容</span></span><br></pre></td></tr></table></figure></p>
+<p>#’check_nrpe’ command definition<br>define command{<br>        command_name    check_nrpe<br>        command_line    $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$<br>}<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">②上面的图表里介绍了<span class="tag">host</span><span class="class">.cfg</span>和<span class="tag">services</span><span class="class">.cfg</span>这两个文件，这里就需要用到这两个文件，文件分别定义了被监控的主机和被监控主机的服务； </span><br><span class="line"></span><br><span class="line"><span class="tag">host</span><span class="class">.cfg</span>的内容格式如下，加上<span class="tag">host-pnp</span>增加柱状图表输出，其中192<span class="class">.168</span><span class="class">.10</span><span class="class">.101</span>和192<span class="class">.168</span><span class="class">.10</span><span class="class">.102</span>分别是被监控主机的地址</span><br></pre></td></tr></table></figure></p>
+<p>define host {<br>        use nagios,host-pnp<br>        host_name web1<br>        alias web1<br>        address 192.168.10.101<br>}</p>
+<p>define host {<br>        use nagios,host-pnp  host_name web2<br>        alias web2<br>        address 192.168.10.102<br>}<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">services</span><span class="class">.cfg</span>的内容格式如下，<span class="tag">services-pnp</span>也已加上</span><br></pre></td></tr></table></figure></p>
+<p>define service{<br>        use local-service,services-pnp<br>        host_name web1<br>        service_description LOAD<br>        check_command  check_nrpe!check_load<br>}</p>
+<p>define service{<br>        use local-service,services-pnp<br>        host_name web1<br>        service_description USERS<br>        check_command check_nrpe!check_users<br>}</p>
+<p>define service{<br>        use local-service,services-pnp<br>        host_name web1<br>        service_description DISK<br>        check_command check_nrpe!check_disk<br>}<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">③在被监控客户端上安装Nagios-<span class="keyword">Plugin</span>和Nrpe </span><br><span class="line"></span><br><span class="line">Nagios-<span class="keyword">Plugin</span>的安装同上，略去；Nrpe的安装只需在最后增加一条指令即可，将nrpe作为xinetd下的一个服务运行，如下</span><br></pre></td></tr></table></figure></p>
+<p>make install-xinetd<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">④配置被监控客户端的nrpe </span><br><span class="line"></span><br><span class="line">在<span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>etc<span class="regexp">/nrpe.cfg里定义了各个被监控服务的命令，如下</span></span><br></pre></td></tr></table></figure></p>
+<p>command[check_users]=/usr/local/nagios/libexec/check_users -w 5 -c 10<br>command[check_load]=/usr/local/nagios/libexec/check_load -w 15,10,5 -c 30,25,20<br>command[check_disk]=/usr/local/nagios/libexec/check_disk -w 20% -c 10%<br>command[check_zombie_procs]=/usr/local/nagios/libexec/check_procs -w 5 -c 10 -s Z<br>command[check_total_procs]=/usr/local/nagios/libexec/check_procs -w 200 -c 300<br>command[check_swap]=/usr/local/nagios/libexec/check_swap -w 30% -c 20%<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">同样，各种监控脚本都在目录<span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec里存放。</span><br><span class="line"></span><br><span class="line">⑤定义xinetd服务支持nrpe，编辑<span class="regexp">/etc/</span>xinetd.d<span class="regexp">/nrpe文件，修改后的文件内容如下</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="default-on"><a href="#default-on" class="headerlink" title="default: on"></a>default: on</h1><h1 id="description-NRPE-Nagios-Remote-Plugin-Executor"><a href="#description-NRPE-Nagios-Remote-Plugin-Executor" class="headerlink" title="description: NRPE (Nagios Remote Plugin Executor)"></a>description: NRPE (Nagios Remote Plugin Executor)</h1><p>service nrpe<br>{<br>        flags           = REUSE<br>        socket_type     = stream<br>        port            = 5666<br>        wait            = no<br>        user            = nagios<br>        group           = nagios<br>        server          = /usr/local/nagios/bin/nrpe<br>        server_args     = -c /usr/local/nagios/etc/nrpe.cfg –inetd<br>        log_on_failure  += USERID<br>        disable         = no<br>        only_from       = 127.0.0.1 192.168.10.100<br>}<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">其中<span class="number">192.168</span><span class="number">.10</span><span class="number">.100</span>是Nagios服务端的IP </span><br><span class="line"></span><br><span class="line">定义nrpe服务端口，在/etc/services中增加一行，如下</span><br></pre></td></tr></table></figure></p>
+<p>nrpe            5666/tcp                # nrpe<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">⑥测试nrpe是否安装成功，如成功，会显示nrpe版本，如下</span><br></pre></td></tr></table></figure></p>
+<p>[root@web1 ~]# /usr/local/nagios/libexec/check_nrpe -H localhost<br>NRPE v2.12<br>```<br>⑦重启nrpe，service xinetd restart </p>
+<p>至此，Nagios+Nrpe+PNP4Nagios配置就全部完成了，有一点需要注意的是<strong>所有的Nagios和PNP4Nagios的目录属主都必须是nagios用户和nagios用户组。</strong></p>
+<p>⑧被监控主机的页面效果如下 </p>
+<p><img src="http://easydone.qiniudn.com/nagios-09.png" alt=""> </p>
+<p><img src="http://easydone.qiniudn.com/nagios-12.png" alt=""></p>
+<p><img src="http://easydone.qiniudn.com/nagios-10.png" alt=""> </p>
+<p><img src="http://easydone.qiniudn.com/nagios-11.png" alt=""> </p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/"> #Linux </a>
+          
+            <a href="/tags/Monitor/"> #Monitor </a>
+          
+            <a href="/tags/Nagios/"> #Nagios </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/14/">
+                Error for compiling Nagios-Plugins On CentOS
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/14/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/14/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>###<strong>Environment:</strong></p>
+<ul>
+<li>System:CentOS release 6.3 (Final)</li>
+<li>SoftWare:Nagios-Plugins-1.4.14</li>
+</ul>
+<p>###<strong>Problem Description:</strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BEGIN failed--compilation aborted at Makefile.<span class="keyword">PL</span> <span class="keyword">line</span> 11.</span><br><span class="line">Can't <span class="keyword">run</span> perl Makefile.<span class="keyword">PL</span> at ../tools/build_perl_modules <span class="keyword">line</span> 68.</span><br><span class="line">make[2]: *** [all-<span class="keyword">local</span>] <span class="keyword">Error</span> 2</span><br><span class="line">make[2]: Leaving directory `/usr/<span class="keyword">local</span>/package/nagios-plugins-1.4.14/perlmods'</span><br><span class="line">make[1]: *** [all-recursive] <span class="keyword">Error</span> 1</span><br><span class="line">make[1]: Leaving directory `/usr/<span class="keyword">local</span>/package/nagios-plugins-1.4.14'</span><br><span class="line">make: *** [all] <span class="keyword">Error</span> 2</span><br></pre></td></tr></table></figure>
+<p>###<strong>Solution:</strong></p>
+<p>The package<a href="http://search.cpan.org/~mschwern/ExtUtils-MakeMaker-6.64/lib/ExtUtils/MakeMaker.pm" target="_blank" rel="external"><strong>ExtUtils-MakeMaker</strong></a>has to be installed first. Additionally, perl-devel is also needed to compile it. Then, reconfigure nagios-plugins.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="operator"><span class="keyword">install</span> perl</span><br><span class="line">yum <span class="keyword">install</span> perl-devel</span><br><span class="line">wget <span class="keyword">http</span>://<span class="keyword">search</span>.cpan.org/CPAN/<span class="keyword">authors</span>/<span class="keyword">id</span>/<span class="keyword">M</span>/MS/MSCHWERN/ExtUtils-MakeMaker-<span class="number">6.64</span>.tar.gz</span><br><span class="line">tar -zxvf ExtUtils-MakeMaker-<span class="number">6.64</span>.tar.gz</span><br><span class="line">cd ExtUtils-MakeMaker-<span class="number">6.64</span></span><br><span class="line">perl Makefile.PL</span><br><span class="line">make </span><br><span class="line">make <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure>
+<p>Then,we can continue the nagios-plugin installling.</p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nagios/"> #Nagios </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2014/01/13/">
+                CentOS查看系统硬件信息
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2014-01-13
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Linux/">Linux</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/01/13/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/13/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>CentOS查看系统硬件信息</p>
+<ul>
+<li>uname -a # 查看内核/操作系统/CPU信息的linux系统信息命令</li>
+<li>head -n 1 /etc/issue # 查看操作系统版本，是数字1不是字母L</li>
+<li>cat /proc/cpuinfo # 查看CPU信息的linux系统信息命令</li>
+<li>hostname # 查看计算机名的linux系统信息命令</li>
+<li>lspci -tv # 列出所有PCI设备</li>
+<li>lsusb -tv # 列出所有USB设备的linux系统信息命令</li>
+<li>lsmod # 列出加载的内核模块</li>
+<li>env # 查看环境变量资源</li>
+<li>free -m # 查看内存使用量和交换区使用量</li>
+<li>df -h # 查看各分区使用情况</li>
+<li>du -sh # 查看指定目录的大小</li>
+<li>grep MemTotal /proc/meminfo # 查看内存总量</li>
+<li>grep MemFree /proc/meminfo # 查看空闲内存量</li>
+<li>uptime # 查看系统运行时间、用户数、负载</li>
+<li>cat /proc/loadavg # 查看系统负载磁盘和分区</li>
+<li>mount | column -t # 查看挂接的分区状态</li>
+<li>fdisk -l # 查看所有分区</li>
+<li>swapon -s # 查看所有交换分区</li>
+<li>hdparm -i /dev/hda # 查看磁盘参数(仅适用于IDE设备)</li>
+<li>dmesg | grep IDE # 查看启动时IDE设备检测状况网络</li>
+<li>ifconfig # 查看所有网络接口的属性</li>
+<li>iptables -L # 查看防火墙设置</li>
+<li>route -n # 查看路由表</li>
+<li>netstat -lntp # 查看所有监听端口</li>
+<li>netstat -antp # 查看所有已经建立的连接</li>
+<li>netstat -s # 查看网络统计信息进程</li>
+<li>ps -ef # 查看所有进程</li>
+<li>top # 实时显示进程状态用户</li>
+<li>w # 查看活动用户</li>
+<li>id # 查看指定用户信息</li>
+<li>last # 查看用户登录日志</li>
+<li>cut -d: -f1 /etc/passwd # 查看系统所有用户</li>
+<li>cut -d: -f1 /etc/group # 查看系统所有组</li>
+<li>crontab -l # 查看当前用户的计划任务服务</li>
+<li>chkconfig –list # 列出所有系统服务</li>
+<li>chkconfig –list | grep on # 列出所有启动的系统服务程序</li>
+<li>rpm -qa # 查看所有安装的软件包</li>
+<li>cat /proc/cpuinfo # 查看CPU相关参数的linux系统命令</li>
+<li>cat /proc/partitions # 查看linux硬盘和分区信息的系统信息命令</li>
+<li>cat /proc/meminfo # 查看linux系统内存信息的linux系统命令</li>
+<li>cat /proc/version # 查看版本，类似uname -r</li>
+<li>cat /proc/ioports # 查看设备io端口</li>
+<li>cat /proc/interrupts # 查看中断</li>
+<li>cat /proc/pci # 查看pci设备的信息</li>
+<li>cat /proc/swaps # 查看所有swap分区的信息<br>用 yum provides “*/lspci”命令来查询上述命令，然后安装相应的软件包。</li>
+</ul>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/"> #CentOS </a>
+          
+            <a href="/tags/kernel/"> #kernel </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = 'page/6/index.html';
+      var disqus_title = '';
+      var disqus_url = '';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>

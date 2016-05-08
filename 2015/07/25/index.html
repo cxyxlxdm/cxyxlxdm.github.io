@@ -1,0 +1,1053 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="Android Developer" />
+
+
+
+  <meta name="keywords" content="QQ,Wechat," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> 微信和QQ授权登录以及微信支付的集成 // Just Be Unreserved! </title>
+</head>
+
+<body>
+<!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Just Be Unreserved!</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              微信和QQ授权登录以及微信支付的集成
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-07-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/Android/">Android</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/25/#comments" >
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/25/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>微信和 QQ 的文档烂到一种境界，这几乎已经是所有人的共识了，如果希望像友盟那样，按照文档一步步配置集成 SDK 就能实现所想要的功能，基本算是痴心妄想。微信的文档上次更新是在 2012 年，QQ 的文档更新实在 2013 年。其实真正代码实现部分很简单，只是文档实在太烂…这也是我写这篇文章的原因。<a id="more"></a>愿天下没有难读的文档。阿门…</p>
+<p>###微信登录</p>
+<p>我觉着有必要吐槽一下网易，微信的文档已经烂的突破天际了，易信居然还要抄过去，还抄的几乎一模一样，真是醉了。</p>
+<p><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419319167&amp;token=c970c9f367d1b83c3ddd3e3ebe1dc440a619e64c&amp;lang=zh_CN" target="_blank" rel="external">微信安卓资源下载</a>，在这里可以下载到官方提供的有关微信所有的资源了。在集成 SDK 之前，一定要先申请开通登录权限和支付权限，而且提交到后台的包名和签名 md5 值一定要应用的包名和签名 md5 值一样，同时，还得注意，应用本身的签名 md5 值是带有冒号的，而微信后台索要填写的签名 md5 值是没有冒号的，如果你多加了冒号，多出了位数，那么抱歉，是不会有任何错误提示的。</p>
+<p>非开发部分的工作完了之后，微信官方会提供一个 appid 和 appsecret ，就可以开始正式地集成 SDK 了。</p>
+<ol>
+<li>要导入 libammsdk.jar 这个包；</li>
+<li><p>在 Application 里注册；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> IWXAPI wechatApi;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Tencent mTencent;</span><br><span class="line">wechatApi = WXAPIFactory.createWXAPI(<span class="keyword">this</span>, Constants.WECHAT_APP_ID, <span class="keyword">true</span>);</span><br><span class="line">wechatApi.registerApp(Constants.WECHAT_APP_ID);<span class="comment">//填写上自己的 appid</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组织获取微信 openid 的请求参数并发起请求，只要发起这个请求成功，就满足拉起登录界面的充分条件了；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String WX_REQ_SCOPE = <span class="string">"snsapi_userinfo"</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String WX_REQ_STATE = <span class="string">"kuaimai_wx_login"</span>;</span><br><span class="line"><span class="keyword">final</span> SendAuth.Req req = <span class="keyword">new</span> SendAuth.Req();</span><br><span class="line">req.scope = WX_REQ_SCOPE;</span><br><span class="line">req.state = WX_REQ_STATE;</span><br><span class="line">BaseApplication.wechatApi.sendReq(req);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目的包名同一级目录下创建一个包，包名必须是 wxapi ，然后再在这个包里创建一个名为 WXEntryActivity 的 Activity ，这是作为拉起微信登录的一个登录界面而存在的。后面要说的微信支付也必须遵循这样的步骤，唯一不同的是 Activity 的名字换了。包结构如下:<br><img src="http://7x2wvb.com1.z0.glb.clouddn.com/wx_login_package.png" alt=""></p>
+</li>
+<li><p>在 AndroidManifest 里注册这个 Activity，同时添加必要的权限；</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 微信登录 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">"com.lykuaimai.kuaimai.wxapi.WXEntryActivity"</span></span><br><span class="line">    <span class="attribute">android:exported</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/wechat_login_title"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@android:style/Theme.NoDisplay"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 WXEntryActivity 这个类里处理登录的操作，首先要在 onCreate() 和 onNewIntent() 方法里做如下的操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    handleIntent(getIntent());</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onNewIntent</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onNewIntent(intent);</span><br><span class="line">    setIntent(intent);</span><br><span class="line">    handleIntent(intent);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleIntent</span><span class="params">(Intent paramIntent)</span> </span>&#123;</span><br><span class="line">    BaseApplication.wechatApi.handleIntent(paramIntent, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来就是处理微信的返回了，如果在 onResp() 方法里 baseResp.errCode 的值为 BaseResp.ErrCode.ERR_OK 了，就说明微信登录已经成功了，这时候会返回一些参数，如 openid, access_token 等，我们可以根据返回的这些东西继续其他的操作，如果需要长期的授权，就需要进一步调用其他的接口，去获取 refresh_token 。要注意的是，这里获取 openid/access_token ，refresh_token 的请求都是普通的 http 请求，使用 Volley 或者 Okhttp 都可以。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResp</span><span class="params">(BaseResp baseResp)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (baseResp.errCode) &#123;</span><br><span class="line">        <span class="keyword">case</span> BaseResp.ErrCode.ERR_OK:</span><br><span class="line">            String code = ((SendAuth.Resp) baseResp).code; <span class="comment">//微信确认登录返回的code</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> BaseResp.ErrCode.ERR_AUTH_DENIED:</span><br><span class="line">            ToastUtil.showShort(getString(R.string.wechat_error_auth_denied));</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> BaseResp.ErrCode.ERR_USER_CANCEL:</span><br><span class="line">            ToastUtil.showShort(getString(R.string.wechat_error_auth_cancel));</span><br><span class="line">            finish();<span class="comment">//此处有巨坑啊，我加一个 finish 算是一个投机取巧的办法，因为项目里只是用微信登录获取 openid 这一步，而微信 SDK 提供的没有提供取消请求的方法，导致第一步请求结束，仍然占用某些资源不释放，等待下一步的请求（这两句是我脑补的），如果用户点了返回，就会 ANR ，只好采取这种简单的粗暴的方式帮它释放资源了。</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            ToastUtil.showShort(getString(R.string.wechat_errcode_unknown));</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这就是微信登录的整个流程，它是如此的简单以至于我已经不敢相信文档里居然是描述的这些东西。</p>
+<p>###QQ 登录</p>
+<p>QQ登录更加简单一些，但是文档更加脑残，很难想象文档说明居然不在 QQ 开放平台的链接里，而是在 QQ 互联里，而要下载 SDK ，又必须跳转到 QQ 开放平台。更加让人无法忍受的是，这么大一个公司的网站，那网页打开的速度简直比蜗牛还慢。由于 QQ SDK 的网页打开实在太慢，就不贴地址了。不扯其他了，还是直接说步骤吧。</p>
+<ol>
+<li>导入 mta-sdk 和 open_sdk 这两个 jar 包;</li>
+<li><p>注册 QQ 的 SDK；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tencent mTencent = Tencent.createInstance(Constants.QQ_APP_ID, LoginActivity.<span class="keyword">this</span>.getApplicationContext());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 AndroidManifest 里注册登录用到的 Activity，需要注意的是 AssistActivity 一定要加上，坑爹的文档又给漏掉了；</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- QQ 登录 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">"com.tencent.tauth.AuthActivity"</span></span><br><span class="line">    <span class="attribute">android:launchMode</span>=<span class="value">"singleTask"</span></span><br><span class="line">    <span class="attribute">android:noHistory</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.VIEW"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.BROWSABLE"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">data</span> <span class="attribute">android:scheme</span>=<span class="value">"你申请到的有授权登录权限的 QQ 号码"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">"com.tencent.connect.common.AssistActivity"</span></span><br><span class="line">    <span class="attribute">android:configChanges</span>=<span class="value">"orientation|keyboardHidden"</span></span><br><span class="line">    <span class="attribute">android:screenOrientation</span>=<span class="value">"portrait"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@android:style/Theme.Translucent.NoTitleBar"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发起登录请求；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String QQ_REQ_STATE = <span class="string">"all"</span>;</span><br><span class="line"><span class="keyword">if</span> (!mTencent.isSessionValid()) &#123;</span><br><span class="line">    mTencent.login(LoginActivity.<span class="keyword">this</span>, QQ_REQ_STATE, createIUiListener());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 createIUiListener() 方法里处理登录回调，返回值一定要是 IUiListener ；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> IUiListener <span class="title">createIUiListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> IUiListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//在这里处理返回的数据，返回的字段主要ret, pay_token, pf, openid, expires_in, pfkey, msg, access_token;接下来的请求同样只是普通的 http 请求，可以使用 Volley 或者 Okhttp 来进行进一步的操作。</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(UiError uiError)</span> </span>&#123;</span><br><span class="line">            LogerUtil.i(TAG, uiError.errorMessage);</span><br><span class="line">            LogerUtil.i(TAG, uiError.errorDetail);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCancel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            LogerUtil.i(TAG, CANCEL);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>到这里，QQ 登录也写完了。</p>
+<p>###微信支付</p>
+<p>微信支付所用的 jar 包跟微信登录是一样的，只不过支付的文档官网上连一个字都没有。这里需要跟服务端配合来做，先有服务端来获取预支付订单的 pre_payid 和签名 nonceStr ，按照官方 Demo 的意思，貌似客户端也可以调用接口获取，可实际上我调用了也没任何卵用，最后仍然是服务端掉了微信的服务器获取的 pre_payid 和 nonceStr ，然后再加上其他几个参数在客户端去调微信服务器即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> IWXAPI msgApi = WXAPIFactory.createWXAPI(<span class="keyword">this</span>, <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">private</span> PayReq req;</span><br><span class="line"><span class="keyword">private</span> StringBuilder stringBuilder;</span><br><span class="line">&#123;</span><br><span class="line">    stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendPayReq</span><span class="params">(String prePayId, String nonceStr)</span> </span>&#123;</span><br><span class="line">    genPayReq(prePayId, nonceStr);</span><br><span class="line">    msgApi.registerApp(Constants.WECHAT_APP_ID);</span><br><span class="line">    msgApi.sendReq(req);</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@SuppressWarnings</span>(<span class="string">"deprecation"</span>)</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">genPayReq</span><span class="params">(String prePayId, String nonceStr)</span> </span>&#123;</span><br><span class="line">    req.appId = Constants.WECHAT_APP_ID;</span><br><span class="line">    req.partnerId = Constants.MCH_ID;</span><br><span class="line">    req.prepayId = prePayId;</span><br><span class="line">    req.packageValue = <span class="string">"Sign=WXPay"</span>;</span><br><span class="line">    req.nonceStr = nonceStr;</span><br><span class="line">    req.timeStamp = String.valueOf(genTimeStamp());</span><br><span class="line">    List&lt;NameValuePair&gt; signParams = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"appid"</span>, req.appId));</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"noncestr"</span>, req.nonceStr));</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"package"</span>, req.packageValue));</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"partnerid"</span>, req.partnerId));</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"prepayid"</span>, req.prepayId));</span><br><span class="line">    signParams.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"timestamp"</span>, req.timeStamp));</span><br><span class="line">    req.sign = genAppSign(signParams);</span><br><span class="line">    stringBuilder.append(<span class="string">"sign\n"</span>).append(req.sign).append(<span class="string">"\n\n"</span>);</span><br><span class="line">    Log.e(<span class="string">"orion"</span>, signParams.toString());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">genTimeStamp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> System.currentTimeMillis() / <span class="number">1000</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="annotation">@SuppressWarnings</span>(&#123;<span class="string">"deprecation"</span>, <span class="string">"ConstantConditions"</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">genAppSign</span><span class="params">(List&lt;NameValuePair&gt; params)</span> </span>&#123;</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; params.size(); i++) &#123;</span><br><span class="line">        sb.append(params.get(i).getName());</span><br><span class="line">        sb.append(<span class="string">'='</span>);</span><br><span class="line">        sb.append(params.get(i).getValue());</span><br><span class="line">        sb.append(<span class="string">'&amp;'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sb.append(<span class="string">"key="</span>);</span><br><span class="line">    sb.append(Constants.WECHAT_PAY_APP_KEY);<span class="comment">//这里的 appkey 是申请微信支付权限时让填写的 32 位字符</span></span><br><span class="line">    <span class="keyword">this</span>.stringBuilder.append(<span class="string">"sign str\n"</span>).append(sb.toString()).append(<span class="string">"\n\n"</span>);</span><br><span class="line">    String appSign = MD5.getMessageDigest(sb.toString().getBytes()).toUpperCase();</span><br><span class="line">    Log.e(<span class="string">"orion"</span>, appSign);</span><br><span class="line">    <span class="keyword">return</span> appSign;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>官方给的 Demo 里请求用的是 HttpClient ，在 Android5.0 已被弃用，如果有兴趣的话，可以换成 HttpUrlConnection ，或者用 Volley ，Okhttp 之类的三方框架。</p>
+<p>然后需要创建一个 AppRegister ，要放在 wxapi 这个包下，官方 Demo 里给的，看代码意思是注册微信 API 用的，不过我怀疑没有什么用处；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppRegister</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">final</span> IWXAPI api = WXAPIFactory.createWXAPI(context, <span class="keyword">null</span>);</span><br><span class="line">		api.registerApp(Constants.WECHAT_APP_ID);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后就是配置 AndroidManifest 了；<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 微信支付 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".ui.activity.WxPayActivity"</span></span><br><span class="line">    <span class="attribute">android:exported</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:launchMode</span>=<span class="value">"singleTop"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.VIEW"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">data</span> <span class="attribute">android:scheme</span>=<span class="value">"微信的 appid"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".wxapi.WXPayEntryActivity"</span></span><br><span class="line">    <span class="attribute">android:exported</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">android:launchMode</span>=<span class="value">"singleTop"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">receiver</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".wxapi.AppRegister"</span></span><br><span class="line">    <span class="attribute">tools:ignore</span>=<span class="value">"ExportedReceiver"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>最后就是处理回调了，要在 wxapi 这个包里创建一个名为 WXPayEntryActivity 这个 Activity ，具体的处理也比较简单；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> IWXAPI api;</span><br><span class="line">api = WXAPIFactory.createWXAPI(<span class="keyword">this</span>, Constants.WECHAT_APP_ID);</span><br><span class="line">api.handleIntent(getIntent(), <span class="keyword">this</span>);<span class="comment">//onCreate() 方法里调用</span></span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onNewIntent</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.onNewIntent(intent);</span><br><span class="line">	setIntent(intent);</span><br><span class="line">    api.handleIntent(intent, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResp</span><span class="params">(BaseResp resp)</span> </span>&#123;</span><br><span class="line">	LogerUtil.i(TAG, resp.errCode);</span><br><span class="line">	<span class="keyword">if</span> (resp.errCode == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="comment">//TODO 成功</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//TODO 失败</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此，关于微信授权登录，QQ 授权登录和微信支付所有相关的内容就全部写完了。可以看到内容非常简单，只希望以后相关的文档能够更加容易读懂一点。愿天下没有难读的文档。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QQ/"> #QQ </a>
+          
+            <a href="/tags/Wechat/"> #Wechat </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/26/">我的gradle配置和proguard-rules</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/12/">给RecyclerView添加多选</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="comments" id="comments">
+        
+          <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+        <!-- 多说热评文章-->
+        <p>热评文章</p>
+        <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://easydone.qiniudn.com/default_avatar.jpg" alt="Ailurus" />
+          <p class="site-author-name">Ailurus</p>
+        </div>
+        <p class="site-description motion-element">Android Developer</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">127</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank">G+</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/liangzhitao" target="_blank">Github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://twitter.com/liangzhitao" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="https://facebook.com/liangzhitao" target="_blank">Facebook</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/208087666" target="_blank">Weibo</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+	<div class="links-of-author motion-element">
+    	
+        	<p class="site-author-name">Links</p>
+        	
+            	<span class="links-of-author-item">
+            	<a href="http://nicodelee.sinaapp.com" target="_blank">日志</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://iamwent.github.io" target="_blank">大城小黄</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://xiequan.info" target="_blank">谢权</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://veaer.com" target="_blank">veaer</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://kymjs.com" target="_blank">kymjs@张涛</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://wuxiaolong.me" target="_blank">吴小龙同學</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://yifeiyuan.me" target="_blank">程序亦非猿</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://lovinghuan.com" target="_blank">大B哥</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://abner-nimengbo.cn" target="_blank">阿布</a>
+            	</span>
+        
+            	<span class="links-of-author-item">
+            	<a href="http://itangqi.me" target="_blank">汤奇</a>
+            	</span>
+        
+    
+	</div>
+        
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2012 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+
+  function displaySidebar () {
+    setTimeout(function () {
+      $('.sidebar-toggle').trigger('click');
+    }, 800);
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebarToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.logo-line-before i'), p: { translateX: "100%" }, o: { duration: 500, sequenceQueue: false } },
+        { e: $('.logo-line-after i'), p: { translateX: "-100%" }, o: { duration: 500, sequenceQueue: false } },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebarToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+  
+<script type="text/javascript" id="bootstrap.scrollspy.custom">
+  /* ========================================================================
+  * Bootstrap: scrollspy.js v3.3.2
+  * http://getbootstrap.com/javascript/#scrollspy
+  * ========================================================================
+  * Copyright 2011-2015 Twitter, Inc.
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  * ======================================================================== */
+
+  /**
+   * Custom by iissnan
+   *
+   * - Add a `clear.bs.scrollspy` event.
+   * - Esacpe targets selector.
+   */
+
+
+  +function ($) {
+    'use strict';
+
+    // SCROLLSPY CLASS DEFINITION
+    // ==========================
+
+    function ScrollSpy(element, options) {
+      this.$body          = $(document.body)
+      this.$scrollElement = $(element).is(document.body) ? $(window) : $(element)
+      this.options        = $.extend({}, ScrollSpy.DEFAULTS, options)
+      this.selector       = (this.options.target || '') + ' .nav li > a'
+      this.offsets        = []
+      this.targets        = []
+      this.activeTarget   = null
+      this.scrollHeight   = 0
+
+      this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
+      this.refresh()
+      this.process()
+    }
+
+    ScrollSpy.VERSION  = '3.3.2'
+
+    ScrollSpy.DEFAULTS = {
+      offset: 10
+    }
+
+    ScrollSpy.prototype.getScrollHeight = function () {
+      return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight)
+    }
+
+    ScrollSpy.prototype.refresh = function () {
+      var that          = this
+      var offsetMethod  = 'offset'
+      var offsetBase    = 0
+
+      this.offsets      = []
+      this.targets      = []
+      this.scrollHeight = this.getScrollHeight()
+
+      if (!$.isWindow(this.$scrollElement[0])) {
+        offsetMethod = 'position'
+        offsetBase   = this.$scrollElement.scrollTop()
+      }
+
+      this.$body
+        .find(this.selector)
+        .map(function () {
+          var $el   = $(this)
+          var href  = $el.data('target') || $el.attr('href')
+          var $href = /^#./.test(href) && $(escapeSelector(href)) // Need to escape selector.
+
+          return ($href
+            && $href.length
+            && $href.is(':visible')
+            && [[$href[offsetMethod]().top + offsetBase, href]]) || null
+        })
+        .sort(function (a, b) { return a[0] - b[0] })
+        .each(function () {
+          that.offsets.push(this[0])
+          that.targets.push(this[1])
+        })
+
+
+    }
+
+    ScrollSpy.prototype.process = function () {
+      var scrollTop    = this.$scrollElement.scrollTop() + this.options.offset
+      var scrollHeight = this.getScrollHeight()
+      var maxScroll    = this.options.offset + scrollHeight - this.$scrollElement.height()
+      var offsets      = this.offsets
+      var targets      = this.targets
+      var activeTarget = this.activeTarget
+      var i
+
+      if (this.scrollHeight != scrollHeight) {
+        this.refresh()
+      }
+
+      if (scrollTop >= maxScroll) {
+        return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      }
+
+      if (activeTarget && scrollTop < offsets[0]) {
+        $(this.selector).trigger('clear.bs.scrollspy')  // Add a custom event.
+        this.activeTarget = null
+        return this.clear()
+      }
+
+      for (i = offsets.length; i--;) {
+        activeTarget != targets[i]
+          && scrollTop >= offsets[i]
+          && (!offsets[i + 1] || scrollTop <= offsets[i + 1])
+          && this.activate(targets[i])
+      }
+    }
+
+    ScrollSpy.prototype.activate = function (target) {
+      this.activeTarget = target
+
+      this.clear()
+
+      var selector = this.selector +
+        '[data-target="' + target + '"],' +
+        this.selector + '[href="' + target + '"]'
+
+      var active = $(selector)
+        .parents('li')
+        .addClass('active')
+
+      if (active.parent('.dropdown-menu').length) {
+        active = active
+          .closest('li.dropdown')
+          .addClass('active')
+      }
+
+      active.trigger('activate.bs.scrollspy')
+    }
+
+    ScrollSpy.prototype.clear = function () {
+      $(this.selector)
+        .parentsUntil(this.options.target, '.active')
+        .removeClass('active')
+    }
+
+
+    // SCROLLSPY PLUGIN DEFINITION
+    // ===========================
+
+    function Plugin(option) {
+      return this.each(function () {
+        var $this   = $(this)
+        var data    = $this.data('bs.scrollspy')
+        var options = typeof option == 'object' && option
+
+        if (!data) $this.data('bs.scrollspy', (data = new ScrollSpy(this, options)))
+        if (typeof option == 'string') data[option]()
+      })
+    }
+
+    var old = $.fn.scrollspy
+
+    $.fn.scrollspy             = Plugin
+    $.fn.scrollspy.Constructor = ScrollSpy
+
+
+    // SCROLLSPY NO CONFLICT
+    // =====================
+
+    $.fn.scrollspy.noConflict = function () {
+      $.fn.scrollspy = old
+      return this
+    }
+
+
+    // SCROLLSPY DATA-API
+    // ==================
+
+    $(window).on('load.bs.scrollspy.data-api', function () {
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this)
+        Plugin.call($spy, $spy.data())
+      })
+    })
+
+  }(jQuery);
+</script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      if (isDesktop() && HEXO_SIDEBAR_CONFIGURATION === 'post') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    var HEXO_SIDEBAR_CONFIGURATION = 'post';
+    $(document).ready(function () {
+      if (HEXO_SIDEBAR_CONFIGURATION === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+  
+
+  
+
+    
+      
+    
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2015/07/25/';
+      var disqus_title = '微信和QQ授权登录以及微信支付的集成';
+      var disqus_url = 'http://www.easydone.cn/2015/07/25/';
+
+      (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+  
+
+
+
+
+  
+  
+</body>
+</html>
