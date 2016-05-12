@@ -255,6 +255,300 @@
             
               
                 
+                <a class="post-title-link" href="/2012/06/20/" itemprop="url">
+                  Java面向对象
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-06-20T16:53:33+08:00" content="Jun 20 2012">
+              Jun 20 2012
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/06/20/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/06/20/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##什么是面向对象？</p>
+<p>面向对象是相对面向过程而言，与面向过程一样，都是一种思想。</p>
+<p>面向过程以函数为基础，关注实现过程，强调功能行为；</p>
+<p>面向对象以对象为基础，关注实现结果，将功能封装近对象，强调具备了功能的对象。</p>
+<p>面向对象是基于面向过程的。</p>
+<p>##类和对象的关系</p>
+<p>java中描述事物通过类的形式体现，是一个抽象的概念。</p>
+<p>对象即是该类事物实实在在存在的个体。</p>
+<p>类是一组相同属性行为的对象的抽象。</p>
+<p>举例：</p>
+<p>类   ：手机</p>
+<p>对象：Nokia，Moto，HTC</p>
+<p>##类有哪些内容组成?</p>
+<p>描述任意一类事物就是在描述他的属性和行为。</p>
+<p>Java中的类class由<strong>成员变量</strong>和<strong>成员方法</strong>两部分组成，分别对应一类事物的属性和行为。<br>定义类其实也就是定义类中的成员（成员变量和成员方法）。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个类</span></span><br><span class="line">class Phone&#123;</span><br><span class="line">    <span class="comment">//成员变量（属性）</span></span><br><span class="line">    <span class="keyword">String</span> <span class="built_in">color</span> = <span class="string">"white"</span>;</span><br><span class="line">    <span class="keyword">String</span> brand = <span class="string">"Nokia"</span>;</span><br><span class="line">    <span class="built_in">int</span> price = <span class="number">998</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//成员方法（）</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> createPhone()&#123;</span><br><span class="line">        System.out.<span class="built_in">println</span>(<span class="built_in">color</span> + brand + price);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##变量使用原则</p>
+<p><strong>就近原则</strong>。</p>
+<p>##如何创建对象?</p>
+<p>java中通过<strong>new</strong>关键字来创建实体。实体其实就是用来封装具体数据用的，如数组。对象也是同样道理，使用new关键字来创建对象。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个对象</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">Phone</span>&#123;</span><br><span class="line">    String color = <span class="string">"white"</span>;</span><br><span class="line">    String brand = <span class="string">"Nokia"</span>;</span><br><span class="line">    <span class="keyword">int</span> price = <span class="number">998</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createPhone</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(color + brand + price);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">PhoneDemo</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args</span>)</span>&#123;</span><br><span class="line">        Phone p = <span class="keyword">new</span> Phone();<span class="comment">//创建对象</span></span><br><span class="line">        p.color = <span class="string">"black"</span>;<span class="comment">//修改对象的属性</span></span><br><span class="line">        p.createPhone();<span class="comment">//使用对象的功能，即调用类中的方法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##成员变量与局部变量有什么区别？</p>
+<p><strong>作用范围</strong></p>
+<p>成员变量：定义在类中,可以被类中的任意方法访问。</p>
+<p>局部变量：只在它所属的局部大括号中有效。 </p>
+<p><strong>存储情况</strong></p>
+<p>成员变量(非静态)：存储在<em>堆内存</em>中，随着<em>对象</em>的存在而存在。当对象变成垃圾被回收时，该该对象中的成员变量会消失。</p>
+<p>成员变量(静态):存储在<em>方法区</em>中,随着<em>类</em>的加载而加载,随着类的消失而消失。</p>
+<p>局部变量：存储在<em>栈内存</em>中，当方法被调用，或者语句被执行的时候，才存在。</p>
+<p>当方法运行完毕，或者语句运行完毕时，局部会被自动释放。所以成员变量也称之为实例(对象)变量。</p>
+<p><strong>初始化情况</strong></p>
+<p>成员变量：在堆内存中有默认初始化值。</p>
+<p>局部变量：必须手动初始化后，才可以被使用。</p>
+<p>##匿名对象</p>
+<p>匿名对象是对象的简化形式，是没有名字的对象。</p>
+<p>匿名对象的使用注意事项：</p>
+<p>当对对象方法仅进行一次调用的时候使用；</p>
+<p>匿名对象可以作为实际参数进行传递。</p>
+<p>##封装(Encapsulation)</p>
+<p>隐藏对象的属性和实现细节，仅对外提供公共访问方式。</p>
+<p><strong>封装的好处</strong>：</p>
+<ul>
+<li>将变化隔离。</li>
+<li>便于使用。</li>
+<li>提高重用性。</li>
+<li>提高安全性。</li>
+</ul>
+<p><strong>原则</strong>：</p>
+<p>将不需要对外提供的内容都隐藏起来。<br>把属性都隐藏，提供公共方法对其访问。</p>
+<p>##private(私有)关键字</p>
+<p><strong>概念</strong>：</p>
+<ol>
+<li>权限修饰符。</li>
+<li>用于修饰成员(成员变量和成员方法)</li>
+<li>被私有化的成员只在本类中有效。</li>
+<li>当成员私有后，提高了安全性。但是访问权限降低了。这时可以通过对外提供公有方法的形式对其进行访问。</li>
+</ol>
+<p><strong>好处</strong>:</p>
+<p>可以在方法中对成员变量的访问进行控制。</p>
+<p><strong>常用场景</strong>：</p>
+<p>将成员变量私有化，对外提供对应的set ，get方法对其进行访问。提高对数据访问的安全性。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;&#125;</span><br><span class="line"><span class="keyword">int</span> getAge()</span><br></pre></td></tr></table></figure>
+<p>##构造方法</p>
+<p><strong>构造方法的特点</strong>：</p>
+<p>构造方法的方法名必须与类名相同。</p>
+<p>构造方法没有返回类型，也不能定义为void，在方法名前面不声明方法类型。</p>
+<p>构造方法不能由编程人员调用，而要系统调用。</p>
+<p>一个类可以定义多个构造方法，也就是构造方法可以重载，以参数的个数，类型，或排列顺序区分。</p>
+<p><strong>构造方法细节</strong>：</p>
+<p>如果在定义类时没有定义构造方法，则编译系统会自动插入一个无参数的默认构造器，这个构造器不执行任何代码。</p>
+<p><strong>作用</strong>：</p>
+<p>构造方法的主要作用是完成对象的初始化工作，它能够把定义对象时的参数传给对象的域。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//无参构造方法调用有参构造方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Test</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args</span>)</span>&#123;</span><br><span class="line">        Phone p = <span class="keyword">new</span> Phone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Phone</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String brand;</span><br><span class="line">    Phone()&#123;<span class="comment">//无参构造方法</span></span><br><span class="line">        <span class="keyword">this</span>(<span class="string">""</span>);  <span class="comment">//必须放在第一行，而且不能直接用this(brand)</span></span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"这是个无参构造方法。"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Phone(String brand)&#123;<span class="comment">//有参构造方法</span></span><br><span class="line">        <span class="keyword">this</span>.brand = brand;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>构造方法和一般方法的区别</strong>：</p>
+<p>从<strong><em>功能</em></strong>上的区别：</p>
+<ul>
+<li>构造方法是给对象初始化的</li>
+<li>一般方法是因为对象需要满足某种功能定义的</li>
+</ul>
+<p>从<strong><em>执行</em></strong>上的区别：</p>
+<ul>
+<li>构造方法，是对象创建的时候被执行，不用调用。</li>
+<li>一般方法是什么时候调用，就什么时候执行，不调用就永远不执行。</li>
+</ul>
+<p>从<strong><em>书写</em></strong>上的区别：</p>
+<ul>
+<li>构造方法,是不需要有返回值，包括void，但是可以有return关键字来结束。</li>
+<li>一般方法是必须具备返回值</li>
+</ul>
+<p><strong>构造代码块</strong>：</p>
+<p>构造代码块又叫初始化块，在<em>创建对象时执行</em>，构造代码块是对构造方法的补充，<em>不接收任何参数</em>，定义一些所有对象<strong><em>共有</em></strong>的属性和方法时就可以用构造代码块。</p>
+<p><strong><em>特点</em></strong>：</p>
+<ol>
+<li>构造代码块在类中方法外；</li>
+<li>构造代码块没有名字，只能在创建对象的时候被自动调用；</li>
+<li>如果有多个构造代码块，那么创建对象时就按照构造代码块的源码顺序，依次执行，构造代码块全部执行完成后，再执行构造方法。</li>
+</ol>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造代码块</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"我是构造方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"><span class="keyword">int</span> a</span>)</span>&#123;        </span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"这是构造方法1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> a = <span class="number">1</span>;a &lt;= <span class="number">10</span>;a++)&#123;</span><br><span class="line">                    System.<span class="keyword">out</span>.println(<span class="string">"Hello Java!"</span>);</span><br><span class="line">                &#125;<span class="comment">//定义对象共有的属性和方法，提高代码的复用性和整个应用的可维护性。</span></span><br><span class="line">                 System.<span class="keyword">out</span>.println(<span class="string">"这是构造代码块2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">｝</span><br></pre></td></tr></table></figure>
+<p>##对象初始化过程</p>
+<p><strong><em>加载main方法所在的类和对象类进方法区→执行静态代码块→主方法进栈→在栈内存中开辟一个变量空间→在堆内存中开辟内存空间new一个对象→给对象一个内存地址值→对成员变量进行默认初始化→对成员变量进程显式初始化→构造代码块对成员变量初始化→构造方法对变量初始化→把地址值赋给栈内存中的变量空间</em></strong></p>
+<p>##代码执行顺序</p>
+<p><strong><em>静态代码块→构造代码块→构造方法</em></strong><br><strong>静态成员随类的加载而加载，类只加载一次，因此静态代码块也只执行一次。</strong></p>
+<p>##this关键字</p>
+<p>this是一个关键字。代表当前对象的引用。</p>
+<p><strong><em>哪个对象调用this所在的方法，this就代表哪个对象。</em></strong></p>
+<p><strong>使用场景</strong>：</p>
+<p>当局部变量和成员变量一样的时候，使用this关键字可以解决局部变量隐藏成员变量问题；</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Phone&#123;</span><br><span class="line">    <span class="keyword">String</span> <span class="built_in">color</span>;</span><br><span class="line">    <span class="keyword">String</span> brand;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> show(<span class="keyword">String</span> <span class="built_in">color</span>,<span class="keyword">String</span> brand)&#123;</span><br><span class="line">        <span class="keyword">this</span>.<span class="built_in">color</span> = <span class="built_in">color</span>;</span><br><span class="line">        <span class="keyword">this</span>.brand = brand;<span class="comment">//this.成员变量名</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在成员方法中调用其他成员方法，如果不加，默认也有this；</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Phone&#123;</span><br><span class="line">    <span class="keyword">String</span> <span class="built_in">color</span>;</span><br><span class="line">    <span class="keyword">String</span> brand;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setColor(<span class="keyword">String</span> <span class="built_in">color</span>)&#123;</span><br><span class="line">        <span class="keyword">this</span>.<span class="built_in">color</span> = <span class="built_in">color</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getColor()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">color</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> show()&#123;</span><br><span class="line">        System.out.<span class="built_in">println</span>(<span class="keyword">this</span>.getColor());<span class="comment">//在成员方法中调用其他成员方法</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在构造方法中调用其他的构造方法，用法是“<strong>this(参数列表)</strong>”，只能用在类的构造方法中，而且只能放在<strong><em>构造方法的第一行</em></strong>。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Phone&#123;</span><br><span class="line">    <span class="keyword">String</span> <span class="built_in">color</span>;</span><br><span class="line">    <span class="keyword">String</span> brand;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Phone()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Phone(<span class="keyword">String</span> <span class="built_in">color</span>)&#123;</span><br><span class="line">        <span class="keyword">this</span>.<span class="built_in">color</span> = <span class="built_in">color</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Phone(<span class="keyword">String</span> <span class="built_in">color</span>,<span class="keyword">String</span> brand)&#123;</span><br><span class="line">        <span class="keyword">this</span>(<span class="string">"yellow"</span>); <span class="comment">//调用Phone(String color)这个构造方法，放在第一行</span></span><br><span class="line">        <span class="keyword">this</span>.brand = brand;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##Static关键字</p>
+<p>static是一个修饰符，用于修饰成员（成员变量和成员方法）。</p>
+<p>当成员被静态修饰后，就多了一种被调用方式，不仅可以被对象调用，也可以被类名调用，格式是：类名.静态成员。</p>
+<p><strong><em>static特点</em></strong>：</p>
+<ol>
+<li><strong>随着类的加载而加载</strong>。也就是说：静态会随着类的消失而消失，说明它生命周期最长。</li>
+<li><strong>优先于对象存在</strong>。因为静态随类的加载而加载，因此一定是静态先存在，对象后存在。</li>
+<li>被所有对象<strong>共享</strong>。对对象的共享数据在方法区提供单独的存储空间，节省内存。</li>
+<li>可以被<strong>类名</strong>所调用。无需在堆中创建对象即可被调用。</li>
+</ol>
+<p>非静态的成员变量又叫<strong>实例变量</strong>，静态变量又叫<strong>类变量</strong>。</p>
+<p><strong><em>非静态的成员变量（实例变量）与静态变量（类变量）的区别</em></strong>：</p>
+<p>在<strong>内存</strong>中的位置：</p>
+<ul>
+<li>(类变量)静态变量随着类的加载而存在于<em>方法区</em>中；</li>
+<li>实例变量随着对象的建立而存在于<em>堆内存</em>中。</li>
+</ul>
+<p><strong>生命周期</strong>：</p>
+<ul>
+<li>静态变量的<em>生命周期最长</em>，随着<strong>类</strong>的消失而消失；</li>
+<li>实例变量的生命周期随着<strong>对象</strong>的消失而消失。</li>
+</ul>
+<p><strong>所属</strong>：</p>
+<p>静态变量也称之为类变量，所属于整个<strong>类</strong>，被整个类的对象所共享；<br>实例变量是对象的特有数据，所属于<strong>对象</strong>。</p>
+<p><strong><em>静态使用注意事项</em></strong>：</p>
+<p>静态方法访问有局限性，<strong>只能访问静态成员</strong>，不能访问非静态成员。</p>
+<ul>
+<li>非静态方法既可以访问静态也可以访问非静态；</li>
+<li>非静态方法中不可以定义静态变量，因为静态随类加载而加载，优于对象存在的。</li>
+</ul>
+<p>静态方法中不可以定义<strong><em>this</em></strong>，<strong><em>super</em></strong>关键字。</p>
+<ul>
+<li>因为静态优先于对象存在。所以静态方法中不可以出现this。</li>
+</ul>
+<p><strong><em>主函数是静态的</em></strong>。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//主函数举例</span><br><span class="line">class <span class="type">StaticMain</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> x = <span class="number">4</span>;</span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) &#123;</span><br><span class="line">        <span class="keyword">method</span>();//主函数是静态的，要调用<span class="keyword">method</span>方法，则<span class="keyword">method</span>方法也必须是静态的。</span><br><span class="line">    &#125;</span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> <span class="keyword">method</span>()&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(x);//<span class="keyword">method</span>方法是静态的，因此使用的变量x也必须是静态的。</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>静态代码块</em></strong>：</p>
+<p>随着类的加载而执行，只执行一次并优先于主函数。 用于给类进行初始化。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line">    执行顺序：静态代码块→构造代码块→构造方法</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"这是构造代码块"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"这是构造方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"这是静态代码块"</span>);</span><br><span class="line">    &#125;    </span><br><span class="line">     </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title">StaticDemo4</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Person();</span><br><span class="line">        <span class="keyword">new</span> Person();<span class="comment">//多次调用对象，只执行一次静态代码块。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>局部代码块&amp;构造代码块&amp;静态代码块</em></strong></p>
+<p><strong>局部代码块</strong>：</p>
+<ul>
+<li>作用：控制变量的生命周期；</li>
+<li>在程序中，当我们已经使用完x后，并且在接下来的代码中，不会再用到x,那么就没必要让x在内存中占用空间了，这用情况下，可以使用局部代码块，将x及其所设计到的区域封装为局部代码块，他们在程序执行中顺序不变，只是在执行完成后消失。</li>
+</ul>
+<p><strong>构造代码块</strong>：</p>
+<ul>
+<li>作用：存在于类中，它可以给所有对象进行初始化；</li>
+<li>当类中的构造方法以重载的形式存在时，并且有共同成员变量或共同的方法时，可以通过构造代码块对其进行初始化；这样可以减少代码的重复。</li>
+</ul>
+<p><strong>静态代码块</strong>：</p>
+<ul>
+<li>作用：加载驱动器；</li>
+<li>当类中的方法都被静态了化，并且构造方法被private了，这时我们不能再将这个类实例化，然而又想让类增加一些属性，就可以使用静态代码块。</li>
+</ul>
+<p>##给成员变量赋值的方式有几种?分别怎么实现?</p>
+<ol>
+<li>在类中显式初始化时给成员变量赋值；</li>
+<li>非静态的成员方法调用成员变量时给成员变量赋值；</li>
+<li>构造方法里调用成员变量赋值；</li>
+<li>创建对象时调用构造方法时给成员变量赋值；</li>
+<li>类调用静态成员变量时可以给静态成员变量赋值。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/05/22/" itemprop="url">
                   tomcat日志设置规范
                 </a>
@@ -1572,131 +1866,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/04/11/" itemprop="url">
-                  其实，我很好
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-04-11T13:49:54+08:00" content="Apr 11 2011">
-              Apr 11 2011
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/感悟/" itemprop="url" rel="index">
-                    <span itemprop="name">感悟</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/04/11/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2011/04/11/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>五味杂陈啊…</p>
-<p>首先最开心的是看到又有一个朋友找到了看上去还蛮靠谱的归宿。一个人有人照顾了，许多人就该放心了。看到他们脸上洋溢着的幸福和快乐，我心里也很高兴，希望他们能一直幸福。一个男人能够为他女朋友的朋友尽心尽力、全身心的投入，我相信他值得托付；不管走多远，至少也有资格拥有那段美好爱恋的回忆吧。生活不是电视剧，也没那么多的爱恨纠葛、恩怨情仇，看到那一张张单纯的面庞，我看到了人与人之间感情的真挚。</p>
-<p>看到人家快乐，自己很高兴。可是高兴并不是快乐啊，很多人把高兴误会是快乐。高兴是一种生理上感到愉悦的自然反应，而快乐则是更加深层次的灵魂上的满足。朋友问我有没有中意的，我颇感无奈啊，很显然我是经常生理上感到愉悦，而灵魂上得不到满足啦。我也听明白了，她说了那么多，也就一个意思，遇到让自己灵魂上有触动的得赶紧上升到剧烈震动的层次，以追求这二十多年梦寐以求、可望而不可得的灵魂上的满足。其实我觉得也蛮对不住那些给我介绍对象的朋友的…我给另一朋友说起这次洛阳之行，人家就给了一个评价：闷骚男赤裸裸的寂寞啊！对于这，我有点虚…</p>
-<p>我始终觉得旅行最大的意义不在于欣赏了多少美丽的风景，而是那份不曾体验过、前所未有的新鲜感。陌生城市里的街道、来来往往的人群，街道两旁的商铺，这些应该会有更多的故事吧，所给予人想象的空间也应该更大吧。看到草坪上惬意的人，自己内心也是说不出的舒畅；堤坝上钓鱼的老翁，也让人觉得有一种说不出的闲适；古色古香的城楼也总让人有种穿越的感觉。</p>
-<p>当然，也有些许尴尬和不安啊，自己一时冲动，为了满足生理上一时的愉悦，跑到朋友那儿，给朋友带去了那么多麻烦，我发自内心的过意不去啊。我本身就是闷骚嘛，话不多，不怎么擅长交流，希望以后有补偿的机会。当然，作为有思想的文艺青年，略显闷骚好像也没什么吧。突然想，一个人去旅行，会不会很带感？只是如今无病呻吟的太多，这些人一旦表现出自己所谓的抑郁，就说要“一个人旅行”。我感觉我是受连累了。</p>
-<p>其实，我很好。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1742,7 +1911,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-count">129</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1750,7 +1919,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1759,7 +1928,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">190</span>
+                <span class="site-state-item-count">191</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
