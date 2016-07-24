@@ -255,6 +255,151 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/24/" itemprop="url">
+                  关于Android插件化的细枝末节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-24T15:59:55+08:00" content="Jul 24 2016">
+              Jul 24 2016
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/24/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/24/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了，按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。Atlas 并没有开源，<a href="https://github.com/DroidPluginTeam/DroidPlugin" target="_blank" rel="external">DroidPlugin</a> 已开源，我们现在采用的方案是基于 Atlas 的，有兴趣的可以看看 <a href="https://github.com/bunnyblue/ACDD" target="_blank" rel="external">ACDD</a> ，核心思想都是一样。</p>
+<p>不管是插件化，还是热补丁，现在的方案都比较多，相应方案在 GitHub 上也都能找得到 demo ，Google 一下，也有不少文章，然而停留在 demo 和文章介绍阶段，始终与实际的生产开发有较大的距离，尤其是大部分文章还只是纸上谈兵，写文章的十之七八恐怕都没有真正的在自己的应用里实践过，而插件化最困难的部分就是实践过程中遇到各种细节和适配问题，还有对当前开发模式的影响也是怎么都绕不过去的问题。下面我大致列一下我们在实践过程中遇到的一些问题。</p>
+<ol>
+<li>插件怎么去引用宿主里的类？</li>
+<li>插件怎么去引用宿主的资源？</li>
+<li>插件化要给每个插件进行资源分段，该如何进行资源分段？</li>
+<li>为了让业务的同学更容易接受，怎么处理宿主的类和资源？</li>
+<li>在引用宿主的资源的时候，默认可用的 context 在插件化里是否依然可用？</li>
+<li>不同的资源类型，引用和处理方式是否相同？</li>
+<li>插件之间共用的一些类，是放在宿主里，还是在插件里开放出接口，该怎么样去考量？</li>
+<li>插件如何去开放接口，让其他插件引用？</li>
+<li>插件开放出了接口，其他插件又该怎样去引用？</li>
+<li>不同的插件都要引用同一个类和同一个资源，类和资源重复了该怎么办？</li>
+<li>加载各个插件时，怎么样知道各个插件的信息？</li>
+<li>插件版本该如何去管理？</li>
+<li>怎样实现 debug 和 release 开发的宿主和插件打包？</li>
+<li>应用启动时要加载那么多插件，怎么加速第一次启动？</li>
+<li>插件引用的宿主的类和资源发生改变，难道每次都要去每个插件里手动修改吗？</li>
+<li>四大组件的免注册是怎么回事？</li>
+<li>四大组件免注册了，是否还需要合并每个插件的 AndroidManifest ？</li>
+<li>在不允许手动拷贝的情况下，如何合并各个插件的 AndroidManifest ？</li>
+<li>宿主的方法数超过 65535 了，该怎么办？</li>
+<li>混淆问题怎么去处理？</li>
+<li>适配，还是适配。</li>
+</ol>
+<p>实际操作中，因为对开发的影响是不可避免的，多亏了有 gradle ，通过定制 gradle 脚本，插件，甚至是 SDK 组件，很多事情我们可以做到自动化，当然，凡事有利就有弊，在这个过程中，会发现相当多的正常开发遇不到的 gradle 的『bug』，因此，假如 gradle 玩不转，会有很多麻烦。目前大致能想到的就这么多，以后有想到了再补充吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/12/" itemprop="url">
                   Scala之旅-函数式编程简介
                 </a>
@@ -1340,129 +1485,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/14/" itemprop="url">
-                  fuck-2015-flirt-2016
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-12-14T15:38:44+08:00" content="Dec 14 2015">
-              Dec 14 2015
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/12/14/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/14/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>晃晃悠悠居然又一年了。</p>
-<p>回头来看，这一年居然做了这么多事。很多事情越来越看不清楚，越来越感受到生活的无奈和复杂。这一年，得到了很多，也失去了很多，时间就在这得失往复中一点点流逝了。创业这一年，身边的小伙伴聚散合离，旧的项目倒下去，新的项目立起来，看着其他友商完全在重复着一模一样的节奏，心里五味杂陈，尤其是这下半年，形势越来越差，Winter is coming ，仿佛一夜之间，所有人都被北京这个寒冬突然击中。这种事情尤其不能回顾，否则只会让本就已经身心俱疲的创业者更加沮丧。当把个人经历与时代变迁结合起来，往往能让自己对自己的遭遇多一分无比认同的同情。
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/12/14/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1508,7 +1530,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">129</span>
+              <span class="site-state-item-count">130</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1525,7 +1547,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">191</span>
+                <span class="site-state-item-count">192</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

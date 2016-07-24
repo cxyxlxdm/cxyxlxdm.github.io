@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2016-05-12T16:19:32.000Z</updated>
+  <updated>2016-07-24T13:51:57.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Android插件化的细枝末节</title>
+    <link href="http://www.easydone.cn/2016/07/24/"/>
+    <id>http://www.easydone.cn/2016/07/24/</id>
+    <published>2016-07-24T07:59:55.000Z</published>
+    <updated>2016-07-24T13:51:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了，按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。Atlas 并没有开源，&lt;a href=&quot;https://github.com/DroidPluginTeam/DroidPlugin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DroidPlugin&lt;/a&gt; 已开源，我们现在采用的方案是基于 Atlas 的，有兴趣的可以看看 &lt;a href=&quot;https://github.com/bunnyblue/ACDD&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ACDD&lt;/a&gt; ，核心思想都是一样。&lt;/p&gt;
+&lt;p&gt;不管是插件化，还是热补丁，现在的方案都比较多，相应方案在 GitHub 上也都能找得到 demo ，Google 一下，也有不少文章，然而停留在 demo 和文章介绍阶段，始终与实际的生产开发有较大的距离，尤其是大部分文章还只是纸上谈兵，写文章的十之七八恐怕都没有真正的在自己的应用里实践过，而插件化最困难的部分就是实践过程中遇到各种细节和适配问题，还有对当前开发模式的影响也是怎么都绕不过去的问题。下面我大致列一下我们在实践过程中遇到的一些问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;插件怎么去引用宿主里的类？&lt;/li&gt;
+&lt;li&gt;插件怎么去引用宿主的资源？&lt;/li&gt;
+&lt;li&gt;插件化要给每个插件进行资源分段，该如何进行资源分段？&lt;/li&gt;
+&lt;li&gt;为了让业务的同学更容易接受，怎么处理宿主的类和资源？&lt;/li&gt;
+&lt;li&gt;在引用宿主的资源的时候，默认可用的 context 在插件化里是否依然可用？&lt;/li&gt;
+&lt;li&gt;不同的资源类型，引用和处理方式是否相同？&lt;/li&gt;
+&lt;li&gt;插件之间共用的一些类，是放在宿主里，还是在插件里开放出接口，该怎么样去考量？&lt;/li&gt;
+&lt;li&gt;插件如何去开放接口，让其他插件引用？&lt;/li&gt;
+&lt;li&gt;插件开放出了接口，其他插件又该怎样去引用？&lt;/li&gt;
+&lt;li&gt;不同的插件都要引用同一个类和同一个资源，类和资源重复了该怎么办？&lt;/li&gt;
+&lt;li&gt;加载各个插件时，怎么样知道各个插件的信息？&lt;/li&gt;
+&lt;li&gt;插件版本该如何去管理？&lt;/li&gt;
+&lt;li&gt;怎样实现 debug 和 release 开发的宿主和插件打包？&lt;/li&gt;
+&lt;li&gt;应用启动时要加载那么多插件，怎么加速第一次启动？&lt;/li&gt;
+&lt;li&gt;插件引用的宿主的类和资源发生改变，难道每次都要去每个插件里手动修改吗？&lt;/li&gt;
+&lt;li&gt;四大组件的免注册是怎么回事？&lt;/li&gt;
+&lt;li&gt;四大组件免注册了，是否还需要合并每个插件的 AndroidManifest ？&lt;/li&gt;
+&lt;li&gt;在不允许手动拷贝的情况下，如何合并各个插件的 AndroidManifest ？&lt;/li&gt;
+&lt;li&gt;宿主的方法数超过 65535 了，该怎么办？&lt;/li&gt;
+&lt;li&gt;混淆问题怎么去处理？&lt;/li&gt;
+&lt;li&gt;适配，还是适配。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;实际操作中，因为对开发的影响是不可避免的，多亏了有 gradle ，通过定制 gradle 脚本，插件，甚至是 SDK 组件，很多事情我们可以做到自动化，当然，凡事有利就有弊，在这个过程中，会发现相当多的正常开发遇不到的 gradle 的『bug』，因此，假如 gradle 玩不转，会有很多麻烦。目前大致能想到的就这么多，以后有想到了再补充吧。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了，按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思
+    
+    </summary>
+    
+      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+    
+      <category term="Plugin" scheme="http://www.easydone.cn/tags/Plugin/"/>
+    
+  </entry>
   
   <entry>
     <title>Scala之旅-函数式编程简介</title>
@@ -783,44 +833,6 @@
       <category term="幸运" scheme="http://www.easydone.cn/tags/%E5%B9%B8%E8%BF%90/"/>
     
       <category term="选择" scheme="http://www.easydone.cn/tags/%E9%80%89%E6%8B%A9/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>史上最简单的实现状态栏变色的方法</title>
-    <link href="http://www.easydone.cn/2015/06/15/"/>
-    <id>http://www.easydone.cn/2015/06/15/</id>
-    <published>2015-06-15T07:23:10.000Z</published>
-    <updated>2015-12-18T10:44:17.000Z</updated>
-    
-    <content type="html">&lt;p&gt;Android 4.4 之后，Android 通知栏变色再也不只是 iOS 专属了，设置通知栏跟应用标题栏同样的颜色，可以给用户更好的体验，这点是毋庸置疑的。对于 iOS 优秀的特性，我们要大胆借鉴，我觉着这没什么，谁都有追求美的权利嘛。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;之前要实现通知栏的变色，很多人都是用 &lt;a href=&quot;https://github.com/jgilfelt/SystemBarTint&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SystemBarTint&lt;/a&gt; 这个库，这个库使用起来非常方便，效果也很好，可以在 Java 代码里设置，也可以在 xml 里设置，具体用法参考 Github 上这个库即可。当然，这个库并不完美，尤其是配合 &lt;a href=&quot;https://github.com/ikew0ng/SwipeBackLayout&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SwipeBackLayout&lt;/a&gt; 使用，会有一个 bug ，不过 Fuubo 的开发者 &lt;a href=&quot;http://fanhongwei.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;断锁怒潮&lt;/a&gt; 已经提出了解决方案，看这里 &lt;a href=&quot;http://fanhongwei.github.io/blog/2015/03/04/android-statusbartint-and-swipebacklayout/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android4.4 及以上版本实现状态栏与顶栏同色&lt;/a&gt;。可这两种方式都略显繁琐了，下面就介绍一下 5.0 以后 Android 自带的方法，只需要通过 values 设置的，史上最简单的实现状态栏变色的方法。&lt;/p&gt;
-&lt;p&gt;话不多说，直接上步骤吧：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;新建一个 &lt;strong&gt;&lt;em&gt;Theme&lt;/em&gt;&lt;/strong&gt; 继承 &lt;strong&gt;&lt;em&gt;Theme.AppCompat.Light.NoActionBar&lt;/em&gt;&lt;/strong&gt; （不要修改属性名字）&lt;/p&gt;
-&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;pi&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;resources&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;style&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;DefaultTheme&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;parent&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;Theme.AppCompat.Light.NoActionBar&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;css&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;&lt;span class=&quot;tag&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;name&lt;/span&gt;=&quot;&lt;span class=&quot;tag&quot;&gt;colorPrimaryDark&lt;/span&gt;&quot;&amp;gt;&lt;span class=&quot;at_rule&quot;&gt;@&lt;span class=&quot;keyword&quot;&gt;color/appPrimaryDark&amp;lt;/item&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;style&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;resources&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;新建 &lt;strong&gt;&lt;em&gt;color&lt;/em&gt;&lt;/strong&gt; 文件，定义在 &lt;strong&gt;&lt;em&gt;Theme&lt;/em&gt;&lt;/strong&gt; 里引用的 &lt;strong&gt;&lt;em&gt;color&lt;/em&gt;&lt;/strong&gt; （不要修改属性名字）&lt;/p&gt;
-&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;pi&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;resources&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;appPrimaryDark&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;#ff0000&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;color&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;resources&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这样，代码部分的工作，就完成了！绝对的史上最简单啊！有木有！不过还需要做一些工作，才能达到我们想要的效果。此时 &lt;code&gt;layout&lt;/code&gt; 里预览 UI 的时候，我们只需要将预览主题设置成 &lt;code&gt;DefaultTheme&lt;/code&gt; ，然后将 SDK 版本设置成 22 以上即可。如下图：&lt;br&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/status_bar.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;当然，真机测试，需要在 &lt;code&gt;manifest&lt;/code&gt; 里替换主题。&lt;/p&gt;
-&lt;p&gt;OK，至此，就全部完成了。不过实际应用过程中发现，局限还是不小的，必须是 SDK22 以上，在 &lt;code&gt;layout&lt;/code&gt; 里预览才有效果，而且在 &lt;code&gt;values&lt;/code&gt; 里定义的属性名字不能修改，还有在真机上，5.0 以上才有效，4.4 就没效果。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Android 4.4 之后，Android 通知栏变色再也不只是 iOS 专属了，设置通知栏跟应用标题栏同样的颜色，可以给用户更好的体验，这点是毋庸置疑的。对于 iOS 优秀的特性，我们要大胆借鉴，我觉着这没什么，谁都有追求美的权利嘛。
-    
-    </summary>
-    
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
-    
-    
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
-    
-      <category term="状态栏" scheme="http://www.easydone.cn/tags/%E7%8A%B6%E6%80%81%E6%A0%8F/"/>
     
   </entry>
   
