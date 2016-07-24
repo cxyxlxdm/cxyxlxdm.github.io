@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2016-07-24T13:51:57.000Z</updated>
+  <updated>2016-07-24T13:56:39.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://www.easydone.cn/2016/07/24/"/>
     <id>http://www.easydone.cn/2016/07/24/</id>
     <published>2016-07-24T07:59:55.000Z</published>
-    <updated>2016-07-24T13:51:57.000Z</updated>
+    <updated>2016-07-24T13:56:39.000Z</updated>
     
-    <content type="html">&lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了，按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。Atlas 并没有开源，&lt;a href=&quot;https://github.com/DroidPluginTeam/DroidPlugin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DroidPlugin&lt;/a&gt; 已开源，我们现在采用的方案是基于 Atlas 的，有兴趣的可以看看 &lt;a href=&quot;https://github.com/bunnyblue/ACDD&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ACDD&lt;/a&gt; ，核心思想都是一样。&lt;/p&gt;
+    <content type="html">&lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了。按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;Atlas 并没有开源，&lt;a href=&quot;https://github.com/DroidPluginTeam/DroidPlugin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DroidPlugin&lt;/a&gt; 已开源，我们现在采用的方案是基于 Atlas 的，有兴趣的可以看看 &lt;a href=&quot;https://github.com/bunnyblue/ACDD&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ACDD&lt;/a&gt; ，核心思想都是一样。&lt;/p&gt;
 &lt;p&gt;不管是插件化，还是热补丁，现在的方案都比较多，相应方案在 GitHub 上也都能找得到 demo ，Google 一下，也有不少文章，然而停留在 demo 和文章介绍阶段，始终与实际的生产开发有较大的距离，尤其是大部分文章还只是纸上谈兵，写文章的十之七八恐怕都没有真正的在自己的应用里实践过，而插件化最困难的部分就是实践过程中遇到各种细节和适配问题，还有对当前开发模式的影响也是怎么都绕不过去的问题。下面我大致列一下我们在实践过程中遇到的一些问题。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;插件怎么去引用宿主里的类？&lt;/li&gt;
@@ -52,7 +52,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了，按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思
+      &lt;p&gt;最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了。按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。
     
     </summary>
     
