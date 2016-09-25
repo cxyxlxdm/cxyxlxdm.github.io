@@ -255,6 +255,151 @@
             
               
                 
+                <a class="post-title-link" href="/2013/12/07/" itemprop="url">
+                  Linux设置core文件介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-07T14:21:08+08:00" content="Dec 7 2013">
+              Dec 7 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/07/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/07/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>①ulimit -a查看操作系统limit信息，显示结果如下：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">core file size          <span class="list">(<span class="keyword">blocks</span>, -c)</span> <span class="number">5120</span></span><br><span class="line"></span><br><span class="line">data seg size           <span class="list">(<span class="keyword">kbytes</span>, -d)</span> unlimited</span><br><span class="line"></span><br><span class="line">scheduling priority             <span class="list">(<span class="keyword">-e</span>)</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">file size               <span class="list">(<span class="keyword">blocks</span>, -f)</span> unlimited</span><br><span class="line"></span><br><span class="line">pending signals                 <span class="list">(<span class="keyword">-i</span>)</span> <span class="number">240561</span></span><br><span class="line"></span><br><span class="line">max locked memory       <span class="list">(<span class="keyword">kbytes</span>, -l)</span> <span class="number">64</span></span><br><span class="line"></span><br><span class="line">max memory size         <span class="list">(<span class="keyword">kbytes</span>, -m)</span> unlimited</span><br><span class="line"></span><br><span class="line">open files                      <span class="list">(<span class="keyword">-n</span>)</span> <span class="number">1024</span></span><br><span class="line"></span><br><span class="line">pipe size            <span class="list">(<span class="number">512</span> bytes, -p)</span> <span class="number">8</span></span><br><span class="line"></span><br><span class="line">POSIX message queues     <span class="list">(<span class="keyword">bytes</span>, -q)</span> <span class="number">819200</span></span><br><span class="line"></span><br><span class="line">real-time priority              <span class="list">(<span class="keyword">-r</span>)</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">stack size              <span class="list">(<span class="keyword">kbytes</span>, -s)</span> <span class="number">10240</span></span><br><span class="line"></span><br><span class="line">cpu time               <span class="list">(<span class="keyword">seconds</span>, -t)</span> unlimited</span><br><span class="line"></span><br><span class="line">max user processes              <span class="list">(<span class="keyword">-u</span>)</span> <span class="number">1024</span></span><br><span class="line"></span><br><span class="line">virtual memory          <span class="list">(<span class="keyword">kbytes</span>, -v)</span> unlimited</span><br><span class="line"></span><br><span class="line">file locks                      <span class="list">(<span class="keyword">-x</span>)</span> unlimited</span><br></pre></td></tr></table></figure></p>
+<p>其中第一行显示的就是core文件的配置信息。</p>
+<p>当系统中的一些程序在遇到一些错误以及crash时，系统会自动产生core文件记录crash时刻系统信息，包括内存和寄存器信息，用以程序员日后debug时可以使用。这些错误包括段错误、非法指令、总线错误或用户自己生成的退出信息等等。 </p>
+<p>②设置core文件主要有如下几种方法：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/<span class="keyword">profile</span></span><br></pre></td></tr></table></figure></p>
+<p>添加以下内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># No core files by default</span></span><br><span class="line">ulimit -S -c <span class="number">0</span> &gt; /dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">vim /etc/security/limits.conf</span><br></pre></td></tr></table></figure></p>
+<p>注释掉以下内容<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*               </span>soft    core            0</span><br></pre></td></tr></table></figure></p>
+<p>以上两种方法都是设置禁止系统所有用户产生core文件。<br>生产环境中，需要对产生的core文件进行调试，因此一般情况下会对core文件进行一些设置。</p>
+<p>设置允许某个用户产生core文件，即不限制大小<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">vim</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<p>添加下面这行内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -c unlimited</span><br></pre></td></tr></table></figure></p>
+<p>③下面是对ulimit这个命令的一些具体描述</p>
+<p>ulimit用于shell启动进程所占用的资源，属于shell内建命令</p>
+<p> 语法格式：ulimit</p>
+<p> 参数介绍：</p>
+<p> -H 设置硬件资源限制。</p>
+<p> -S 设置软件资源限制。</p>
+<p> -a 显示当前所有的资源限制。</p>
+<p> -c size：设置core文件的最大值，单位：blocks</p>
+<p> -d size：设置数据段的最大值，单位：kbytes</p>
+<p> -f size：设置创建文件的最大值，单位：blocks</p>
+<p> -l size：设置在内存中锁定进程的最大值，单位：kbytes</p>
+<p> -m size：设置可以使用的常驻内存的最大值，单位：kbytes</p>
+<p> -n size：设置内核可以同时打开的文件描述符的最大值，单位：n</p>
+<p> -p size：设置管道缓冲区的最大值，单位：kbytes</p>
+<p> -s size：设置堆栈的最大值.单位：kbytes</p>
+<p> -t size：设置CPU使用时间的最大上限，单位：seconds</p>
+<p> -v size：设置虚拟内存的最大值，单位：kbytes</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/12/06/" itemprop="url">
                   怎样击败360
                 </a>
@@ -1418,163 +1563,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/23/" itemprop="url">
-                  Android添加桌面widget插件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-23T11:02:32+08:00" content="Sep 23 2013">
-              Sep 23 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/23/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/09/23/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>##Widget的概述<br>可以添加桌面Widget是Android的一大特色，AppWidget是在HomeScreen上显示的小部件，提供直观的交互操作，有许多的表现形式，如视频、音乐、地图、新闻、游戏等等，它的根本思想来源于代码的复用。通过在HomeScreen长按，在弹出的对话框中选择Widget部件进行构建，长按部件并拖动到垃圾箱可以删除。</p>
-<p>Android中的Widget主要设计以下几个类：</p>
-<ul>
-<li>AppWidgerProvider</li>
-<li>AppWidgetManager</li>
-<li>RemoteViews</li>
-</ul>
-<p>Widget的核心是AppWidgetProvider，属于广播接收者，是四大组件之一，在AppWidgetProvider这个类中，一共有五个方法，其中有一个<strong>onReceive(Context, Intent)</strong>方法，分别调用了其他四个空实现的方法onEnabled(Context context)，onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)，onDeleted(Context context, int[] appWidgetIds)，onDisabled(Context context)，而被调用的这四个方法刚好就是一个Widget的生命周期。</p>
-<p>RemoteView是用来描述一个跨进程显示的View，也就是说这个View是在另外一个进程中显示的，它可以获取layout的布局文件，并且提供了可以修改View内容的一些简答操作。AppWidgetProvider提供Widget的生命周期，真正显示界面的是AppWidgetHostView（这是在Launcher中实现的），这中间就是通过RemoteView来沟通。通过RemoteView来告诉Launcher你想要的AppWidget长什么样。</p>
-<p>##如何创建一个Widget</p>
-<p>###配置清单文件<br>要创建一个Widget，第一步就是要在清单文件中配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">receiver</span> <span class="attribute">android:name</span>=<span class="value">"ExampleAppWidgetProvider"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.appwidget.action.APPWIDGET_UPDATE"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta-data</span> <span class="attribute">android:name</span>=<span class="value">"android.appwidget.provider"</span></span><br><span class="line">        <span class="attribute">android:resource</span>=<span class="value">"@xml/example_appwidget_info"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>###定义Widget的生命周期<br>然后要写一个类继承AppWidgetProvider，并重写AppWidgetProvider的代表生命周期的四个空方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.widget1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.appwidget.AppWidgetManager;</span><br><span class="line"><span class="keyword">import</span> android.appwidget.AppWidgetProvider;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleAppWidgetProvider</span> <span class="keyword">extends</span> <span class="title">AppWidgetProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"ExampleAppWidgetProvider"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 可用</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEnabled</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onEnabled(context);</span><br><span class="line">		Log.i(TAG, <span class="string">"onEnabled"</span>);</span><br><span class="line">		<span class="comment">// 启动服务</span></span><br><span class="line">		context.startService(<span class="keyword">new</span> Intent(context, MyService.class));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 更新</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onUpdate</span><span class="params">(Context context, AppWidgetManager appWidgetManager,</span><br><span class="line">			<span class="keyword">int</span>[] appWidgetIds)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onUpdate(context, appWidgetManager, appWidgetIds);</span><br><span class="line">		Log.i(TAG, <span class="string">"onUpdate"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 删除</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDeleted</span><span class="params">(Context context, <span class="keyword">int</span>[] appWidgetIds)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onDeleted(context, appWidgetIds);</span><br><span class="line">		Log.i(TAG, <span class="string">"onDeleted"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 不可用</span></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDisabled</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onDisabled(context);</span><br><span class="line">		Log.i(TAG, <span class="string">"onDisabled"</span>);</span><br><span class="line">		<span class="comment">// 停止服务</span></span><br><span class="line">		context.stopService(<span class="keyword">new</span> Intent(context, MyService.class));</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>###定义Widget的基本属性<br>然后呢，就需要提供一个XML文件来定义Widget的基本属性（位于res/xml/..）目录下，右键新建Android资源文件，选择类型AppWidgetProvider即可。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- android:minWidth="294dp" 宽</span><br><span class="line">    android:minHeight="72dp"高</span><br><span class="line">    android:initialLayout="@layout/example_appwidget" widget的布局</span><br><span class="line">    --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">appwidget-provider</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:minWidth</span>=<span class="value">"294dp"</span></span><br><span class="line">    <span class="attribute">android:minHeight</span>=<span class="value">"72dp"</span></span><br><span class="line">    <span class="attribute">android:initialLayout</span>=<span class="value">"@layout/example_appwidget"</span></span><br><span class="line">    &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">appwidget-provider</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>###定义Widget的布局<br>接着需要提供一个Widget界面布局的XML文件（位于res/layout/…），需要注意的是该XML使用的组件必须是RemoteViews所支持的，目前原生API支持的组件如下：</p>
-<ul>
-<li>FrameLayout</li>
-<li>LinearLayout</li>
-<li>RelativeLayout</li>
-<li>AnalogClock</li>
-<li>Button</li>
-<li>Chronmeter</li>
-<li>ImageButton</li>
-<li>ImageView</li>
-<li>ProgressBar</li>
-<li>TextView</li>
-</ul>
-<p><strong>如果使用这些组件之外的组件，在Widget创建的时候，会出现一个android.view.InflateException的异常。</strong></p>
-<p>因此这也就导致一些功能或者样式无法实现，如很基本的List或文本编辑都是无法直接实现的，如果想自定义Widget中的View的话只能通过修改Framework来提供相应组件的支持。</p>
-<p>代码示例如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/tv_time"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"这是widget桌面插件"</span></span><br><span class="line">        <span class="attribute">android:background</span>=<span class="value">"#f00"</span></span><br><span class="line">        <span class="attribute">android:textColor</span>=<span class="value">"@android:color/black"</span></span><br><span class="line">        <span class="attribute">android:gravity</span>=<span class="value">"right"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/bt_open"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"复制号码到拨号盘"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>###Widget动态实例</p>
-<p>接下来，可以实例实现一个Widget显示系统时间和复制号码到拨号盘。</p>
-<p>一般Widget所显示的内容都是需要动态变化的，因此需要开启服务在后台操作。AppWidgetManager就是负责更新Widget的内容，AppWidgetManager类中提供一个获取实例的方法，getInstance(Context context)，AppWidgetManager也提供了三个更新Widget的方法，由于AppWidgetProvider是一个广播接收者，很显然，需要传递一个组件进去，所以在这里我需要选择<strong>updateAppWidget(ComponentName provider, RemoteViews views)</strong>这个方法来对AppWidget进行更新操作。在上面继承的AppWidgetProvider类，在Widget的生命周期方法中，已经做了启动和停止服务的操作，然后我只要写一个MyService类继承Service即可，当然，后台服务需要开启线程，要重写run()方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.widget1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.PendingIntent;</span><br><span class="line"><span class="keyword">import</span> android.app.Service;</span><br><span class="line"><span class="keyword">import</span> android.appwidget.AppWidgetManager;</span><br><span class="line"><span class="keyword">import</span> android.content.ComponentName;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.widget.RemoteViews;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 定时器</span></span><br><span class="line">	Timer timer = <span class="keyword">null</span>;</span><br><span class="line">	TimerTask task = <span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			<span class="comment">// 更新app widget</span></span><br><span class="line">			<span class="comment">// 使用AppWidgetManager 更新</span></span><br><span class="line">			<span class="comment">// App Widget管理器</span></span><br><span class="line">			AppWidgetManager awm = AppWidgetManager</span><br><span class="line">					.getInstance(getApplicationContext());</span><br><span class="line">			<span class="comment">// 组件</span></span><br><span class="line">			ComponentName provider = <span class="keyword">new</span> ComponentName(getApplicationContext(),</span><br><span class="line">					ExampleAppWidgetProvider.class);</span><br><span class="line">			<span class="comment">// 远端布局（不在activity上的布局）</span></span><br><span class="line">			RemoteViews views = <span class="keyword">new</span> RemoteViews(getPackageName(),</span><br><span class="line">					R.layout.example_appwidget);</span><br><span class="line">			<span class="comment">// 获取系统当前的时间</span></span><br><span class="line">			<span class="keyword">long</span> millis = System.currentTimeMillis();</span><br><span class="line">			SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(</span><br><span class="line">					<span class="string">"yyyy-MM-dd hh:mm:ss"</span>);</span><br><span class="line">			<span class="comment">// 格式化系统时间</span></span><br><span class="line">			String text = format.format(millis);</span><br><span class="line">			<span class="comment">// 设置显示内容</span></span><br><span class="line">			views.setTextViewText(R.id.tv_time, text);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 复制号码到拨号盘</span></span><br><span class="line">			Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">			intent.setAction(Intent.ACTION_DIAL);</span><br><span class="line">			intent.setData(Uri.parse(<span class="string">"tel:8888"</span>));</span><br><span class="line">			PendingIntent pendingIntent = PendingIntent.getActivity(</span><br><span class="line">					getApplicationContext(), <span class="number">100</span>, intent, <span class="number">0</span>);</span><br><span class="line">			<span class="comment">// 事件</span></span><br><span class="line">			views.setOnClickPendingIntent(R.id.bt_open, pendingIntent);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 更新</span></span><br><span class="line">			awm.updateAppWidget(provider, views);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onCreate();</span><br><span class="line">		timer = <span class="keyword">new</span> Timer();</span><br><span class="line">		<span class="comment">// task任务 delay延时执行 period 周期</span></span><br><span class="line">		timer.schedule(task, <span class="number">0</span>, <span class="number">500</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="annotation">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">super</span>.onDestroy();</span><br><span class="line">		<span class="comment">// 取消任务</span></span><br><span class="line">		timer.cancel();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样一个简单的桌面插件显示系统时间和复制号码到拨号盘的小程序就完成了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1615,7 +1608,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">130</span>
+              <span class="site-state-item-count">131</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1632,7 +1625,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">192</span>
+                <span class="site-state-item-count">194</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

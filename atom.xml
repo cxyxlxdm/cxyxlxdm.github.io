@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2016-07-24T13:56:39.000Z</updated>
+  <updated>2016-09-25T11:48:15.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于oasis的组件化思想的一些思考</title>
+    <link href="http://www.easydone.cn/2016/09/25/"/>
+    <id>http://www.easydone.cn/2016/09/25/</id>
+    <published>2016-09-25T11:43:36.000Z</published>
+    <updated>2016-09-25T11:48:15.000Z</updated>
+    
+    <content type="html">&lt;p&gt;插件化技术发展到现在其实已经很成熟了，但是相应的问题，如果没有真正地去实践过，根本不了解其中有多少问题，会牵涉到多少技术细节，多少被外人膜拜的外表光鲜的技术大牛都被『插件化』这三个字折磨地死去活来，这对于 Android 整个生态的损害也让人无法忽视。&lt;/p&gt;
+&lt;p&gt;昨天的 MDCC ，冯森林老师提出了一个很有意思的思路『组件化』。&lt;/p&gt;
+&lt;p&gt;我们首先要想一下，我们做插件化的目的是什么？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为了满足产品随时上线的需求？&lt;/li&gt;
+&lt;li&gt;为了修复因为我们对自己要求不严格而写出来的 bug ？&lt;/li&gt;
+&lt;li&gt;为了向人炫耀自己的技术实力？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很抱歉，如果是为了这些目的，那就真的太对不起自己是『开发者』这个如此高逼格的身份了。&lt;/p&gt;
+&lt;p&gt;做插件化真正的目的：是为了去适应并行开发，是为了解耦各个模块，是为了避免模块之间的交叉依赖，是为了加快编译速度，从而提高并行开发效率。&lt;/p&gt;
+&lt;p&gt;明确了这些，我们再来看插件化的结果，每个模块都支持独立运行测试，分为稳定的 release 版本和不稳定的 snapshot 版本，每个模块都高度解耦，没有交叉依赖，不会出现一个模块依赖了另一个模块，其中一个人改了这个模块的代码，对另一个模块造成影响。这时候，我们再看冯老师的『组件化』思想。&lt;/p&gt;
+&lt;p&gt;那么这个『组件化』是什么意思呢？我说下我自己的理解，可能不对，还请指教：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;通过 gradle 配置的方式，将打 debug 包和 release 包分开。这样会有一个好处，开发一个模块，在 debug 的时候，可以打成一个 apk ，独立运行测试，可以完全独立于整个宿主 APP 的其他所有组件；待到要打 release 包的时候，再把这个模块作为一个 library ，打成 aar ，作为整个宿主 APP 的一部分。而 debug 和 release 的切换都是通过 gradle 配置，可以做到无缝切换。至于模块之间的跳转，可以用别名的方式，而不是用 Activity 和 Fragment 类名。这样所有的模块和宿主 APP 都是完全解耦的，彻底解决了并行开发的可能造成的交叉依赖等问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;按照这个思路，我们再来看看一些其他的细节：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Android 里有一个比较爽的一点是，作为 library 的时候，aar 里的引用依赖，在宿主 Application 里也有同样的引用依赖，并不会打包两份到宿主 Application 里；&lt;/li&gt;
+&lt;li&gt;模块之间的跳转，除了使用别名的方式，我能想到的还有另外一种方式，同样是通过 gradle 脚本，将跳转用到的类打成一个 jar ，作为一个 API 服务提供给其他模块作为编译期依赖（provided）引入；&lt;/li&gt;
+&lt;li&gt;各个 library 在 debug 的时候作为 apk ，要独立打包运行测试，这时就需要有一个启动 Activity ，而 library 是不需要的，我的想法是放置两个 AndroidManifest.xml ，使用 sourceSets 分别在 debug 和 release 的时候加载不同的 AndroidManifest.xml 。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;怎么样？看上去是不是很像插件化 Atlas ？然而这个方案没有任何『黑科技』，不牵涉任何 hook ，跟 Atlas 的区别就是无需关心不同的 Context ，无需再关心类、资源怎么去加载，无需关心 Context 的安全问题，无需关心不同机型的兼容适配…技术成本可能连 Atlas 的十分之一都不到！&lt;/p&gt;
+&lt;p&gt;感兴趣的话，可以看看这个 slide 分享，地址在这儿&lt;a href=&quot;http://www.slideshare.net/oasisfeng/from-containerization-to-modularity&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;from-containerization-to-modularity&lt;/a&gt;，我也写了个小 sample 去实现这个想法&lt;a href=&quot;GitHub - liangzhitao/ComponentizationApp&quot;&gt;ComponentizationApp&lt;/a&gt;。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;插件化技术发展到现在其实已经很成熟了，但是相应的问题，如果没有真正地去实践过，根本不了解其中有多少问题，会牵涉到多少技术细节，多少被外人膜拜的外表光鲜的技术大牛都被『插件化』这三个字折磨地死去活来，这对于 Android 整个生态的损害也让人无法忽视。&lt;/p&gt;
+&lt;p&gt;昨天的
+    
+    </summary>
+    
+      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+    
+      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+    
+      <category term="插件化" scheme="http://www.easydone.cn/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
+    
+      <category term="组件化" scheme="http://www.easydone.cn/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>关于Android插件化的细枝末节</title>
@@ -801,38 +853,6 @@
       <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
     
       <category term="UltimateRecyclerView， 多选" scheme="http://www.easydone.cn/tags/UltimateRecyclerView%EF%BC%8C-%E5%A4%9A%E9%80%89/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>拥有选择的幸运</title>
-    <link href="http://www.easydone.cn/2015/06/24/"/>
-    <id>http://www.easydone.cn/2015/06/24/</id>
-    <published>2015-06-24T01:31:29.000Z</published>
-    <updated>2015-12-15T02:27:49.000Z</updated>
-    
-    <content type="html">&lt;p&gt;在外面飘着，那么的不容易，为什么不回去啊，为什么还要忍受这看不到头的伤痛和无奈？我讲一下这次回家的见闻感受吧。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;乡里的小区旁边建了一座教堂，家里的年轻人都去上班了，只有大爷大妈们在家，于是没过多久，大爷大妈们就都成了基督徒了，后来要拆迁了，教堂首当其冲，本来大家都极力反对，可是后来补贴翻了一倍，基督徒们一夜之间就都成了犹大。一开始我也以为这是现实版的 72 房租客，结果不是，不过倒是更加合理了。&lt;/p&gt;
-&lt;p&gt;在我上初中的地方有一家卖烧饼的，我上初中的时候已经存在很长时间了，那时候，夫妇俩还没孩子，在我初中毕业那一年，夫妇俩有了孩子。然而，除了这个，时间的流逝对夫妇俩好像没什么关系。再后来，我上高中，上大学，大学毕业，他们一直都在，快有 20 年了，我以为会一直这样下去，我以为烧饼铺子之于夫妇俩一定就像是梅丽号和阳光号之于草帽一伙。这次回来，我发现烧饼铺子已经没了，听说他们靠开铺子挣的钱在城里买了一套房子，然后就把这间开了二十多年的铺子关了。按照剧情，他们应该把铺子一直开下去啊，然后给他们的孩子们，这叫坚守和传承。&lt;/p&gt;
-&lt;p&gt;其实，为了追求更高的生活品质，这些都是可以理解的。只是这些不是我所认同的，也不是我想要的生活方式。&lt;/p&gt;
-&lt;p&gt;这里总能发生一些道义上无所谓对错，但情感上让人难以接受的事情。今天刚得知初中时候的两位同学结婚了，联想起年少时他们两个人身上发生的事，我觉着自己的三观被刷新了。然而，更为让我感到震惊的是一位小学男同学跟一位初中女同学结婚了，小学时候，尤其是低年级的时候，这位男同学是班长，我受尽他的欺负，当然，不只是我，整个班里都受到过他的欺负。这位初中女同学，是第一位让我产生男女情愫的人，当然，她是看不上我的，不过后来我也才发现那只是一种相对同龄人更为迟钝的情感萌动，甚至连喜欢都算不上。如果让我去描绘一组可能的结合，可能穷尽我一生一世的智慧也无法将两个人联系起来。突然感觉好庆幸，自己只是稍微比他们努力了一点点，就避免了他们的境遇。我并不是说我的选择就多么高明，他们的选择我多么地看不上。只是如果在另一个平行时空，让我留在他们那样的的环境里，同时又让我看到了自己在这个时空的境遇，绝对地我要崩溃。&lt;/p&gt;
-&lt;p&gt;每次回到这小山村里，总有说不出的安心，可这安心也总会马上被数不胜数的无知和愚昧冲刷的一干二净。而往往，这种无知和愚昧造成的后果最让人心痛。我有两个表哥，我姑父家的孩子，其实小一点的那位，我已经不记得他是我表哥还是表弟了，姑且就都称为表哥吧。他们从小就身体不好，小学一毕业，大表哥就辍学了，紧接着，二表哥也辍学了，当然，不是每个人都是霍金，甚至不是每个残疾人都有参加残运会的勇气，更多的是像我表哥那样，身体上有一点的不方便，就开始自暴自弃了。最最让我心痛的是，昨天晚上刚得知小表哥已经在一个月之前走了，而家里的亲戚们谈起来的时候都已经没有一丝一毫的悲伤，好像是已经准备这一刻好长时间了。二表哥走了之后，大表哥也开始绝食，现在腿能有普通人的三根手指加起来那么粗。我姑父呢？在我二表哥走了之后半个月，因为在大路上阻碍人家合法施工，被人家抓住把柄抓进去了。而在之前的几个月，他刚被自己的亲弟弟骗走了十几万，近五十年的亲兄弟从此反目。&lt;/p&gt;
-&lt;p&gt;对于这样的环境，我真的是一刻都不想呆下去。&lt;/p&gt;
-&lt;p&gt;留下或者离开，哪种选择都不能算错，只是现实和文艺作品里的状况多多少少总有一些不同。都说最近几年，人们都在逃离北上广，然而事实是更多的人依然对北上广趋之若鹜，有奔钱去的，有奔梦想去的，有随大流的，他们都有一个共同点，那就是对现在的生活不满意，他们想要一种不一样的生活，他们有更美好的追求，他们希望有一个更好的将来。而我就是他们中的一员。感谢生活给了我选择的机会。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在外面飘着，那么的不容易，为什么不回去啊，为什么还要忍受这看不到头的伤痛和无奈？我讲一下这次回家的见闻感受吧。
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="幸运" scheme="http://www.easydone.cn/tags/%E5%B9%B8%E8%BF%90/"/>
-    
-      <category term="选择" scheme="http://www.easydone.cn/tags/%E9%80%89%E6%8B%A9/"/>
     
   </entry>
   
