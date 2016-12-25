@@ -255,6 +255,133 @@
             
               
                 
+                <a class="post-title-link" href="/2013/12/09/" itemprop="url">
+                  linux安全加固项（部分）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-09T14:15:39+08:00" content="Dec 9 2013">
+              Dec 9 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/09/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/09/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Linux安全加固最基本的原则就是不需要的软件绝对不要装，不需要的服务也绝对不要启用，未知的用户绝对不能存在。操作系统最好是最小化安装，针对需要的服务进行定制操作系统，对于root用户的权限控制一定要严格。最好操作系统定制然后刻盘保存。</p>
+<p>禁止root ssh<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">vim</span> /etc/ssh/sshd_conf</span><br><span class="line">PermitRootLogin <span class="built_in">no</span></span><br></pre></td></tr></table></figure></p>
+<p>禁止空密码登陆<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">vim</span> /etc/ssh/sshd_conf</span><br><span class="line">PermitEmptyPasswords <span class="built_in">no</span></span><br></pre></td></tr></table></figure></p>
+<p>禁止ftp（可以sftp）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/shadow</span><br><span class="line">ftp:*:<span class="number">15513</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::</span><br></pre></td></tr></table></figure></p>
+<p>防IP欺骗<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/host.<span class="keyword">conf</span></span><br><span class="line">nospoof <span class="keyword">on</span></span><br></pre></td></tr></table></figure></p>
+<p>禁用nobody用户<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/shadow</span><br><span class="line">nobody:*:<span class="number">15513</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::</span><br></pre></td></tr></table></figure></p>
+<p>禁止全局产生core<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">ulimit -S -c <span class="number">0</span> &amp;gt; /dev/null <span class="number">2</span>&amp;gt;&amp;amp;<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>允许某个用户产生core<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br><span class="line"><span class="built_in">ulimit</span> -c unlimited</span><br><span class="line"><span class="built_in">ulimit</span> -c <span class="number">5120</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/12/08/" itemprop="url">
                   sysctl -p 报错解决办法
                 </a>
@@ -1412,132 +1539,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/26/" itemprop="url">
-                  莫忘初心
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-26T23:33:07+08:00" content="Oct 26 2013">
-              Oct 26 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/感悟/" itemprop="url" rel="index">
-                    <span itemprop="name">感悟</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/26/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/26/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://farm8.staticflickr.com/7441/9648121393_765aa86372_b.jpg" target="_blank" rel="external"><img src="http://farm8.staticflickr.com/7441/9648121393_765aa86372_b.jpg" alt=""></a> 图片来自<a href="http://www.flickr.com/photos/ongsixiao/" target="_blank" rel="external">ongsixiao</a></p>
-<p>不要在迷失的道路上停留太久，不要让自己对未来的迷惘变成习惯；不能与优秀同行，也要时常低头，看看脚下的路。<strong>莫忘初心</strong>。</p>
-<p>自从越来越多地使用微博、微信，真的是已经好久好久没再写过长文了。如今，经常地突然脑子里感觉有很多很多的东西想要记录，打开博客，刚一点开编辑器，却怎么也不知道该怎么开始。现在想想以前每天写博客的日子，感觉好像是上个世纪的事情。如今，也真的是好久没有静下心来看过一本完整的书了，一直在买书，从来没看过。可能懒惰真就是人的本能，完全不用学习就可以把懒惰的特质发挥到完美到极致。</p>
-<p>越来越多地接触这个社会，遇到越来越多的人，关于自己，却从来没有一个交待。每次看到别人类似的自我反省的文章，心里总是略显不屑地呵呵一笑：俗不可耐！却从来没想到过自己还远不如人家，连自省的勇气甚至觉悟都没有。身处这个浮躁的社会里，想要努力地沉淀自己从来都不是一种奢求，而是一种勇气；又有谁愿意承认自己是一个懦弱到害怕直面自己的人？从来都没人阻止自己去追求内心的宁静，除了自己的懦弱和不屑。</p>
-<p>在某些方面，我自认为是一个追求完美的人，有一些心灵上的洁癖；也许每一个拥有“追求完美”这种特质的人，都会不自觉地有种孤芳自赏的清高。这“清高”本就是那么的完美，像一块无瑕美玉，让人不舍得伸手去触碰，生怕给美玉留下污点；然而这“清高”终究是一种只存在于自我陶醉的世界里，终有一天必须要看到自己之外的世界。经常看到有人自我反省说：“是不是跑得太快了，以至于忘记了当初的那份纯粹？”再看看自己，恐怕自己连跑都没有跑吧！</p>
-<p>这么久以来，自己经历了很多的困难，越来越感觉到生存的不易，一次次地被欺骗，被愚弄，每次总要到跌得遍体鳞伤的时候，就开始无休止地抱怨。一直都是在毫无意义的抱怨，从来没想过是否自己的初衷就是错的，从来都没有想过为什么总是自己，从来没想过自己是不是已经忘记低头看看所处的位置了。一直以来，都仿佛下了一个很大的赌注一般，凭着年少轻狂的那股倔强，毫无目的也毫无顾忌地往前奔，早已经忘记了自己真正想要的到底是什么，甚至已经在与自己的初心完全背道而驰的了。</p>
-<p>如今，周围全都是优秀的人，看到别人的优雅，欣赏别人的优雅，多么渴望自己也能优雅起来！意识到迷失了，还是要尽快走出来继续上路，要继续走下去，还要一直走下去。<strong>这很难，可这是自己的初心</strong>。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1583,7 +1584,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">132</span>
+              <span class="site-state-item-count">133</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

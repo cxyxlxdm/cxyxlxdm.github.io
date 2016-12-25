@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,SSH," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,22 +86,19 @@
 
 
 
-<meta name="description" content="实际工作中，有很多的服务器，为保证安全性和时效性，一般会取一台跳板机服务器作为外网连接媒介，把其他所有服务器都放在内网，所有服务都通过跳板机提供对外接口，若是要执行线上维护，就都先登录跳板机，然后由跳板机切换登录到其他服务器。如果每次切换都ssh+Server IP，那效率就太低了……
-下面是一个效率比较高也比较可靠的方案：
-①在跳板机上设置登录到各个内网服务器的ssh证书，ssh登录的时候就不需">
+<meta name="description" content="前些天，看了电影『驴得水』，朋友跟我讲，很心疼张一曼，我也回了个『嗯，心疼』，然后又接了句『也心疼周铁男』。在听到枪响之前，这是我最喜欢的一个角色，年轻、莽撞、单纯，枪响之后，这个人立马变成了自己曾经讨厌的样子。最近一直在问自己：忙忙碌碌一整年，如今的自己是个什么样子？
+去年年底，确定了加入口袋，然后休息了一段时间，今年过完春节就直接过来了。如今再审视当初的决定，我很庆幸。一整年的时间里，懈怠过多">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell脚本实现服务器单板快速登录切换">
-<meta property="og:url" content="http://www.easydone.cn/2013/11/10/index.html">
+<meta property="og:title" content="Just Be Unreserved!">
+<meta property="og:url" content="http://www.easydone.cn/2016/12/25/index.html">
 <meta property="og:site_name" content="Just Be Unreserved!">
-<meta property="og:description" content="实际工作中，有很多的服务器，为保证安全性和时效性，一般会取一台跳板机服务器作为外网连接媒介，把其他所有服务器都放在内网，所有服务都通过跳板机提供对外接口，若是要执行线上维护，就都先登录跳板机，然后由跳板机切换登录到其他服务器。如果每次切换都ssh+Server IP，那效率就太低了……
-下面是一个效率比较高也比较可靠的方案：
-①在跳板机上设置登录到各个内网服务器的ssh证书，ssh登录的时候就不需">
-<meta property="og:updated_time" content="2015-03-19T14:09:04.000Z">
+<meta property="og:description" content="前些天，看了电影『驴得水』，朋友跟我讲，很心疼张一曼，我也回了个『嗯，心疼』，然后又接了句『也心疼周铁男』。在听到枪响之前，这是我最喜欢的一个角色，年轻、莽撞、单纯，枪响之后，这个人立马变成了自己曾经讨厌的样子。最近一直在问自己：忙忙碌碌一整年，如今的自己是个什么样子？
+去年年底，确定了加入口袋，然后休息了一段时间，今年过完春节就直接过来了。如今再审视当初的决定，我很庆幸。一整年的时间里，懈怠过多">
+<meta property="og:updated_time" content="2016-12-25T14:35:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shell脚本实现服务器单板快速登录切换">
-<meta name="twitter:description" content="实际工作中，有很多的服务器，为保证安全性和时效性，一般会取一台跳板机服务器作为外网连接媒介，把其他所有服务器都放在内网，所有服务都通过跳板机提供对外接口，若是要执行线上维护，就都先登录跳板机，然后由跳板机切换登录到其他服务器。如果每次切换都ssh+Server IP，那效率就太低了……
-下面是一个效率比较高也比较可靠的方案：
-①在跳板机上设置登录到各个内网服务器的ssh证书，ssh登录的时候就不需">
+<meta name="twitter:title" content="Just Be Unreserved!">
+<meta name="twitter:description" content="前些天，看了电影『驴得水』，朋友跟我讲，很心疼张一曼，我也回了个『嗯，心疼』，然后又接了句『也心疼周铁男』。在听到枪响之前，这是我最喜欢的一个角色，年轻、莽撞、单纯，枪响之后，这个人立马变成了自己曾经讨厌的样子。最近一直在问自己：忙忙碌碌一整年，如今的自己是个什么样子？
+去年年底，确定了加入口袋，然后休息了一段时间，今年过完春节就直接过来了。如今再审视当初的决定，我很庆幸。一整年的时间里，懈怠过多">
 
 
 
@@ -119,7 +116,7 @@
   };
 </script>
 
-  <title> Shell脚本实现服务器单板快速登录切换 | Just Be Unreserved! </title>
+  <title>  | Just Be Unreserved! </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +256,7 @@
             
             
               
-                Shell脚本实现服务器单板快速登录切换
+                
               
             
           </h1>
@@ -271,38 +268,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-10T22:43:39+08:00" content="Nov 10 2013">
-              Nov 10 2013
+            <time itemprop="dateCreated" datetime="2016-12-25T22:36:03+08:00" content="Dec 25 2016">
+              Dec 25 2016
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/11/10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/10/" itemprop="commentsCount"></span>
+                <a href="/2016/12/25/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/25/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -330,11 +308,19 @@
       
 
       
-        <p>实际工作中，有很多的服务器，为保证安全性和时效性，一般会取一台跳板机服务器作为外网连接媒介，把其他所有服务器都放在内网，所有服务都通过跳板机提供对外接口，若是要执行线上维护，就都先登录跳板机，然后由跳板机切换登录到其他服务器。如果每次切换都ssh+Server IP，那效率就太低了……</p>
-<p>下面是一个效率比较高也比较可靠的方案：</p>
-<p>①在跳板机上设置登录到各个内网服务器的ssh证书，ssh登录的时候就不需要再输入密码，直接通过证书加解密会非常方便，安全性也会提高。</p>
-<p>②通过以下脚本，实现快速切换登录：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#!/bin/bash</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Source function library</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">"$1"</span> in</span><br><span class="line">master)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.101</span></span><br><span class="line">  ;;</span><br><span class="line">slave)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.102</span></span><br><span class="line">  ;;</span><br><span class="line">web1)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.103</span></span><br><span class="line">  ;;</span><br><span class="line">web2)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.104</span></span><br><span class="line">  ;;</span><br><span class="line">web3)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.105</span></span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  echo <span class="string">"useage: con &#123;master|slave|web1|web2|web3&#125;"</span></span><br><span class="line">  ;;</span><br><span class="line">esac</span><br><span class="line"><span class="built_in">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
-<p>  将以上脚本命名为con，放入/bin文件夹下，赋予执行权限，然后就可以使用con master|slave|web1|web2|web3来切换登录到各个服务器了。</p>
+        <p>前些天，看了电影『驴得水』，朋友跟我讲，很心疼张一曼，我也回了个『嗯，心疼』，然后又接了句『也心疼周铁男』。在听到枪响之前，这是我最喜欢的一个角色，年轻、莽撞、单纯，枪响之后，这个人立马变成了自己曾经讨厌的样子。最近一直在问自己：忙忙碌碌一整年，如今的自己是个什么样子？</p>
+<p>去年年底，确定了加入口袋，然后休息了一段时间，今年过完春节就直接过来了。如今再审视当初的决定，我很庆幸。一整年的时间里，懈怠过多少次，就被鼓励过多少次，也就成长了多少次。假如是放在一年前，我可能会觉着自己做不到现在这样。有时候我会想，假如没有那么多次的懈怠，而是一直奋不顾身的往前冲，是不是结果会更好一点？以我的性格，即便知道结果会更好，恐怕依然会有那么多次的懈怠。这一年的经历，我更加确信这是一个很好的团队，有最好的 HR，有最好的领导，有最好的伙伴。也正是因为这些亦师亦友的同事们，才会允许我有这么多的懈怠。</p>
+<p>如果只是看这过去的一年，也许还可以沾沾自喜。</p>
+<ul>
+<li>到现在，整个项目的平台化改造基本完成，还剩下一些细枝末节的工作，都是一些体力活，以后会慢慢完善。 </li>
+<li>工作之余看了15本书，有传记类、小说类、管理类、心理类…比之以前，通过读书开始更多的思考宏观层面的东西了。</li>
+<li>举行了婚礼，亲朋好友也终于都放心了。作为一个男人，终于下决心去承担自己应该承担的那份责任。</li>
+<li>被折磨了十多年鼻炎，终于下决心去做了手术，虽然没有彻底治愈，不过总算是有效果。</li>
+<li>看了两场很早之前就想去的奶茶刘若英的演唱会，而且第一场是很有纪念意义的这一年的第一天。</li>
+<li>认识了喜欢同样类型电影的新朋友，我想这会是一辈子的财富吧。</li>
+</ul>
+<p>然而在这一年的最后几天，依然开始莫名其妙地很焦虑，回想一下，多年以前自己的理想，如今越来越看不清楚。事到如今，终究是一事无成，没有长成十五岁的自己讨厌的样子，却也没有成为理想中的大人。在北京这样一个冰冷的城市的冰冷的冬天里，面对这样的自己，难免会让自己这模糊的未来显得更加虚无缥缈。我是一个很传统的人，从小到大，都在极力克制自己，在我所有的已经形成的观念里，努力守规矩是一件很重要的事，克制会创造幸福。我不喜欢迟到，不喜欢不上进，不喜欢把大量精力都浪费在社交上，不喜欢把太多的时间都浪费在睡觉上，不喜欢桌子上堆好多垃圾…然而即便如此，这么久了，还是一无所成。在中国这样一个如此重视家这个概念的国度里，我这样一个传统观念如此根深蒂固的人，就这样一直在离家几千里之外的地方飘啊飘啊飘啊…儿行千里母担忧啊，在几千里外的家里，越来越苍老的父亲母亲，还要承受为几千里之外的儿子的平安健康提心吊胆。这实在太让人沮丧了。每每念及于此，总会忍不住悲伤起来，有时候会觉着自己是不是一直都是错的…</p>
+<p>也许这一生就这样了吧。再往下想，正如即便事先知道面对困难不去懈怠会有更好的结果，我还是会懈怠一样，选择了这样的人生，已然成为了这样的自己，注定要在焦虑和安逸中度过每一个春夏秋冬，也许更应该放宽心，至少让家里的父母对自己放心，让自己不至于在畏首畏尾里蹉跎岁月。『我从来不曾爱过一个人会比海更深，奢求太多也注定无济于事』。经常会劝别人，既来之，则安之，要放宽心，这事没那么严重。这样放之天下皆准的道理，我讲起来最是得心应手。而我这么克制的人，当然也不可能会一直焦虑下去。不是每个人都能成为自己理想中的大人。比去年的这个时候，我让家人朋友更放心了，这就是我啊。</p>
 
       
     </div>
@@ -354,30 +340,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Linux/" rel="tag">#Linux</a>
-          
-            <a href="/tags/SSH/" rel="tag">#SSH</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/11/06/" rel="next" title="如果我是DNSPod的产品经理">
-                <i class="fa fa-chevron-left"></i> 如果我是DNSPod的产品经理
+              <a href="/2016/12/08/" rel="next" title="故事要开始了吗">
+                <i class="fa fa-chevron-left"></i> 故事要开始了吗
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2013/12/06/" rel="prev" title="怎样击败360">
-                怎样击败360 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -745,9 +719,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'easydonecn';
-      var disqus_identifier = '2013/11/10/';
-      var disqus_title = 'Shell脚本实现服务器单板快速登录切换';
-      var disqus_url = 'http://www.easydone.cn/2013/11/10/';
+      var disqus_identifier = '2016/12/25/';
+      var disqus_title = '';
+      var disqus_url = 'http://www.easydone.cn/2016/12/25/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
