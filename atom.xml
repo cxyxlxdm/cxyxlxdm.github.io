@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2016-12-30T12:35:04.000Z</updated>
+  <updated>2016-12-30T12:45:22.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -16,14 +16,14 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>2016-12-30-一个不得已的解释</title>
+    <title>一个不得已的解释</title>
     <link href="http://www.easydone.cn/2016/12/30/"/>
     <id>http://www.easydone.cn/2016/12/30/</id>
     <published>2016-12-30T12:32:52.000Z</published>
-    <updated>2016-12-30T12:35:04.000Z</updated>
+    <updated>2016-12-30T12:45:22.000Z</updated>
     
-    <content type="html">&lt;p&gt;最近真是节奏不断…起因都是在朋友圈里说了一些人认为不该说的话。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;前两天被 drakeet 拉黑了，原因我也不想多说了。总之，当时反应是比较愕然，有那么一瞬间的失落，不过随即就消失了，慢慢地有一些生气一直到现在，不过并不在意，不会放在心上。&lt;/p&gt;
+    <content type="html">&lt;p&gt;最近真是节奏不断…起因都是在朋友圈里说了一些人认为不该说的话。&lt;/p&gt;
+&lt;p&gt;前两天被 drakeet 拉黑了，原因我也不想多说了。总之，当时反应是比较愕然，有那么一瞬间的失落，不过随即就消失了，慢慢地有一些生气一直到现在，不过并不在意，不会放在心上。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;再接下来的一件事就有点让人懊恼了，而且因为牵涉到的人，也会觉着有一些伤心。当然，像我这么看得开的人，绝对不可能会因为已经无可挽回的与自己没什么关系的事情，而造成的这种不好的情绪持续太久。但是又不能看着事态进一步扩展，让不明真相的人产生误会。于情于理，这样的解释都必不可少。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;首先，我要说明的是，我认识的做 Android 的人真不多，所以说的 dodola 在 Android 方面的造诣在我认识的做 Android 的人里至少能排进前五，这是经过深思熟虑的，而且我不会改；&lt;/li&gt;
@@ -41,11 +41,12 @@
     
     <summary type="html">
     
-      &lt;p&gt;最近真是节奏不断…起因都是在朋友圈里说了一些人认为不该说的话。
+      &lt;p&gt;最近真是节奏不断…起因都是在朋友圈里说了一些人认为不该说的话。&lt;/p&gt;
+&lt;p&gt;前两天被 drakeet 拉黑了，原因我也不想多说了。总之，当时反应是比较愕然，有那么一瞬间的失落，不过随即就消失了，慢慢地有一些生气一直到现在，不过并不在意，不会放在心上。
     
     </summary>
     
-      <category term="随便" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E4%BE%BF/"/>
+      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
       <category term="解释" scheme="http://www.easydone.cn/tags/%E8%A7%A3%E9%87%8A/"/>
