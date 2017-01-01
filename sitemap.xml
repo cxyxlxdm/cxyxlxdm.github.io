@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.easydone.cn/about/index.html</loc>
+    
+    <lastmod>2017-01-01T05:07:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.easydone.cn/2016/12/30/</loc>
     
     <lastmod>2016-12-30T12:45:22.000Z</lastmod>
@@ -849,7 +856,7 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2013/11/10/</loc>
+    <loc>http://www.easydone.cn/2012/05/22/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -857,13 +864,6 @@
   
   <url>
     <loc>http://www.easydone.cn/2013/04/01/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.easydone.cn/2013/02/01/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -905,21 +905,14 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2012/05/22/</loc>
+    <loc>http://www.easydone.cn/2013/11/10/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2013/04/29/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.easydone.cn/2012/07/02/</loc>
+    <loc>http://www.easydone.cn/2013/02/01/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -927,6 +920,13 @@
   
   <url>
     <loc>http://www.easydone.cn/2013/10/29/</loc>
+    
+    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.easydone.cn/2012/07/02/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -968,7 +968,7 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/about/index.html</loc>
+    <loc>http://www.easydone.cn/2013/04/29/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
