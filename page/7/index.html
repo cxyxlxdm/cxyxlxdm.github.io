@@ -255,6 +255,149 @@
             
               
                 
+                <a class="post-title-link" href="/2014/02/12/" itemprop="url">
+                  zsh安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-02-12T00:06:50+08:00" content="Feb 12 2014">
+              Feb 12 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/02/12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/12/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>实在忍不了了，每次新装完Linux系统，都要重新搭一次使用环境，其实对于我而言也很简单，只需要安装几个软件就可以了，其实说白了，也就是用zsh替换系统默认的bash，其他几个软件有的是安装zsh必须的，有的是配合zsh使用起来会更爽。但是却也真的懒得去记那些安装步骤，还是记录下来了事，以后也方便查阅。</p>
+<p>我的使用环境必须包含下面几个软件：</p>
+<ul>
+<li>Vim</li>
+<li>git</li>
+<li>zsh</li>
+<li>oh-my-zsh</li>
+<li>autojump</li>
+</ul>
+<p>只有以上五个，甚至连gcc，make都可以暂时没有，但是没有上面这五个软件，系统使用起来会让我非常难受。安装过程也很简单，我也主要用CentOS和elementary OS，前者属于RedHat系的，yum即可；后者输入Ubuntu系的，使用apt-get就可以。</p>
+<p>####安装Vim<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> vim           <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> vim       <span class="comment">#elementary OS</span></span><br></pre></td></tr></table></figure></p>
+<p>####安装git<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> git           <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> git       <span class="comment">#elementary OS</span></span><br></pre></td></tr></table></figure></p>
+<p>###安装zsh<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum <span class="keyword">install</span> zsh        <span class="comment">#CentOS</span></span><br><span class="line">sudo apt-get <span class="keyword">install</span> zsh    <span class="comment">#elementary OS</span></span><br><span class="line">chsh -s /bin/zsh            <span class="comment">#修改系统默认Shell为zsh</span></span><br></pre></td></tr></table></figure></p>
+<p>###安装配置oh-my-zsh<br><a href="https://github.com/robbyrussell/oh-my-zsh/" target="_blank" rel="external">oh-my-zh</a>是zsh的一款主题，这真是一个牛叉到让人无语的项目，废话也不多说了，可以选择多种安装方法。</p>
+<p>####via curl<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/robbyrussell/oh-my-zsh/master/tools/install.<span class="keyword">sh</span> | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>####via wget<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.github.<span class="keyword">com</span>/robbyrussell/oh-my-zsh/master/tools/install.<span class="keyword">sh</span> -O - | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>以上都是自动安装方式，当然，也可以选择手动安装方式：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git:<span class="comment">//github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span></span><br><span class="line">cp ~/<span class="class">.zshrc</span> ~/<span class="class">.zshrc</span><span class="class">.orig</span></span><br><span class="line">cp ~/.oh-my-zsh/templates/zshrc<span class="class">.zsh-template</span> ~/.zshrc</span><br></pre></td></tr></table></figure></p>
+<p>安装完成之后就是配置了。</p>
+<p>根据个人喜好，修改为自己喜欢的主题即可。我使用的是example这个主题。修改文件~/.zshrc，找到<strong>ZSH_THEME</strong>，修改为：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">ZSH_THEME=<span class="value"><span class="string">"example"</span></span></span></span><br></pre></td></tr></table></figure></p>
+<p>还有一个配置就是插件的添加和修改，在文件~/.zshrc里找到<strong>plugins</strong>，把需要的插件添加上即可，就像下面这样：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=<span class="list">(<span class="keyword">git</span> autojump)</span></span><br></pre></td></tr></table></figure></p>
+<p>其中git和autojump就是两个插件。</p>
+<p>###安装autojump<br><a href="https://github.com/joelthelion/autojump/tree/master" target="_blank" rel="external">autojump</a>与zsh配合使用不仅能极大提高工作效率，还能使人的心情非常的愉悦。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//github.com/downloads/joelthelion/autojump/autojump_v21.1.2.tar.gz</span></span><br><span class="line">tar zxvf autojump_v21<span class="number">.1</span><span class="number">.2</span>.tar.gz</span><br><span class="line">cd autojump_v21<span class="number">.1</span><span class="number">.2</span></span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure></p>
+<p>然后将一下代码粘贴到~/.zshrc里<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[[ -s ~/.autojump/etc/profile.d/autojump.sh ]]</span> &amp;&amp; . ~/.autojump/etc/profile.d/autojump.sh</span><br></pre></td></tr></table></figure></p>
+<p>如此，这样，就大功告成了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/02/11/" itemprop="url">
                   回家过年
                 </a>
@@ -1593,134 +1736,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/12/12/" itemprop="url">
-                  使用mod_limitipconn.so限制apache的并发连接数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-12-12T10:49:40+08:00" content="Dec 12 2013">
-              Dec 12 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Server/" itemprop="url" rel="index">
-                    <span itemprop="name">Server</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/12/12/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/12/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前些日子，部署了nagios监控，部署快完成的时候，遇到一个问题，当时忘了记录具体怎么描述的了，现在只知道是apache的并发连接数超过了限制。最终找到了如下的解决方案。</p>
-<p>1、下载mod_limitipconn-0.24.tar.bz2，解压并编译安装。</p>
-<p>2、apache编译安装目录为/usr/local/apache2,执行以下两条命令：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make APXS=<span class="regexp">/usr/</span>local<span class="regexp">/apache2/</span>bin<span class="regexp">/apxs /</span>usr<span class="regexp">/local/</span>apache2/mod_limitipconn</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/apache2/</span>bin<span class="regexp">/apxs -c mod_limitipconn.c -o ./</span>mod_limitipconn.so</span><br></pre></td></tr></table></figure></p>
-<p>3、修改apache的配置文件httpd.conf</p>
-<p>找到这一行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">“LoadModule limitipconn_module modules/mod_limitipconn.<span class="keyword">so</span>”</span><br></pre></td></tr></table></figure></p>
-<p>去掉注释；</p>
-<p>然后增加如下内容：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ExtendedStatus On</span><br><span class="line"><span class="variable">&lt;IfModule limitipconn_module&gt;</span></span><br><span class="line">       <span class="variable">&lt;Location /usr/local/nagios/share&gt;</span></span><br><span class="line">       MaxConnPerIP 3</span><br><span class="line">       NoIPLimit image/<span class="keyword">*</span></span><br><span class="line">       <span class="variable">&lt;/Location&gt;</span></span><br><span class="line">       <span class="variable">&lt;Location /usr/local/nagios/sbin&gt;</span></span><br><span class="line">       MaxConnPerIP 3</span><br><span class="line">       NoIPLimit image/<span class="keyword">*</span></span><br><span class="line">       <span class="variable">&lt;/Location&gt;</span></span><br><span class="line"><span class="variable">&lt;/IfModule&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>/usr/local/nagios是我的nagios安装目录。</p>
-<p>4、重启apache服务。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1766,7 +1781,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">134</span>
+              <span class="site-state-item-count">135</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1783,7 +1798,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">198</span>
+                <span class="site-state-item-count">203</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

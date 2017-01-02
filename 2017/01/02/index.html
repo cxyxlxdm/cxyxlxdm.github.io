@@ -1,0 +1,909 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Obfuscate,Optimize,Preverify,ProGuard,Shink," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="概述Android 里比较常见的混淆方案就是 ProGuard 和 DexGuard，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 iXGuard。
+我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 https://sourceforge.net/projects/proguard/ 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ProGuard在插件化里的应用">
+<meta property="og:url" content="http://www.easydone.cn/2017/01/02/index.html">
+<meta property="og:site_name" content="Just Be Unreserved!">
+<meta property="og:description" content="概述Android 里比较常见的混淆方案就是 ProGuard 和 DexGuard，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 iXGuard。
+我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 https://sourceforge.net/projects/proguard/ 。">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-2@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-1@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-0@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-9@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-10@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-3@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-4@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-5@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-6@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-7@2x.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20161220-8.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-8@2x.png">
+<meta property="og:updated_time" content="2017-01-02T06:37:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ProGuard在插件化里的应用">
+<meta name="twitter:description" content="概述Android 里比较常见的混淆方案就是 ProGuard 和 DexGuard，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 iXGuard。
+我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 https://sourceforge.net/projects/proguard/ 。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> ProGuard在插件化里的应用 | Just Be Unreserved! </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Just Be Unreserved!</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学无止境。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ProGuard在插件化里的应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-02T10:48:03+08:00" content="Jan 2 2017">
+              Jan 2 2017
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Android 里比较常见的混淆方案就是 <a href="https://www.guardsquare.com/en/proguard" target="_blank" rel="external">ProGuard</a> 和 <a href="https://www.guardsquare.com/en/dexguard" target="_blank" rel="external">DexGuard</a>，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 <a href="https://www.guardsquare.com/en/ixguard" target="_blank" rel="external">iXGuard</a>。</p>
+<p>我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 <a href="https://sourceforge.net/projects/proguard/" target="_blank" rel="external">https://sourceforge.net/projects/proguard/</a> 。<a id="more"></a></p>
+<h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>ProGuard 为我们做了这么几项工作：</p>
+<ul>
+<li>shink（压缩）；</li>
+<li>optimize（优化）；</li>
+<li>obfuscate（混淆）；</li>
+<li>preverify（预校验）；</li>
+</ul>
+<p>也就是说我们常说的混淆，并不仅仅指的是混淆，而是 ProGuard，而混淆只是其多个功能里的一个。在 Android 里，现在 ProGuard 的实现方式实际上有两种：</p>
+<ul>
+<li><p>一种是传统的方式，在 proguard.pro 文件里配置规则，这种方式，更便于集中管理，这里有一点需要注意，proguardFile 是可以配置多个的，我们的插件化里，有一个公共的 proguard-rules-base.pro，是归所有模块共用的，还有一个 proguard-rules.pro，这是每个模块独有的；</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-2@2x.png" alt="img"></p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-1@2x.png" alt="img"></p>
+</li>
+<li><p>另一种是引入 support-annotation 包，使用 @keep 注解，这种方式，与日常的开发结合更紧密。<br><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-0@2x.png" alt="img"></p>
+</li>
+</ul>
+<h3 id="shink"><a href="#shink" class="headerlink" title="shink"></a>shink</h3><p>的目的是为了移除在 App 运行过程中，用不到的类和方法，这样可以缩减方法数，进而缩小  Apk 体积，是避免达到 65535 方法数的一个很好的措施。但是由于我们的插件化方案，对于这一步，我们就要慎之又慎，因为每个模块都是独立的 Apk，虽然不存在了 65535 的问题，但是一些会被其他模块调用但是在自身模块却不会调用的类或方法，经过 ProGuard 之后，就会被 shink 掉，此时就会有 ClassNotFountException 或 NoSuchMethodError，这种一般也比较好解，根据报错，将对应的类或方法 keep 掉即可。详细参数介绍看这里<a href="https://www.guardsquare.com/en/proguard/manual/usage#shrinkingoptions" target="_blank" rel="external">shrinkingoptions</a> 。</p>
+<h3 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h3><p>可以在字节码级别对代码进行优化，默认启用，可以设置不启用。详细参数介绍可以看这里<a href="https://www.guardsquare.com/en/proguard/manual/usage#optimizationoptions" target="_blank" rel="external">optimizationoptions</a> 。经过优化，可能会删除一些 log 信息，或者删除被调用没有返回值的方法，或者一些常亮引用直接就使用字符串数字本身了，但是需要注意的是对于 library 里是无效的，同样它可以合并接口，通过减少类来优化。对于我们插件化来说，就也可能出现跟 shink 一样的情况，也需要注意。</p>
+<h3 id="obfuscate"><a href="#obfuscate" class="headerlink" title="obfuscate"></a>obfuscate</h3><p>就很好理解了，也就是我们经常说的混淆，通过设置一些字符，将我们代码里的类名、方法名、变量名替换为这些设置的字符，这些字符组合起来就是一个字典，默认的字典就是我们常常看到的 abcd 之类的，我们可以自己指定一些自定义的字典，增加反编译难度，主要是这样三个参数：<code>-obfuscationdictionary filename</code> <code>-classobfuscationdictionary filename</code> <code>-packageobfuscationdictionary filename</code>，在 proguard.pro 里配置一下就可以了。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-9@2x.png" alt=""></p>
+<p>最终的混淆结果就像下面这样：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-10@2x.png" alt=""></p>
+<p>详细参数介绍看这里<a href="https://www.guardsquare.com/en/proguard/manual/usage#obfuscationoptions" target="_blank" rel="external">obfuscationoptions</a> 。混淆是保护 App 很好的手段，正常情况下，我们根据编译过程中的 warning 警告就可以确定哪些类不应该被混淆，但是由于我们的插件化方案，造成了编译期的警告全都不可用了，只能通过运行期的报错信息来处理混淆。</p>
+<h3 id="preverify"><a href="#preverify" class="headerlink" title="preverify"></a>preverify</h3><p>预校验从 Java6 开始被支持，Java6 上是可选的，Java7 以上是必须的，但是 Android 上是可选的，在我们的工程里，关闭了这个选项，这也是官方推荐的，因此暂时也就没有了解。</p>
+<p>这样之后，我们会看到，我们的主要工作主要集中在 shink、optimize 和 obfuscate 这三项上。</p>
+<h2 id="compile-VS-runtime"><a href="#compile-VS-runtime" class="headerlink" title="compile VS runtime"></a>compile VS runtime</h2><p>事实上，ProGuard 是会在编译过程中处理所有的类，因此，正常情况下，在编译过程中的 warning 信息是非常有用的，如果我们能处理掉在编译过程中所有的 warning 信息，那将会对整个 ProGuard 的工作有非常大的帮助。而且编译期的 warning 信息是非常容易解决的，根据提示将对应的类或类成员 keep 掉即可。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-3@2x.png" alt=""></p>
+<p>但是，既然这是正常情况下，就肯定有一些非正常情况，在插件化里，由于类的调用方式已经改变了，可能有大量的编译器依赖并不会被打进最终的 Apk 里，因此编译过程中的 warning 信息就几乎完全不可用了。所以，还是要从运行期入手，通过运行期的报错信息，来一点点地处理，这极其低效，然而在我的有限理解里却是最有效。</p>
+<h2 id="产物"><a href="#产物" class="headerlink" title="产物"></a>产物</h2><p>经过 ProGuard 处理之后，会生成四个文件：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-4@2x.png" alt=""></p>
+<ul>
+<li>dump.txt 描述apk文件中所有类文件的内部结构</li>
+<li>mapping.txt 列出了类、方法、成员的原貌与混淆后的映射表。在收到错误报告时，可以用它翻译混淆后的堆栈信息。参数为 -printmapping。</li>
+<li>seeds.txt 列出未混淆的类与成员。参数为 -printseeds。</li>
+<li>usage.txt 列出从apk中清除的无用代码。参数为 -printusage。</li>
+</ul>
+<p>根据上面的解释，我们可以发现 mapping.txt、seeds.txt、usage.txt 对于我们的 ProGuard 工作是非常重要的。通过分析它们，我们可以扩大混淆范围，尽可能精准地确定混淆信息。</p>
+<p>ProGuard 提供了 <strong>ReTrace</strong> 功能，也就是反混淆功能。混淆之后，堆栈信息会变得很难看懂，这时候就需要 ReTrace 出场了，通过 mapping.txt，可以还原被混淆后的堆栈信息。用起来也很简单，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar retrace.jar [options...] mapping_file [stacktrace_file]</span><br></pre></td></tr></table></figure>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>一些反编译工具能够帮助我们更好地完成 ProGuard 工作，通过一些措施，使反编译工具失效，也能更好地达到保护 App 的目的。</p>
+<h3 id="Jadx"><a href="#Jadx" class="headerlink" title="Jadx"></a>Jadx</h3><p>最常用的就是 <a href="https://github.com/skylot/jadx" target="_blank" rel="external">Jadx</a> 了，可以直接反编译 apk，apk 里的二进制 xml、dex 都可以被反编译出来，如下截图：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-5@2x.png" alt=""></p>
+<p><strong>但是 jadx 并不能反编译 jar 包和 dex 文件</strong>。</p>
+<p>其他的诸如 <a href="https://github.com/pxb1988/dex2jar" target="_blank" rel="external">dex2jar</a>，<a href="https://github.com/iBotPeaches/Apktool" target="_blank" rel="external">Apktool</a>，<a href="https://github.com/JesusFreke/smali" target="_blank" rel="external">smali/baksmali</a>，<a href="https://bytecodeviewer.com/" target="_blank" rel="external">BytecodeViewer</a> 等，也都不错，不过都不如 jadx 用起来简单。前三者也没有 GUI 工具，功能也不够丰富。</p>
+<h3 id="BytecodeViewer"><a href="#BytecodeViewer" class="headerlink" title="BytecodeViewer"></a>BytecodeViewer</h3><p>值得一提的是 <code>BytecodeViewer</code>：</p>
+<ul>
+<li>它像 jadx 一样，也提供了 GUI 工具；</li>
+<li>对于 Java 的反编译提供了更多种方案，理论上应该是几种工具里反编译最准确，可定制性也最强的；</li>
+<li>更新也很快；</li>
+<li>比 jadx 更强大的一点是，它还可以反编译 jar 和 dex；</li>
+<li>而且更加难能可贵的是，它不仅提供了 class 的反编译，还可以可视化看到 smali 代码（如下图）。</li>
+</ul>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-6@2x.png" alt=""></p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-7@2x.png" alt=""></p>
+<p>但是实际上它对 apk 的支持并不好，经常会出问题。而且对于<strong>插件化</strong>方案来讲，它有一个致命的缺陷，就是不支持一个 apk 里存在多个<code>packageId</code>，一旦 apk 里有多个 <code>packageId</code>，工具就会 crash。</p>
+<p>除了这些专门针对 Android 的反编译工具之外，还有一些针对 Java 的反编译工具，也可以参考一下，如 CFR、Procyon/<a href="https://github.com/deathmarine/Luyten" target="_blank" rel="external">luyten</a>，<a href="https://github.com/java-decompiler/jd-gui/" target="_blank" rel="external">JD-GUI</a> 等，前两者比 JD-GUI 更准确，也更强大稳定。</p>
+<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><p><strong>ProGuard </strong>的源码主要分为几个部分：</p>
+<ul>
+<li>如何读取输入的文件（readInput）？</li>
+<li>shink、optimize、obfuscate、preverify 如何处理文件（Android 新的编译工具 Jack 执行任务的过程已经包含了 ProGuard，说明 ProGuard 不仅能处理 class？存疑。）？</li>
+<li>如何将输入的文件与 ProGuard 参数组合（Configuration）？</li>
+</ul>
+<p>这里只是大致分析一下如何读取，obfuscate 如何工作，以及 ProGuard 的参数配置部分。optimize 代码量太大了，以后再慢慢看，preverify 项目里没用到，shink 要简单不少，因此这三部分就不作分析了。</p>
+<h3 id="readInput"><a href="#readInput" class="headerlink" title="readInput"></a>readInput</h3><p>先找到 <code>ProGuard#main</code> 方法，在这里经过一系列 check，调到 <code>readInput()</code> 方法，然后实例化 <code>InputReader</code>，并调用 <code>readInput(String, ClassPath, DataEntryReader)</code>，通过循环遍历读取 <code>class path entry</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Reads the given input class path entry.</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readInput</span><span class="params">(String messagePrefix, ClassPathEntry classPathEntry, DataEntryReader dataEntryReader)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Create a reader that can unwrap jars, wars, ears, and zips.</span></span><br><span class="line">        DataEntryReader reader =</span><br><span class="line">                DataEntryReaderFactory.createDataEntryReader(messagePrefix,</span><br><span class="line">                        classPathEntry,</span><br><span class="line">                        dataEntryReader);</span><br><span class="line">        <span class="comment">// Create the data entry pump.</span></span><br><span class="line">        DirectoryPump directoryPump = <span class="keyword">new</span> DirectoryPump(classPathEntry.getFile());</span><br><span class="line">        <span class="comment">// Pump the data entries into the reader.</span></span><br><span class="line">        directoryPump.pumpDataEntries(reader);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> (IOException) <span class="keyword">new</span> IOException(<span class="string">"Can't read ["</span> + classPathEntry + <span class="string">"] ("</span> + ex.getMessage() + <span class="string">")"</span>).initCause(ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>紧接着递归调用 <code>readFiles</code> 方法，读取每一个文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Reads the given subdirectory recursively, applying the given DataEntryReader</span><br><span class="line"> * to all files that are encountered.</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readFiles</span><span class="params">(File file, DataEntryReader dataEntryReader)</span></span><br><span class="line">        <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the file data entry to the reader.</span></span><br><span class="line">    dataEntryReader.read(<span class="keyword">new</span> FileDataEntry(directory, file));</span><br><span class="line">    <span class="keyword">if</span> (file.isDirectory()) &#123;</span><br><span class="line">        <span class="comment">// Recurse into the subdirectory.</span></span><br><span class="line">        File[] listedFiles = file.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; listedFiles.length; index++) &#123;</span><br><span class="line">            File listedFile = listedFiles[index];</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                readFiles(listedFile, dataEntryReader);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> (IOException) <span class="keyword">new</span> IOException(<span class="string">"Can't read ["</span> + listedFile.getName() + <span class="string">"] ("</span> + e.getMessage() + <span class="string">")"</span>).initCause(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由这里，我们可以看到，关键点在 <code>DataEntryReader</code>，这是个接口，有不同的实现类，这会根据传入的 file 的不同，选择不同的实现类去实例化。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20161220-8.png" alt=""></p>
+<p>以 ClassReader 为例，继续下面的分析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Implementations for DataEntryReader.</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(DataEntry dataEntry)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Get the input stream.</span></span><br><span class="line">        InputStream inputStream = dataEntry.getInputStream();</span><br><span class="line">        <span class="comment">// Wrap it into a data input stream.</span></span><br><span class="line">        DataInputStream dataInputStream = <span class="keyword">new</span> DataInputStream(inputStream);</span><br><span class="line">        <span class="comment">// Create a Clazz representation.</span></span><br><span class="line">        Clazz clazz;</span><br><span class="line">        <span class="keyword">if</span> (isLibrary) &#123;</span><br><span class="line">            clazz = <span class="keyword">new</span> LibraryClass();</span><br><span class="line">            clazz.accept(<span class="keyword">new</span> LibraryClassReader(dataInputStream, skipNonPublicLibraryClasses, skipNonPublicLibraryClassMembers));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            clazz = <span class="keyword">new</span> ProgramClass();</span><br><span class="line">            clazz.accept(<span class="keyword">new</span> ProgramClassReader(dataInputStream));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Apply the visitor, if we have a real class.</span></span><br><span class="line">        String className = clazz.getName();</span><br><span class="line">        <span class="keyword">if</span> (className != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!dataEntry.getName().replace(File.pathSeparatorChar, ClassConstants.PACKAGE_SEPARATOR).equals(className + ClassConstants.CLASS_FILE_EXTENSION) &amp;&amp;</span><br><span class="line">                    warningPrinter != <span class="keyword">null</span>) &#123;</span><br><span class="line">                warningPrinter.print(className,</span><br><span class="line">                        <span class="string">"Warning: class ["</span> + dataEntry.getName() + <span class="string">"] unexpectedly contains class ["</span> + ClassUtil.externalClassName(className) + <span class="string">"]"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            clazz.accept(classVisitor);</span><br><span class="line">        &#125;</span><br><span class="line">        dataEntry.closeInputStream();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> (IOException) <span class="keyword">new</span> IOException(<span class="string">"Can't process class ["</span> + dataEntry.getName() + <span class="string">"] ("</span> + ex.getMessage() + <span class="string">")"</span>).initCause(ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得一提的是，在 ProGuard 源码里用了大量的<strong>装饰器模式</strong>和<strong>访问者模式</strong>，代码阅读起来还是有一些困难。</p>
+<p>在上面的代码里，<code>Clazz</code> 作为一个 <code>Element（抽象元素）</code>，其实现类  <code>LibraryClass</code> 和 <code>ProgramClass</code> 是 <code>ConcreteElement（具体元素）</code>，<code>ClassVisitor</code> 作为一个 <code>Visitor（抽象访问者）</code>，其实现类 <code>ProgramClassReader</code> 和 <code>LibraryClassReader</code> 都是 <code>ConcreteVisitor（具体访问者）</code>，元素调用 <code>accept</code> 方法（需要传入参数访问者），而在元素的 accept 方法里（元素里还有诸多其他的业务方法），又调用了访问者的 <code>visitProgramClass(ProgramClass programClass)</code> 或 <code>visitLibraryClass(LibraryClass libraryClass)</code>方法，从而实现『双重分派』，这里实际上少了一个 <code>ObjectStructure（对象结构）</code>的角色和增加删除元素的方法，对象结构是元素的集合。下面就是简单的图示：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/proguard/20170102-8@2x.png" alt=""></p>
+<p>如果是完整的访问者模式，这里需要修改一下，增加对象结构，然后编译集合，这样就可以使每一个元素都调用到访问者的 accept 方法，再加上增加元素和删除元素的方法。如果新增加元素，只需要调用增加删除元素的方法即可，而无需修改其他代码。</p>
+<h3 id="obfuscate-1"><a href="#obfuscate-1" class="headerlink" title="obfuscate"></a>obfuscate</h3><p>对访问者模式有一个大致了解之后，obfuscate 的代码也就不那么难读懂了。在这里 ClassPool 是元素，ClassPoolVistor 是访问者。调用 Obfuscator 的 execute 方法，在这个方法里就按照下面的步骤执行：</p>
+<ol>
+<li><p>先去 check 一下 keep 规则、applyMapping、printMapping 是否同时为空，同时为空就抛出异常，否则继续；</p>
+</li>
+<li><p>清空 visitor 信息；</p>
+</li>
+<li><p>根据类成员的名字是否要全局对应，如果是的话，就 link 所有的类，否则就 link 所有类里的非 private 方法，具体做法是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ClassVisitor memberInfoLinker = configuration.useUniqueClassMemberNames ? (ClassVisitor)<span class="keyword">new</span> AllMemberVisitor(<span class="keyword">new</span> MethodLinker()) : (ClassVisitor)<span class="keyword">new</span> BottomClassFilter(<span class="keyword">new</span> MethodLinker());</span><br><span class="line">programClassPool.classesAccept(memberInfoLinker);</span><br><span class="line">libraryClassPool.classesAccept(memberInfoLinker);</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">classesAccept</span><span class="params">(ClassVisitor classVisitor)</span> </span>&#123; <span class="comment">//classesAccept 是 ClassPool 这个元素里的一个业务方法，而在这个方法里，又将 memberInfoLinker 作为一个访问者，通过循环遍历，处理每一个类。</span></span><br><span class="line">    Iterator iterator = classes.values().iterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        Clazz clazz = (Clazz) iterator.next();</span><br><span class="line">        clazz.accept(classVisitor);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建标记为 seed（参照上文的 seeds.txt） 的 visitor，并标记 seed；</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NameMarker nameMarker = <span class="keyword">new</span> NameMarker();</span><br><span class="line">ClassPoolVisitor classPoolvisitor =</span><br><span class="line">    ClassSpecificationVisitorFactory.createClassPoolVisitor(configuration.keep,</span><br><span class="line">                                                            nameMarker,</span><br><span class="line">                                                            nameMarker,</span><br><span class="line">                                                            <span class="literal">false</span>,</span><br><span class="line">                                                            <span class="literal">false</span>,</span><br><span class="line">                                                            <span class="literal">true</span>);</span><br><span class="line"><span class="comment">// 又是访问者模式</span></span><br><span class="line">programClassPool.accept(classPoolvisitor);</span><br><span class="line">libraryClassPool.accept(classPoolvisitor);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>keep library 里的 class 和 library 里的 class member；</p>
+</li>
+<li><p>keep 返回动态方法调用的类成员；</p>
+</li>
+<li><p>标记需要被 keep 的 attributes；</p>
+</li>
+<li><p>keep 方法的参数和参数类型；</p>
+</li>
+<li><p>移除被标记为丢弃的 attitutes；</p>
+</li>
+<li><p>applyMapping；</p>
+</li>
+<li><p>为所有的类指定新的名字（应用混淆字典）；</p>
+</li>
+<li><p>为所有的类成员指定新的名字；</p>
+</li>
+<li><p>解决在替换名字过程中可能引起的冲突；</p>
+</li>
+<li><p>如果有 warning 新的话，就打印 warning 信息；</p>
+</li>
+<li><p>移除没有用到的常量。</p>
+</li>
+</ol>
+<p>这就是整个混淆的过程。以上步骤除了第一步的 check 之外，无一例外全都是通过访问者模式实现的。</p>
+<h2 id="常见问题（runtime）"><a href="#常见问题（runtime）" class="headerlink" title="常见问题（runtime）"></a>常见问题（runtime）</h2><p>需要重点提及的一个问题就是因为<strong>间接依赖</strong>，造成不该被混淆优化的类和类成员被混淆优化了。比如 Activity，Fragment 这种，类被打进了宿主里，其他模块引用的又是 BaseActivity 这种中间类，同时又没有通过 provided 去依赖，这样就会造成 Activity 被混淆了。实践过程中，有相当一部分问题都是这种原因造成的。我们现在的解决方案是，让所有的模块都 provided 了一份其他所有模块的 api，这样保证不会因为间接依赖而出问题，不过因为打包的时候会扫描所有的类，会造成编译速度会慢几秒钟。</p>
+<ul>
+<li><p>java.lang.ClassNotFoundException</p>
+<p>类找不到，keep 掉对应的类即可。</p>
+</li>
+<li><p>java.lang.NoSuchMethodError</p>
+<p>方法找不到，keep 掉对应的方法即可。</p>
+</li>
+<li><p>Java.lang.UnsupportedOperationException: Required method xxx was not overridden</p>
+<p>方法没被重写，keep 掉对应的方法即可。</p>
+</li>
+<li><p>java.lang.AbstractMethodError</p>
+<p>接口里方法和 new 出来的接口对象里实现的方法名不一致，需要保证它们是一致的。</p>
+</li>
+<li><p>other</p>
+<p>其他问题，可以先把对应的类给 keep 掉，然后再去断点调试定位哪里出了问题。</p>
+</li>
+</ul>
+<hr>
+<p>这就是我做 ProGuard 相关的工作时的一些经验。ProGuard 的工作其实是很不容易做的，这最需要耐心，很多问题有时候经验本身会显得更重要。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Obfuscate/" rel="tag">#Obfuscate</a>
+          
+            <a href="/tags/Optimize/" rel="tag">#Optimize</a>
+          
+            <a href="/tags/Preverify/" rel="tag">#Preverify</a>
+          
+            <a href="/tags/ProGuard/" rel="tag">#ProGuard</a>
+          
+            <a href="/tags/Shink/" rel="tag">#Shink</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/" rel="next" title="一个不得已的解释">
+                <i class="fa fa-chevron-left"></i> 一个不得已的解释
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://easydone.qiniudn.com/default_avatar.jpg"
+               alt="Ailurus" />
+          <p class="site-author-name" itemprop="name">Ailurus</p>
+          <p class="site-description motion-element" itemprop="description">Android Developer</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">135</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">203</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank" title="G+">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  G+
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liangzhitao" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/liangzhitao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/liangzhitao" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/208087666" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://nicodelee.sinaapp.com" title="日志" target="_blank">日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamwent.github.io" title="大城小黄" target="_blank">大城小黄</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiequan.info" title="谢权" target="_blank">谢权</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://veaer.com" title="veaer" target="_blank">veaer</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://itangqi.me" title="汤奇" target="_blank">汤奇</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#功能"><span class="nav-number">2.</span> <span class="nav-text">功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shink"><span class="nav-number">2.0.1.</span> <span class="nav-text">shink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimize"><span class="nav-number">2.0.2.</span> <span class="nav-text">optimize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#obfuscate"><span class="nav-number">2.0.3.</span> <span class="nav-text">obfuscate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#preverify"><span class="nav-number">2.0.4.</span> <span class="nav-text">preverify</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compile-VS-runtime"><span class="nav-number">2.1.</span> <span class="nav-text">compile VS runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产物"><span class="nav-number">2.2.</span> <span class="nav-text">产物</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">2.3.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jadx"><span class="nav-number">2.3.1.</span> <span class="nav-text">Jadx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BytecodeViewer"><span class="nav-number">2.3.2.</span> <span class="nav-text">BytecodeViewer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码解析"><span class="nav-number">2.4.</span> <span class="nav-text">源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#readInput"><span class="nav-number">2.4.1.</span> <span class="nav-text">readInput</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#obfuscate-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">obfuscate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题（runtime）"><span class="nav-number">2.5.</span> <span class="nav-text">常见问题（runtime）</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2017/01/02/';
+      var disqus_title = 'ProGuard在插件化里的应用';
+      var disqus_url = 'http://www.easydone.cn/2017/01/02/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
