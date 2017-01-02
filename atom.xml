@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2017-01-02T06:37:43.000Z</updated>
+  <updated>2017-01-02T06:41:59.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://www.easydone.cn/2017/01/02/"/>
     <id>http://www.easydone.cn/2017/01/02/</id>
     <published>2017-01-02T02:48:03.000Z</published>
-    <updated>2017-01-02T06:37:43.000Z</updated>
+    <updated>2017-01-02T06:41:59.000Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;Android 里比较常见的混淆方案就是 &lt;a href=&quot;https://www.guardsquare.com/en/proguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ProGuard&lt;/a&gt; 和 &lt;a href=&quot;https://www.guardsquare.com/en/dexguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DexGuard&lt;/a&gt;，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 &lt;a href=&quot;https://www.guardsquare.com/en/ixguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;iXGuard&lt;/a&gt;。&lt;/p&gt;
+    <content type="html">&lt;p&gt;Android 里比较常见的混淆方案就是 &lt;a href=&quot;https://www.guardsquare.com/en/proguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ProGuard&lt;/a&gt; 和 &lt;a href=&quot;https://www.guardsquare.com/en/dexguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DexGuard&lt;/a&gt;，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 &lt;a href=&quot;https://www.guardsquare.com/en/ixguard&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;iXGuard&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 &lt;a href=&quot;https://sourceforge.net/projects/proguard/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://sourceforge.net/projects/proguard/&lt;/a&gt; 。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&quot;功能&quot;&gt;&lt;a href=&quot;#功能&quot; class=&quot;headerlink&quot; title=&quot;功能&quot;&gt;&lt;/a&gt;功能&lt;/h1&gt;&lt;p&gt;ProGuard 为我们做了这么几项工作：&lt;/p&gt;
 &lt;ul&gt;
@@ -159,7 +159,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;Android 里比较常见的混淆方案就是 &lt;a href=&quot;https://www.guardsquare.com/en/proguard&quot;&gt;ProGuard&lt;/a&gt; 和 &lt;a href=&quot;https://www.guardsquare.com/en/dexguard&quot;&gt;DexGuard&lt;/a&gt;，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 &lt;a href=&quot;https://www.guardsquare.com/en/ixguard&quot;&gt;iXGuard&lt;/a&gt;。&lt;/p&gt;
+      &lt;p&gt;Android 里比较常见的混淆方案就是 &lt;a href=&quot;https://www.guardsquare.com/en/proguard&quot;&gt;ProGuard&lt;/a&gt; 和 &lt;a href=&quot;https://www.guardsquare.com/en/dexguard&quot;&gt;DexGuard&lt;/a&gt;，都是 GuardSquare 的产品，前者免费，后者收费；同时，GuardSquare 还推出了 iOS 的混淆方案 &lt;a href=&quot;https://www.guardsquare.com/en/ixguard&quot;&gt;iXGuard&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;我们用的方案是 ProGuard，因此这里的讨论只针对 ProGuard，源码见这里 &lt;a href=&quot;https://sourceforge.net/projects/proguard/&quot;&gt;https://sourceforge.net/projects/proguard/&lt;/a&gt; 。
     
     </summary>
