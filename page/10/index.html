@@ -255,6 +255,136 @@
             
               
                 
+                <a class="post-title-link" href="/2013/04/11/" itemprop="url">
+                  Linux下拷贝MySql数据库文件备份数据库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-04-11T18:05:20+08:00" content="Apr 11 2013">
+              Apr 11 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/DataBase/" itemprop="url" rel="index">
+                    <span itemprop="name">DataBase</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/04/11/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/04/11/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>大致上MySql数据库备份可以采用两种方式：一种就是直接导出sql语句或者易于导入的其他格式的sql存储文件，使用sql语句或者一些可视化客户端导出，这种方法非常简单，无需赘述；另一种方法就是拷贝出数据库文件，再将数据库文件转换成sql文件，这篇文章就介绍一下这种方法。</p>
+<p>①查找数据库文件存放位置，MySql文件的后缀有三种形式<em>.MYD、</em>.MYI、*.frm；<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> / -<span class="built_in">name</span> *.MYD</span><br></pre></td></tr></table></figure></p>
+<p>②进入数据库存储文件目录；<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/opt/</span>lanmp<span class="regexp">/mysql-5.1.63/</span>win<span class="regexp">/data/</span></span><br></pre></td></tr></table></figure></p>
+<p>③使用copy命令把所有数据拷出去；</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">copy</span> <span class="bash">mysql /home</span></span><br></pre></td></tr></table></figure>
+<p>④此时只需将这些数据库文件转换成sql文件，这也是这篇文章里我要讲的重点，如果需要的时候再将sql文件用命令导入即可；</p>
+<p>⑤新建一个数据库命名为mysqlbak，将刚才拷出来的文件夹拷入新数据库的data文件夹；<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysqlbak</span><br><span class="line">cd <span class="regexp">/home/</span>mysql</span><br><span class="line">copy * <span class="regexp">/www/</span>wdlinux<span class="regexp">/mysql-5.1.63/</span>var<span class="regexp">/mysqlbak/</span></span><br></pre></td></tr></table></figure></p>
+<p>⑥此时就已经可以看到新数据库mysqlbak里的数据了，跟原数据库mysql里的数据是一样的；</p>
+<p>⑦使用命令导出数据库文件即可。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -<span class="tag">p</span> mysqlbak /home/mysql.sql</span><br></pre></td></tr></table></figure>
+<p>⑧这home文件夹下的文件mysql.sql文件就是易导入的数据库文件。需要注意的是所有的操作都必须在操作系统下用命令完成，而不提倡使用工具。因为在实际操作过程中，我们经常会遇到数据库里的数据库文件版本和数据库版本不一致，或者新旧数据库版本不一致的问题，再或者数据服务器版本与客户端工具不兼容等意想不到的问题，如果是这种情况，使用工具导出一般会报“1577:Cannot proceed because system tables used by Event Scheduler were found damaged at server start”的错误。说到这里，其实本文也提供了一种打开mysql数据库文件的方法，如果现在只有一堆<em>.MYD、</em>.MYI、*.frm文件，执行步骤⑤到步骤⑧即可。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/04/01/" itemprop="url">
                   CentOS下SVN服务器的搭建使用
                 </a>
@@ -2068,132 +2198,6 @@ super.方法名()    --    父类的
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/04/04/" itemprop="url">
-                  我的故事
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-04-04T15:28:19+08:00" content="Apr 4 2012">
-              Apr 4 2012
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/04/04/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/04/04/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我讲下自己的故事，我毫不讳言自己内心那点小九九，我当然渴望得到更多的同情。</p>
-<p>不知道从什么时候开始，清明节不再是作为某些人祭祖而存在的节日了。放假三天，成群结队地到处跑着旅游，对这种有争议的做法，如果没有触及到自己的利益，我也懒得去做过多的评论。只是这某些人这种数典忘祖，只顾自己快活，不顾祖宗活死的做法，直接导致我回家乘车的难度系数增加了好多倍。由于家在登封，每逢节日，游客都会很多。那天，在车站等车去登封的有上千人，一辆车最多只能拉40人，我九点买到的是十一点十分的票。</p>
-<p>人太多，一开始都排队还像模像样，没过多久就乱了。人挤人，成千人挤在一个大院里，由于前一天晚上我在宿舍跟同学一起打了一个晚上的DotA，困的不行，我就随着人流飘来飘去。突然我觉得有只手在摸我的口袋，因为困有点意识模糊，我只是推开了她的手，也懒得去揭穿她，只是抬头看了眼那人。我们四目相对那一瞬间，一个嘴张歪的女孩儿叫起来了。我就这样成了人所不齿的色狼……对于自己这角色的瞬间转变，显然让我措手不及，我开始辩解。“我左手提着袋子，右手拿着手机，怎么摸你屁股？”随后，我周围立马聚集了六七个歪嘴女的同伙，看装束，像是河南司法警官学校的学生。</p>
-<p>那时候，我真是被怼蒙了，任凭那些人骂出怎样难听的话，我都毫无反应。我心里想的唯一一件事是我周围这一千多号人怎么看我，在这一千多人眼里，我就是一素质极其低下的大色狼。我怎么都想不通啊，事情怎么会变成这个样子，人生的大起大落甚至让我产生了呼吸障碍。千夫所指，不白之冤，有口莫辩，我长这么大没受过这样的冤枉，没被这么多人冤枉过……事情还没玩！那些人走了之后，我旁边有其他人聊起来，“那些人就是装逼，不就仗着人多嘛，这就随便冤枉人？”听到这句话，我的眼泪瞬间就流下来了。</p>
-<p>那一刻，我心里没有对那个偷我东西不成反而冤枉我的女孩儿的怨恨，没有对那群肆意践踏我尊严的女孩儿朋友的怨恨，更没有对那些人知道真相而不愿帮我澄清的人的怨恨，我内心只是单纯地难受，无以复加的难受。我想不通，我想不通啊，到底是自己太天真，还是这个社会太难懂。我唯一想到的就是马上逃离那个停车场大院，再也不要看到那些人的目光，事实上我自始至终也没敢看其他人的眼。到了车上，我又想到一些感情上的事，就彻底泪崩了，整个人已经处于一种崩毁的状态。我曾经也试图说清楚感情的事，但是最终发现一切都是徒劳，所幸不说了。我就觉得特别累特别累…在那种状态下，我睡着了，梦里不知怎么就梦到了韩寒的前一天发的微博，最后一段话，张国荣的句子“我一生没做坏事，为何这样？”韩寒说他知道为什么，“因为，你一生没做坏事，所以，就是这样。”可我还是不懂啊…为什么我对别人的宽容会让别人如此的下贱凶残？为什么我面对这些下贱凶残会那么地无力？为什么这个社会会如此地纵容作恶却要无情地击溃善良？</p>
-<p>“我向来是不惮以最坏的恶意，来推测中国人的，然而我还不料，也不信竟会下劣凶残到这地步。”一个人的本性很难改变，一个民族的本性更难。每个中国人都无法摆脱这样一个事实：也许这一刻你是韩寒、张国荣、舒淇，背负着无数人的责难，但这不是最糟糕的，最糟糕的是下一刻你就是那个下劣凶残的中国人，又或者是内心极度阴暗扭曲且丧心病狂到无可救药的方舟子。每个人都是小悦悦，每个人也都是自己口诛笔伐的十八个冷漠的路人。原来骂来骂去，我们竟然骂的都是自己。如此的悖论也许只有在我们这样神奇的国度才会出现吧。契诃夫在给朋友的信里说“要把自己身上的奴性一滴一滴挤出去”。我们不是没有这样的大师，“一个没有英雄的民族是可悲的民族，而一个拥有英雄而不知道爱戴他、拥护他的民族则更为可悲。”我们还要为那点奴性坚持到什么时候？</p>
-<p>瞎扯这么多，我当然明白那些冤枉我的人不会有丝毫的改变，我却也不敢想象此刻作为警校学生的他们，以后真正成了所谓的“人民警察”会是怎样一个状态。此时此刻，我当然也怨恨他们，但却不是最主要的情绪，我依然觉得很迷茫。生于长于这个价值缺失的年代，我有太多的困惑。每日都活在战战兢兢之中，即便已经如履薄冰，即便已经尽最大努力避免了天灾，却还要时刻提防自己会遭遇这样那样的人祸。太累了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2239,7 +2243,7 @@ super.方法名()    --    父类的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">135</span>
+              <span class="site-state-item-count">136</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2256,7 +2260,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">203</span>
+                <span class="site-state-item-count">204</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -255,6 +255,136 @@
             
               
                 
+                <a class="post-title-link" href="/2014/02/16/" itemprop="url">
+                  使用expect脚本实现SSH登录管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-02-16T22:02:34+08:00" content="Feb 16 2014">
+              Feb 16 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/02/16/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/16/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>expect是一个免费的编程工具语言，用来实现自动和交互式任务进行通信，而无需人的干预。expect的作者Don Libes在1990年开始编写expect时对expect做有如下定义：expect是一个用来实现自动交互功能的软件套件(expect is a software suite for automating interactive tools)。使用它，系统管理员可以创建脚本来对命令或程序进行输入，而这些命令和程序是期望从终端（terminal）得到输入，一般来说这些输入都需要手工输入进行的。expect则可以根据程序的提示模拟标准输入提供给程序需要的输入来实现交互程序执行。甚至可以实现简单的BBS聊天机器人。 </p>
+<p>expect是不断发展的，随着时间的流逝，其功能越来越强大，已经成为系统管理员的的一个强大助手。expect需要Tcl编程语言的支持，要在系统上运行expect必须首先安装Tcl。</p>
+</blockquote>
+<p>好了，以上内容全部来自于<a href="http://baike.baidu.com/subview/1604222/5864353.htm#viewPageContent" target="_blank" rel="external">百度百科</a>，说一千道一万，expect最常用的还是作为Linux脚本管理服务器，处理一些批量任务。当然，最最常用的还是SSH登录远程服务器执行操作命令，网上也到处都是类似的脚本，好记性总不如烂笔头，我也记录一下自己的所接触的一些应用实例及学习体悟吧。</p>
+<p>设想一下这样的场景，所有的服务器都在内网，公网访问管理服务器都要通过OpenVPN登录到跳板机，然后再由跳板机登录到相应的服务器进行操作，跳板机与服务器的连接都是内网地址。而服务器的Root用户是全部禁止远程登录的，跳板机与服务器间做了非Root用户的SSH-Key信任关系。但是实际生产环境中，一些操作必须要sudo才能完成，单台服务器，直接登录然后sudo就行了，但是很多台怎么办呢？这时候expect就派上用场了。</p>
+<p>废话这么多，还是直接上代码分析直观些。当然，这所有一切的前提都是要先安装expect：<strong>sudo yum install expect -y</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#!/usr/bin/expect</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> timeout <span class="number">3</span>        <span class="preprocessor">#设置超时时间，单位是秒</span></span><br><span class="line">spawn ssh test@<span class="number">192.168</span><span class="number">.10</span><span class="number">.110</span>    <span class="preprocessor">#发送SSH请求，spawn是expect的一个内建命令，用来传递交互指令，只有安装了expect之后，才会有这个命令</span></span><br><span class="line">expect     <span class="preprocessor">#返回信息匹配，expect也是expect的一个内建命令，判断上一个指令输入之后的得到输出结果是否包含<span class="string">""</span>双引号里的字符串</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"yes/no"</span> &#123; send <span class="string">"yes\r"</span>; exp_continue&#125;    <span class="preprocessor">#如果是第一次登录，会出现<span class="string">"yes/no"</span>的字符串，就发送（send）指令<span class="string">"yes\r"</span>，然后继续（exp_continue）</span></span><br><span class="line">    <span class="string">"192.168.10.120"</span> &#123; send <span class="string">"sudo touch /etc/file\r"</span> &#125;    <span class="preprocessor">#承接上个指令，出现登录的IP，发送创建文件指令</span></span><br><span class="line">&#125;</span><br><span class="line">expect <span class="string">"password:"</span>    <span class="preprocessor">#出现密码提示</span></span><br><span class="line">send <span class="string">"test\r"</span>        <span class="preprocessor">#发送密码</span></span><br><span class="line">expect eof            <span class="preprocessor">#在远程服务器上执行完命令，然后退出远程服务器</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>以上就是远程登录单台服务器执行指令的脚本，若是要在N台服务器上批量执行相同的命令，就用万能句式<strong>for i in $IP</strong>，把上面的192.168.10.110换成$IP就行了当然用户名密码得一样。<strong>注意：末尾\r一定不能漏！</strong></p>
+<p>如果是要在执行完指令后保持交互状态，停留在远程终端上，就把最后两行代码换成<strong>interact</strong>。</p>
+<p>很显然，expect还有很多的使用场景，也就不一一列举，大致的使用方法也就上面写的那么多。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/02/12/" itemprop="url">
                   zsh安装
                 </a>
@@ -1602,140 +1732,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/12/15/" itemprop="url">
-                  那些年
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-12-15T13:34:55+08:00" content="Dec 15 2013">
-              Dec 15 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/感悟/" itemprop="url" rel="index">
-                    <span itemprop="name">感悟</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/12/15/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/15/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p> 最近一直在看上世纪九十年代的一个香港剧集『天地男儿』，很经典的一个港剧。一共六十五集，之前一直强迫自己不要去看结尾，虽然真的很想很想非常想知道结局，但是又害怕错过中间精彩的剧情。那天晚上十一点多的时候，看到了五十八集了，实在忍不了了，这罗嘉良演的徐家立简直坏透了，彼时对这部剧最大的期待就是想看看这家伙怎么死的！熬到现在专门看了结尾，虽然觉得他死的太过容易，不是很过瘾，但是看到其他人还算圆满的结局，也就淡化了之前对徐家立的死的期待。多希望电视剧只有二十集啊，那时候的家立还是个好人……剧集里伍咏薇演的罗慧芳，真希望自己能有这样的老婆啊，有点后悔去查她的资料和图片，就让她的形象定格在电视剧里多好。more</p>
-<p>另外一部剧，跟这部一样，同样出自戚其义之手，更加家喻户晓，叫『创世纪』，罗嘉良演了好人。提起『创世纪』，我就又开始怀旧了。其实，不只是我，这应该是当年我们313宿舍集体的回忆。当年，我们宿舍晚上睡觉前的必备活动项目就是聊电视剧剧情。那时候我们整个学校都是封闭式管理，全体都要住校，一层楼一个公共的卫生间，宿舍里只有早上、中午和晚上开门。晚上下自习九点多，洗刷完毕躺床上就开始海侃。几年时间，聊得最多的就是『创世纪』和『流金岁月』。反倒是上了大学之后，大家都有了电脑，晚上有的上网聊妹子，有的打游戏，有的上自习到很晚，有的早早就睡觉了，再也没有高中时候那简陋的条件下的热闹情境。如今毕业了，自己在外面租房住，一个人的屋子，就愈发地怀念已经逝去的那些年。</p>
-<p>上个月的24号，我回家参加了当时一位室友（也是我兄弟）的婚礼，回去后才发现没去几个朋友，大家不是在外面上学就是上班，都很忙，时间排不开，我一个人捎了八个人的红包。在去他家的前一天晚上，我发了一条状态：“小伙伴们，在明天温暖的日光里，我会带着你们的心意，去看我们共同的，十七岁那年的雨季。”结果钓上来好多以前默默潜水的家伙，哈哈！其实我也是请了三天假，加上两天周末，五天时间专门为回去参加他的婚礼。看着兄弟脸上洋溢着的幸福，心中由衷地感到高兴。脑海里不断地闪现那些年的点点滴滴，不管是相互扶持，还是冲突矛盾，现在都成了兄弟之间共同的美好回忆。</p>
-<p>前些日子，和菜头在微信上发了一篇文章<a href="http://url.cn/VRD0pe" target="_blank" rel="external">人过三十交友难</a>。这么伤感的一个题目，这篇文章却以一个理性到近乎毫无感情和残忍的方式平述出来，三十岁，真的好可怕。文章最后做了一个总结：  </p>
-<p>###30岁后，人们为何很难结交亲密朋友？</p>
-<blockquote>
-<p>1）你开始觉得人生有限，不能过多用在与陌生人交流；</p>
-<p>2）结交好友的三个外部条件很难满足：</p>
-<p>近距离接触、反复见面、计划外的互动；</p>
-<p>3）社会地位和收入差异；</p>
-<p>4）对方配偶的介入；</p>
-<p>5）子女限制了你的社交圈；</p>
-<p>6）你对好友的标准比年轻时严格得多。</p>
-</blockquote>
-<p>那些年的美好与不美好，终究成了让人无法忘怀，想起来总会微笑甚至伤感的回忆。三十岁，一个说近不近，说远真的不远的时候，该珍惜现在拥有的一切了。趁着现在还拥有，朋友们，多见见面呗。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1781,7 +1777,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">135</span>
+              <span class="site-state-item-count">136</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1798,7 +1794,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">203</span>
+                <span class="site-state-item-count">204</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
