@@ -255,6 +255,128 @@
             
               
                 
+                <a class="post-title-link" href="/2013/04/29/" itemprop="url">
+                  Linux下安装配置nginx+php+mysql环境
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-04-29T16:03:24+08:00" content="Apr 29 2013">
+              Apr 29 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/04/29/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/04/29/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于最近比较忙，写的比较简略，步骤不够详细，不过基本按着这步骤顺下来，也不会出什么问题，先记录下来，以后有空再丰富下内容。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y update&#10;&#10;yum install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel //&#23433;&#35013;&#20381;&#36182;&#21253;&#10;&#10;/usr/sbin/groupadd nginx&#10;&#10;/usr/sbin/useradd -g nginx -M nginx&#10;&#10;mkdir -p /var/tmp/nginx/client //&#21019;&#24314;&#29992;&#25143;&#10;&#10;yum -y install php mysql mysql-server mysql-devel php-mysql php-cgi php-mbstring php-gd php-fastcgi //&#23433;&#35013;php&#21644;mysql&#10;&#10;rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm&#10;&#10;//&#21551;&#29992;redhat&#38468;&#20214;&#21253;&#10;&#10;yum install nginx //&#23433;&#35013;nginx&#10;&#10;chkconfig nginx on //&#35774;&#32622;&#24320;&#26426;&#21551;&#21160;&#10;&#10;yum install spawn-fcgi //&#23433;&#35013;spawn-fcgi&#26469;&#36816;&#34892;php-cgi&#10;&#10;wget http://bash.cyberciti.biz/dl/419.sh.zip&#10;&#10;unzip 419.sh.zip&#10;&#10;mv 419.sh /etc/init.d/php_cgi&#10;&#10;chmod +x /etc/init.d/php_cgi // &#33719;&#21462;spawn-fcgi &#30340;&#21551;&#21160;&#33050;&#26412;&#10;&#10;service php_cgi start //&#21551;&#21160;php_cgi&#10;&#10;location ~ \.php$ &#123;&#10;&#10;root /var/www; //&#32593;&#31449;&#26681;&#30446;&#24405;&#10;&#10;fastcgi_pass 127.0.0.1:9000;&#10;&#10;fastcgi_index index.php;&#10;&#10;fastcgi_param SCRIPT_FILENAME /var/www$fastcgi_script_name;&#10;&#10;include fastcgi_params;&#10;&#10;&#125; //&#37197;&#32622;nginx.conf&#10;&#10;&#65288;root&#25351;&#23450;&#32593;&#31449;&#26681;&#30446;&#24405;&#65307;fastcgi_param&#25351;&#23450;&#25918;&#32622;PHP&#21160;&#24577;&#31243;&#24207;&#30340;&#20027;&#30446;&#24405;&#65292;&#21363;$fastcgi_script_name&#21069;&#38754;&#30340;&#36335;&#24452;&#65289;&#10;&#10;yum install phpmyadmin //&#23433;&#35013;phpmyadmin&#10;&#10;chmod +x /var/lib/php/session //&#20462;&#25913;/var/lib/php/session&#21644;php_cgi&#26435;&#38480;&#19968;&#33268;&#10;&#10;chown -R nginx.nginx /var/lib/php/session</span><br></pre></td></tr></table></figure>
+<p>将网站目录放在/var/www目录下，访问<a href="http://IP/网站目录即可。" target="_blank" rel="external">http://IP/网站目录即可。</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/04/11/" itemprop="url">
                   Linux下拷贝MySql数据库文件备份数据库
                 </a>
@@ -1964,240 +2086,6 @@ super.方法名()    --    父类的
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/04/13/" itemprop="url">
-                  Java基础知识
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-04-13T16:16:53+08:00" content="Apr 13 2012">
-              Apr 13 2012
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/04/13/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/04/13/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a><strong>关键字</strong></h2><ul>
-<li><p><strong>Java标识符</strong></p>
-<p>  大小写字母，数字，_和$，不能以数字开头，不能使用关键字，严格区分大小写。<br>  Java注释：单行注释，多行注释，文档注释；调试程序。</p>
-</li>
-<li><p><strong>常量与变量</strong></p>
-<p>  常量的分类：整数，小数，布尔，字符（单引号），字符串（双引号），null常量</p>
-<p>  <strong>整数常量</strong>：进制。</p>
-<p>  三个二进制位为一个八进制，四个二进制位为一个十六进制位。</p>
-<p>  <strong>负数</strong>：正数二进制取反加1，负数二进制最高位是1.</p>
-</li>
-<li><p><strong>变量</strong></p>
-<p>  变量名，数据类型，数据。</p>
-<p>  强类型语言。</p>
-<p>  基本数据类型</p>
-<p>  <strong>数值型</strong>：整数类型（byte,short,int,long）;浮点型（float,double）;</p>
-<p>  <strong>字符型</strong>（char）</p>
-<p>  <strong>布尔型</strong>（boolean）</p>
-<p>  <strong>引用数据类型</strong>：类（class）;接口（interface）;数组（[ ]）</p>
-<p>  整数默认：int 小数默认：double</p>
-<p>  类型提升和强制类型转换（丢失精度），</p>
-<p>  字符运算：编码表（ASCII）国标码（gb2312）unicode（国际标准编码表）</p>
-<p>  隐性转换，显性转换</p>
-<p>  +=在底层自动做强制转换。</p>
-<p>  b=a++：先把a赋给b,b=a,a=a+1</p>
-<p>  b=++a：a先自增,然后赋给b,a=b=a+1</p>
-<p>  <strong>成员变量和局部变量的区别</strong>：</p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span></span><br><span class="line">成员变量定义在类中，整个类中都可以访问；</span><br><span class="line">局部变量定义在函数，语句，局部代码块中，只在所属的区域有效。</span><br><span class="line"><span class="number">2.</span></span><br><span class="line">成员变量存在于堆内存的对象中；</span><br><span class="line">局部变量存在于栈内存的方法中；</span><br><span class="line"><span class="number">3.</span></span><br><span class="line">成员变量随着对象的创建而存在，随着对象的消失而消失；</span><br><span class="line">局部变量随着所属区域的执行而存在，随着所属区域的结束而释放。</span><br><span class="line"><span class="number">4.</span></span><br><span class="line">成员变量都有默认初始化值；</span><br><span class="line">局部变量没有默认初始化值。</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>##<strong>运算符</strong></p>
-<ul>
-<li><p><strong>逻辑运算符</strong></p>
-<p>  与，&amp;</p>
-<p>  或，|</p>
-<p>  异或，^ 两边结果不同为真，相同为假</p>
-<p>  非，!</p>
-<p>  短路，&amp;&amp;左边结果假，右边不计算</p>
-<p>  ||左边结果真，右边不计算</p>
-</li>
-<li><p><strong>位运算符</strong></p>
-<p>  转换为二进制计算；</p>
-<p>  一个数异或另一个数两次，结果还是这个数〈常用于加解密〉；</p>
-<p>  &lt;&lt; 左移 左移几位就是原数据乘以2的几次方；</p>
-<p>  >&gt; 右移 右移几位就是原数据除以2的几次方，高位出现的空位，原来高位是什么就用什么补这个空位，保证数据正负不变；</p>
-<p>  >&gt;&gt; 无符号右移 由移后，无论高位是什么，高位出现的空位都用0来补。</p>
-</li>
-</ul>
-<ul>
-<li><strong>三元运算符</strong>  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(条件表达式)?表达式<span class="number">1</span>:表达式<span class="number">2</span>    </span><br><span class="line">如果条件为<span class="literal">true</span>,运算后的结果是表达式<span class="number">1</span>；    </span><br><span class="line">如果条件为<span class="literal">false</span>,运算后的结果是表达式<span class="number">2.</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a><strong>流程控制</strong></h2><ul>
-<li><p><strong>判断结构</strong></p>
-<p>  <strong>if语句</strong></p>
-<p>  （1）</p>
-  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span><span class="comment">(条件表达式)</span>    </span><br><span class="line">&#123;    </span><br><span class="line">    执行语句;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  if语句控制的语句为单条语句时，大括号可以省略；如果if语句后没有大括号，if就控制离它最近的那条语句。</p>
-<p>  （2）</p>
-  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  三元运算符就是if else的简写格式；当if else运算符，有一个具体的结果的时候，可以简写为三元运算符。</p>
-<p>  （3）<br>  多条件判断</p>
-  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  局部代码块可以定义局部变量的生命周期。</p>
-<p>  <strong>switch语句</strong></p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)<span class="comment">//byte,int,short,char</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> 取值<span class="number">1</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> 取值<span class="number">2</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">        ……</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  <strong>if和switch的应用场景</strong></p>
-<p>  if：</p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>对具体的值进行判断；</span><br><span class="line"><span class="number">2.</span>对区间判断；    </span><br><span class="line"><span class="number">3.</span>对运算结果是boolean类型的表达式进行判断。</span><br></pre></td></tr></table></figure>
-<p>  switch：</p>
-  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>对具体的值进行判断；    </span><br><span class="line"><span class="number">2.</span>值的个数通常是固定的；</span><br></pre></td></tr></table></figure>
-<p>  对于几个固定的值判断，建议使用switch语句，因为switch语句会将具体的答案都加载进内存，效率相对高一点。</p>
-</li>
-<li><p><strong>循环结构</strong></p>
-<p>  while</p>
-  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span><span class="comment">(条件表达式)</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  do while</p>
-  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;<span class="keyword">while</span><span class="comment">(条件表达式)</span>;</span><br></pre></td></tr></table></figure>
-<p>  for</p>
-  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">for</span><span class="params">(初始化;表达式;条件)</span></span>执行语句</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p><strong>break与contunue</strong></p>
-<p>  break:跳出</p>
-  <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">break</span>作用的范围：<span class="keyword">switch</span>语句或者循环语句。    </span><br><span class="line">当<span class="keyword">break</span>语句单独存在时，下面不要定义其他语句，因为执行不到。</span><br></pre></td></tr></table></figure>
-<p>  continue:继续</p>
-  <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">continue</span>作用的范围：循环结构。    </span><br><span class="line">结束本次循环，继续下次循环。</span><br></pre></td></tr></table></figure>
-<p>  如果continue单独存在时，下面不要有任何语句，因为执行不到。</p>
-</li>
-</ul>
-<p>##<strong>内存的划分</strong></p>
-<ul>
-<li>寄存器</li>
-<li>本地方法区</li>
-<li>方法区</li>
-<li><p>栈内存</p>
-<p>  存储的都是局部变量，而且变量所属的作用域一旦结束，该变量自动释放。即栈的生命周期比较短，更新比较快.</p>
-</li>
-<li><p>堆内存</p>
-<p>  存储的是数组和对象（其实数组就是对象），凡是new建立的都在堆中.</p>
-<p>  (1)每一个实体都有首地址;</p>
-<p>  (2)堆内存中的每一个变量都有默认初始化值，根据类型的不同而不同。整数是0，小数是0.0或0.0f，boolean是false，char是’\u0000’.</p>
-</li>
-</ul>
-<p>##<strong>一般函数与构造函数的区别</strong>    </p>
-<ul>
-<li><p><strong>构造函数</strong>：</p>
-<p>  对象创建时，就会调用与之对应的构造函数，对对象进行初始化；</p>
-<p>  只调用一次。</p>
-</li>
-<li><p><strong>一般函数</strong>：</p>
-<p>  对象创建后，需要函数功能时才调用；</p>
-<p>  可以调用多次。</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2243,7 +2131,7 @@ super.方法名()    --    父类的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2260,7 +2148,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-count">206</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

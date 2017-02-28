@@ -255,6 +255,240 @@
             
               
                 
+                <a class="post-title-link" href="/2012/04/13/" itemprop="url">
+                  Java基础知识
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-04-13T16:16:53+08:00" content="Apr 13 2012">
+              Apr 13 2012
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/04/13/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/04/13/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a><strong>关键字</strong></h2><ul>
+<li><p><strong>Java标识符</strong></p>
+<p>  大小写字母，数字，_和$，不能以数字开头，不能使用关键字，严格区分大小写。<br>  Java注释：单行注释，多行注释，文档注释；调试程序。</p>
+</li>
+<li><p><strong>常量与变量</strong></p>
+<p>  常量的分类：整数，小数，布尔，字符（单引号），字符串（双引号），null常量</p>
+<p>  <strong>整数常量</strong>：进制。</p>
+<p>  三个二进制位为一个八进制，四个二进制位为一个十六进制位。</p>
+<p>  <strong>负数</strong>：正数二进制取反加1，负数二进制最高位是1.</p>
+</li>
+<li><p><strong>变量</strong></p>
+<p>  变量名，数据类型，数据。</p>
+<p>  强类型语言。</p>
+<p>  基本数据类型</p>
+<p>  <strong>数值型</strong>：整数类型（byte,short,int,long）;浮点型（float,double）;</p>
+<p>  <strong>字符型</strong>（char）</p>
+<p>  <strong>布尔型</strong>（boolean）</p>
+<p>  <strong>引用数据类型</strong>：类（class）;接口（interface）;数组（[ ]）</p>
+<p>  整数默认：int 小数默认：double</p>
+<p>  类型提升和强制类型转换（丢失精度），</p>
+<p>  字符运算：编码表（ASCII）国标码（gb2312）unicode（国际标准编码表）</p>
+<p>  隐性转换，显性转换</p>
+<p>  +=在底层自动做强制转换。</p>
+<p>  b=a++：先把a赋给b,b=a,a=a+1</p>
+<p>  b=++a：a先自增,然后赋给b,a=b=a+1</p>
+<p>  <strong>成员变量和局部变量的区别</strong>：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span></span><br><span class="line">成员变量定义在类中，整个类中都可以访问；</span><br><span class="line">局部变量定义在函数，语句，局部代码块中，只在所属的区域有效。</span><br><span class="line"><span class="number">2.</span></span><br><span class="line">成员变量存在于堆内存的对象中；</span><br><span class="line">局部变量存在于栈内存的方法中；</span><br><span class="line"><span class="number">3.</span></span><br><span class="line">成员变量随着对象的创建而存在，随着对象的消失而消失；</span><br><span class="line">局部变量随着所属区域的执行而存在，随着所属区域的结束而释放。</span><br><span class="line"><span class="number">4.</span></span><br><span class="line">成员变量都有默认初始化值；</span><br><span class="line">局部变量没有默认初始化值。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##<strong>运算符</strong></p>
+<ul>
+<li><p><strong>逻辑运算符</strong></p>
+<p>  与，&amp;</p>
+<p>  或，|</p>
+<p>  异或，^ 两边结果不同为真，相同为假</p>
+<p>  非，!</p>
+<p>  短路，&amp;&amp;左边结果假，右边不计算</p>
+<p>  ||左边结果真，右边不计算</p>
+</li>
+<li><p><strong>位运算符</strong></p>
+<p>  转换为二进制计算；</p>
+<p>  一个数异或另一个数两次，结果还是这个数〈常用于加解密〉；</p>
+<p>  &lt;&lt; 左移 左移几位就是原数据乘以2的几次方；</p>
+<p>  >&gt; 右移 右移几位就是原数据除以2的几次方，高位出现的空位，原来高位是什么就用什么补这个空位，保证数据正负不变；</p>
+<p>  >&gt;&gt; 无符号右移 由移后，无论高位是什么，高位出现的空位都用0来补。</p>
+</li>
+</ul>
+<ul>
+<li><strong>三元运算符</strong>  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(条件表达式)?表达式<span class="number">1</span>:表达式<span class="number">2</span>    </span><br><span class="line">如果条件为<span class="literal">true</span>,运算后的结果是表达式<span class="number">1</span>；    </span><br><span class="line">如果条件为<span class="literal">false</span>,运算后的结果是表达式<span class="number">2.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a><strong>流程控制</strong></h2><ul>
+<li><p><strong>判断结构</strong></p>
+<p>  <strong>if语句</strong></p>
+<p>  （1）</p>
+  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span><span class="comment">(条件表达式)</span>    </span><br><span class="line">&#123;    </span><br><span class="line">    执行语句;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  if语句控制的语句为单条语句时，大括号可以省略；如果if语句后没有大括号，if就控制离它最近的那条语句。</p>
+<p>  （2）</p>
+  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  三元运算符就是if else的简写格式；当if else运算符，有一个具体的结果的时候，可以简写为三元运算符。</p>
+<p>  （3）<br>  多条件判断</p>
+  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(条件表达式)</span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  局部代码块可以定义局部变量的生命周期。</p>
+<p>  <strong>switch语句</strong></p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式)<span class="comment">//byte,int,short,char</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> 取值<span class="number">1</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> 取值<span class="number">2</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">        ……</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        执行语句;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  <strong>if和switch的应用场景</strong></p>
+<p>  if：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>对具体的值进行判断；</span><br><span class="line"><span class="number">2.</span>对区间判断；    </span><br><span class="line"><span class="number">3.</span>对运算结果是boolean类型的表达式进行判断。</span><br></pre></td></tr></table></figure>
+<p>  switch：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>对具体的值进行判断；    </span><br><span class="line"><span class="number">2.</span>值的个数通常是固定的；</span><br></pre></td></tr></table></figure>
+<p>  对于几个固定的值判断，建议使用switch语句，因为switch语句会将具体的答案都加载进内存，效率相对高一点。</p>
+</li>
+<li><p><strong>循环结构</strong></p>
+<p>  while</p>
+  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span><span class="comment">(条件表达式)</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  do while</p>
+  <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">    执行语句;</span><br><span class="line">&#125;<span class="keyword">while</span><span class="comment">(条件表达式)</span>;</span><br></pre></td></tr></table></figure>
+<p>  for</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">for</span><span class="params">(初始化;表达式;条件)</span></span>执行语句</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><strong>break与contunue</strong></p>
+<p>  break:跳出</p>
+  <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">break</span>作用的范围：<span class="keyword">switch</span>语句或者循环语句。    </span><br><span class="line">当<span class="keyword">break</span>语句单独存在时，下面不要定义其他语句，因为执行不到。</span><br></pre></td></tr></table></figure>
+<p>  continue:继续</p>
+  <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">continue</span>作用的范围：循环结构。    </span><br><span class="line">结束本次循环，继续下次循环。</span><br></pre></td></tr></table></figure>
+<p>  如果continue单独存在时，下面不要有任何语句，因为执行不到。</p>
+</li>
+</ul>
+<p>##<strong>内存的划分</strong></p>
+<ul>
+<li>寄存器</li>
+<li>本地方法区</li>
+<li>方法区</li>
+<li><p>栈内存</p>
+<p>  存储的都是局部变量，而且变量所属的作用域一旦结束，该变量自动释放。即栈的生命周期比较短，更新比较快.</p>
+</li>
+<li><p>堆内存</p>
+<p>  存储的是数组和对象（其实数组就是对象），凡是new建立的都在堆中.</p>
+<p>  (1)每一个实体都有首地址;</p>
+<p>  (2)堆内存中的每一个变量都有默认初始化值，根据类型的不同而不同。整数是0，小数是0.0或0.0f，boolean是false，char是’\u0000’.</p>
+</li>
+</ul>
+<p>##<strong>一般函数与构造函数的区别</strong>    </p>
+<ul>
+<li><p><strong>构造函数</strong>：</p>
+<p>  对象创建时，就会调用与之对应的构造函数，对对象进行初始化；</p>
+<p>  只调用一次。</p>
+</li>
+<li><p><strong>一般函数</strong>：</p>
+<p>  对象创建后，需要函数功能时才调用；</p>
+<p>  可以调用多次。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/04/04/" itemprop="url">
                   我的故事
                 </a>
@@ -1429,133 +1663,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/01/15/" itemprop="url">
-                  关于感情
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-01-15T13:23:09+08:00" content="Jan 15 2011">
-              Jan 15 2011
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/感悟/" itemprop="url" rel="index">
-                    <span itemprop="name">感悟</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/01/15/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2011/01/15/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>  12岁的澳洲小朋友克拉克，骑车送报时结识了小女孩琼，两人长大后相爱结婚。62年过去，克拉克已是74岁高龄，妻子患上了老年失忆症，甚至不再认识相濡以沫的丈夫，却仍然记得少女时代的青涩往事。于是克拉克老头蹬起自行车，成为了澳洲年纪最老的送报人，让爱妻仍然生活在小女孩时代的甜蜜梦境中。</p>
-<p>  记得还看过这样以故事：他向她求婚时，只说了三个字“相信我”；她为他生下第一个女儿的时候，他对她说“辛苦了”；女儿出嫁那天，他搂着她的肩说“还有我”；他收到她病危通知的那天，重复地对她说“我在这”；她要走的那一刻，他亲吻她的额头轻声说“你等我”。这一生，他没对她说过一次“我爱你”，但爱，从未离开过……</p>
-<p>  很多的感情，都因为一厢情愿，最后连朋友都当不成了。一些本来很好的友情，最后却因为对方的一句喜欢你，如果你没有反应，这一段友情似乎也难以维持下去了。表白了之后不是成了男女朋友，要不就连朋友都当不成了。然而你可能永远都不甘心只是朋友……</p>
-<p>  我们都曾经以为，有些事情是不可以放手的。时日渐远，当你回望你会发现，你曾经以为不可以放手的东西，只是生命瞬间的一块跳板。你跳过了，就可以变得更精采。人在跳板上，最辛苦的不是跳下来那一刻，而是跳下来之前心里的挣扎无助和患得患失。我们以为跳不过去了，闭上眼睛，鼓起勇气，却跳过了。</p>
-<p>  如果彼此出现早一点，也许就不会和另一个人十指紧扣。又或者相遇的再晚一点，晚到两个人在各自的爱情经历中慢慢地学会了包容与体谅、善待和妥协，也许走到一起的时候，就不会那么轻易地放弃，任性地转身，放走了爱情。没有早一步也没有晚一步，那是太难得的缘份。</p>
-<p>  有人告诉我，鱼的记忆只有7秒，7秒之后它就不记得过去的事情，一切又都变成新的。所以，在那小小鱼缸里的鱼儿，永远不会感到无聊。—— 我宁愿是条鱼，7秒一过就什么都忘记，曾经遇到的人，曾经做过的事，都可以烟消云散……可我不是鱼，无法忘记我爱的人，无法忘记牵挂的苦，无法忘记相思的痛……</p>
-<p>  迷宫般的城市，让人习惯看相同的景物， 走相同的路线，到同样的目的地； 习惯让人的生活不再变。 习惯让人有种莫名的安全感，却又有种莫名的寂寞。 而你永远不知道，你的习惯会让你错过什么。</p>
-<p>  不管怎样，即使一直一个人，没人陪，都要爱自己啊，照顾好自己。学会爱自己：我们都不是很完美的人，但我们要接受不完美的自己。在孤独的时候，给自己安慰；在寂寞的时候，给自己温暖。学会独立，告别依赖，对软弱的自己说再见。生活不是只有温暖，人生的路不会永远平坦，但只要你对自己有信心，知道自己的价值，懂的珍惜自己，世界的一切不完美，你都可以坦然面对。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1601,7 +1708,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1618,7 +1725,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-count">206</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

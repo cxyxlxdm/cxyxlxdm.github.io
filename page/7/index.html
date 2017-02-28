@@ -255,6 +255,128 @@
             
               
                 
+                <a class="post-title-link" href="/2014/02/20/" itemprop="url">
+                  Nginx日志切割
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-02-20T22:23:15+08:00" content="Feb 20 2014">
+              Feb 20 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/02/20/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/02/20/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Nginx日志切割，其必要性也没必要说那么多了，主要记录几种Nginx日志切割的方法，其实原理都大同小异，主要还是通过每天把日志按照日期备份的方式，使用kill -USR1指令重新生成新的日志。可以完全通过Shell脚本实现，也可以通过Shell+Cron定时任务实现，还可以使用logrotate日志轮询来进行分割。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/02/20/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/02/16/" itemprop="url">
                   使用expect脚本实现SSH登录管理
                 </a>
@@ -1609,129 +1731,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/08/" itemprop="url">
-                  关于转基因
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-08T09:46:44+08:00" content="Jan 8 2014">
-              Jan 8 2014
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/08/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/08/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从国家的层面讲，并没有旗帜鲜明地反对转基因；相反，实质上是在支持转基因，只不过现在的舆论导向有点问题，迫于压力，官方也不敢旗帜鲜明地支持转基因。</p>
-<p>央视新闻调查，“黄金大米”的专题里讲的很清楚，转基因本身是一种好技术，但是通过违规操作推广转基因，只能增加人们对转基因的恐惧，让人会以为推广转基因里会有更多的黑幕，而事实也确实是存在黑幕。</p>
-<p>方舟子、冯大辉、刘彦伟们反对的很多所谓的“反转控”，有不小的部分其实并不是“反转控”，而是“转控”操作过程的黑幕，只不过这一部分被方舟子们强行“反转控”，以方舟子为首的“转控”们也从来都都不会给人辩驳的机会，方舟子太容易钻牛角尖，为人太偏激，可以从讨论转基因扯到数十年前崔永元主持里的失误；刘彦伟签名里所谓的“不服来辩”只不过是个姿态；而冯大辉是个喜欢摆观点但是不解释，而用粗口来证明自己的人。所谓先推广，再解决黑幕，不过又是一个“先发展经济，再治理污染”的类比翻版。</p>
-<p>转基因很好，但是研究转基因的科学家们有这群猪一样的队友（虽然科学家们是被他们强行队友了），这么好的技术推广不下去非常遗憾，也非常可惜，但是却也是活该。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1777,7 +1776,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">136</span>
+              <span class="site-state-item-count">137</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1794,7 +1793,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">204</span>
+                <span class="site-state-item-count">206</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
