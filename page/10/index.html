@@ -255,6 +255,142 @@
             
               
                 
+                <a class="post-title-link" href="/2013/06/07/" itemprop="url">
+                  使用cwRsync同步静态资源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-06-07T17:43:57+08:00" content="Jun 7 2013">
+              Jun 7 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/06/07/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/06/07/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近一直在加班，加班，加班……前几天某个风雨交加的夜里，辗转反侧实在睡不着，粗略算了一下，四月份休息了两天半，五月份休息了三天半，每天晚上基本上也都是九点之后才到家，有时候还会通宵加班。一直以来我都没细致地去想过自己现在为什么这么拼命，现在想来，突然发现自己不知不觉地捡起来了曾经戒掉的理想，发现自己有意愿好像也有能力为曾经的不甘心扬眉吐气，发现自己为了证明自己的价值给人看对自己是如此地重要！因为如此，我才愿意在自己不是太在意金钱的年纪里忍受如此的落差，虽然看上去很大程度上是在为别人活，但这样我挺满足的。</p>
+<p>虽说是这样，可心里却并不快乐。今天有同事问我是不是觉得很充实，我想了一下，迸出来一句：我觉得很累……然后就真的好像虚了很多，也确实想放松放松了……扯了这么多，偏题严重了，写博客的频繁程度，其实很大程度上是与自己的懒惰程度成反比的，平时说自己比较忙，没时间写，其实是自欺欺人。昨天刚做了个静态资源的同步，今天先记录一下。</p>
+<p>cwRsync是一个跨平台的开源文件同步（备份）软件，简单好用。我的环境，Server端和Client端都是Windows 2008 Server R2，服务端IP是10.0.0.4，客户端IP是10.0.0.2。</p>
+<p>服务端和客户端软件在官网都可以下载到，直接双击也就安装完成了，非常简单。需要指出的一点是安装Server端的时候，有一个创建用户的对话框，因为我的环境是2008R2，所以设置的密码复杂度一定要符合2008R2的标准，否则服务安装不上，而且没有任何提示。我创建的用户名是FileSync，密码是1Qaz2Wsx.</p>
+<p><strong>Server：</strong></p>
+<p>先说服务端的配置，主要就是rsyncd.conf这个配置文件，内容很容易理解，也就不一一解释了，我要同步的是D盘的image和Upload两个文件夹；</p>
+<p>1、我直接贴一下自己的配置文件内容吧，如下：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">usechroot =false</span><br><span class="line"></span><br><span class="line">strict modes =false</span><br><span class="line"></span><br><span class="line">hosts allow = *</span><br><span class="line"></span><br><span class="line">log file = rsyncd.log</span><br><span class="line"></span><br><span class="line">pid file = rsyncd.pid</span><br><span class="line"></span><br><span class="line">port =<span class="number">800</span></span><br><span class="line"></span><br><span class="line">max connections =<span class="number">4</span></span><br><span class="line"></span><br><span class="line">UID=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">GID=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"># Module definitions</span><br><span class="line"></span><br><span class="line"># Remember cygwin naming conventions : c:\work becomes /cygwin/c/work</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">#[test]</span><br><span class="line"></span><br><span class="line">#<span class="built_in">path</span> = /cygdrive/c/work</span><br><span class="line"></span><br><span class="line">#read only =false</span><br><span class="line"></span><br><span class="line">#transfer logging = yes</span><br><span class="line"></span><br><span class="line">[image]</span><br><span class="line"></span><br><span class="line"><span class="built_in">path</span> = /cygdrive/d/image</span><br><span class="line"></span><br><span class="line">read only =false</span><br><span class="line"></span><br><span class="line">transfer logging = yes</span><br><span class="line"></span><br><span class="line">lock file = rsyncd.lock</span><br><span class="line"></span><br><span class="line">auth users =FileSync</span><br><span class="line"></span><br><span class="line">secrets file = etc/rsyncd.secrets</span><br><span class="line"></span><br><span class="line">[Upload]</span><br><span class="line"></span><br><span class="line"><span class="built_in">path</span> = /cygdrive/d/Upload</span><br><span class="line"></span><br><span class="line">read only =false</span><br><span class="line"></span><br><span class="line">transfer logging = yes</span><br><span class="line"></span><br><span class="line">lock file = rsyncd.lock</span><br><span class="line"></span><br><span class="line">auth users =FileSync</span><br><span class="line"></span><br><span class="line">secrets file = etc/rsyncd.secrets</span><br></pre></td></tr></table></figure>
+<p>2、创建密码文件rsyncd.secrets并放入etc文件夹，格式为“user:passwd”，如“FileSync:1Qaz2Wsx”；</p>
+<p>3、修改防火墙配置，将配置文件里配置的800端口打开；</p>
+<p>4、修改要同步的D盘的image和Upload两个文件夹的权限，添加用户FileSync对两个文件夹为完全控制；</p>
+<p>至此，服务端配置完毕。</p>
+<p><strong>Client：</strong> 客户端的配置更简单，一个脚本就可以完成全部的同步任务。</p>
+<p>1、新建脚本rsync.bat，我的脚本内容如下：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@echo</span> off</span><br><span class="line">echo.</span><br><span class="line">echo 开始同步数据，请稍等...</span><br><span class="line">echo.</span><br><span class="line">cd <span class="attribute">C</span>:\Program Files (x86)\cwRsync\bin</span><br><span class="line">rsync -vzrtopg --port=<span class="number">800</span> --progress --delete FileSync<span class="variable">@10</span>.<span class="number">0.0</span>.<span class="number">4</span>::image /cygdrive/d/image &lt; passwd.txt</span><br><span class="line">rsync -vzrtopg --port=<span class="number">800</span> --progress --delete FileSync<span class="variable">@10</span>.<span class="number">0.0</span>.<span class="number">4</span>::Upload /cygdrive/d/Upload &lt; passwd.txt</span><br><span class="line">echo.</span><br><span class="line">echo 数据同步完成</span><br><span class="line">echo.</span><br></pre></td></tr></table></figure>
+<p>2、新建密码文件passwd.txt，输入密码1Qaz2Wsx，将rsync.bat和passwd.txt放置于同一目录下；</p>
+<p>3、开启服务端的RsyncServer服务，执行脚本就可以完成同步任务，如果需要定时同步，添加Windows计划任务即可。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/04/29/" itemprop="url">
                   Linux下安装配置nginx+php+mysql环境
                 </a>
@@ -1927,165 +2063,6 @@ super.方法名()    --    父类的
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/05/22/" itemprop="url">
-                  tomcat日志设置规范
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-05-22T11:03:52+08:00" content="May 22 2012">
-              May 22 2012
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Server/" itemprop="url" rel="index">
-                    <span itemprop="name">Server</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/05/22/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/05/22/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>涉及两部分：<strong>关闭控制台日志</strong>和<strong>规范程序日志大小和个数</strong>。</p>
-<p><strong>1.tomcat程序日志</strong></p>
-<p>在%TOMCAT_HOME%/conf/logging.properties中设置catalina.org.apache.juli.FileHandler.level = OFF，关闭catalina的输出。</p>
-<p>如需保留catalina输出，可参考文档管理系统经验总结添加自动删除脚本。</p>
-<p><strong>2.程序日志</strong></p>
-<p>编辑log4j.properties文件。一般可见log4j.rootCategory=info,stdout,file，stdout输出到控制台，file输出到文件。</p>
-<p>1)关闭控制台日志输出</p>
-<p>将log4j.appender.stdout=org.apache.log4j.ConsoleAppender注释掉，禁止程序向catalina.out输出控制台信息。</p>
-<p>2)规范程序日志输出</p>
-<p>log4j.appender.file.MaxFileSize=10MB //单个日志大小</p>
-<p>log4j.appender.file.MaxBackupIndex=10 //循环日志个数</p>
-<p>在限定日志大小和数量情况下，可根据项目实际情况设定日志跟踪级别。</p>
-<p><strong>1.堆大小</strong></p>
-<p>普通工控机：-Xmx1g -Xms1g</p>
-<p>高配服务器：-Xmx2g -Xms2g</p>
-<p>初始堆值和最大堆值设置同样大小，一般不超过总内存的1/2，32bit系统下由于寻址问题一般不能超过3GB，系统中有其他重要程序（如数据库）占用内存时，要调小该值。</p>
-<p>常见由堆大小引发的内存溢出：java.lang.OutOfMemory</p>
-<p><strong>2.年轻代大小</strong></p>
-<p>普通工控机：-Xmn512m</p>
-<p>高配服务器：-Xmn1g</p>
-<p>一般为堆大小的3/8-1/2</p>
-<p>常见由年轻代大小引发的内存溢出：java.lang.OutOfMemoryError: Java heap space Heap size</p>
-<p><strong>3.持久代大小</strong></p>
-<p>普通工控机：-XX:PermSize=256m -XX:MaxPermSize=256m</p>
-<p>高配服务器：-XX:PermSize=256m -XX:MaxPermSize=256m</p>
-<p>初始持久代值和最大值设置同样大小，一般值不用调整，若同一tomcat下有多个服务时，可以略微增加。</p>
-<p>常见由持久代大小引发的内存溢出：java.lang.OutOfMemoryError: PermGen space</p>
-<p>编辑tomcat/bin/catalina.sh文件，在文件开头非备注行添加参数:</p>
-<p>JAVA_OPTS=’参数一 参数二……’</p>
-<p>例：</p>
-<p>普通工控机：</p>
-<p>JAVA_OPTS=’-Xms1g -Xmx1g -Xmn512m -XX:PermSize=256m -XX:MaxPermSize=256m’</p>
-<p>高配服务器：</p>
-<p>JAVA_OPTS=’-Xms2g -Xmx2g -Xmn1g -XX:PermSize=256m -XX:MaxPermSize=256m’ </p>
-<p>在不同系统和不同JDK下允许值不一样，事先需进行参数测试，如普通工控机：</p>
-<p>java -Xms1g -Xmx1g -Xmn512m -XX:PermSize=256m -XX:MaxPermSize=256m -version</p>
-<p>输入此命令可以正常返回版本号后，再进行修改。</p>
-<p>修改完成后，重启tomcat，可以观察到ps aux结果中，tomcat的RSS值（实际驻留内存）大幅上升。</p>
-<p><strong>注意：</strong></p>
-<p><strong>JDK 1.5及以前版本对内存默认串行回收，所以没有特殊情况JDK均要求升级至1.6及以上版本。</strong></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2131,7 +2108,7 @@ super.方法名()    --    父类的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2139,7 +2116,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2148,7 +2125,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">206</span>
+                <span class="site-state-item-count">208</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

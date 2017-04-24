@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.easydone.cn/2017/04/24/</loc>
+    
+    <lastmod>2017-04-24T15:24:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.easydone.cn/2017/02/28/</loc>
     
     <lastmod>2017-02-28T16:05:01.000Z</lastmod>
@@ -877,35 +884,7 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2013/09/29/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.easydone.cn/2010/07/10/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.easydone.cn/2013/11/10/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.easydone.cn/2012/05/22/</loc>
-    
-    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.easydone.cn/2014/01/15/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -919,7 +898,14 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2013/11/05/</loc>
+    <loc>http://www.easydone.cn/2012/05/22/</loc>
+    
+    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.easydone.cn/2010/07/10/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
@@ -933,14 +919,35 @@
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2012/07/02/</loc>
+    <loc>http://www.easydone.cn/2013/04/29/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.easydone.cn/2013/04/29/</loc>
+    <loc>http://www.easydone.cn/2013/09/29/</loc>
+    
+    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.easydone.cn/2014/01/15/</loc>
+    
+    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.easydone.cn/2013/11/05/</loc>
+    
+    <lastmod>2015-03-19T14:09:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.easydone.cn/2012/07/02/</loc>
     
     <lastmod>2015-03-19T14:09:04.000Z</lastmod>
     

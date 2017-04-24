@@ -255,6 +255,173 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/13/" itemprop="url">
+                  CentOS查看系统硬件信息
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-13T15:10:36+08:00" content="Jan 13 2014">
+              Jan 13 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/13/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/13/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>CentOS查看系统硬件信息</p>
+<ul>
+<li>uname -a # 查看内核/操作系统/CPU信息的linux系统信息命令</li>
+<li>head -n 1 /etc/issue # 查看操作系统版本，是数字1不是字母L</li>
+<li>cat /proc/cpuinfo # 查看CPU信息的linux系统信息命令</li>
+<li>hostname # 查看计算机名的linux系统信息命令</li>
+<li>lspci -tv # 列出所有PCI设备</li>
+<li>lsusb -tv # 列出所有USB设备的linux系统信息命令</li>
+<li>lsmod # 列出加载的内核模块</li>
+<li>env # 查看环境变量资源</li>
+<li>free -m # 查看内存使用量和交换区使用量</li>
+<li>df -h # 查看各分区使用情况</li>
+<li>du -sh # 查看指定目录的大小</li>
+<li>grep MemTotal /proc/meminfo # 查看内存总量</li>
+<li>grep MemFree /proc/meminfo # 查看空闲内存量</li>
+<li>uptime # 查看系统运行时间、用户数、负载</li>
+<li>cat /proc/loadavg # 查看系统负载磁盘和分区</li>
+<li>mount | column -t # 查看挂接的分区状态</li>
+<li>fdisk -l # 查看所有分区</li>
+<li>swapon -s # 查看所有交换分区</li>
+<li>hdparm -i /dev/hda # 查看磁盘参数(仅适用于IDE设备)</li>
+<li>dmesg | grep IDE # 查看启动时IDE设备检测状况网络</li>
+<li>ifconfig # 查看所有网络接口的属性</li>
+<li>iptables -L # 查看防火墙设置</li>
+<li>route -n # 查看路由表</li>
+<li>netstat -lntp # 查看所有监听端口</li>
+<li>netstat -antp # 查看所有已经建立的连接</li>
+<li>netstat -s # 查看网络统计信息进程</li>
+<li>ps -ef # 查看所有进程</li>
+<li>top # 实时显示进程状态用户</li>
+<li>w # 查看活动用户</li>
+<li>id # 查看指定用户信息</li>
+<li>last # 查看用户登录日志</li>
+<li>cut -d: -f1 /etc/passwd # 查看系统所有用户</li>
+<li>cut -d: -f1 /etc/group # 查看系统所有组</li>
+<li>crontab -l # 查看当前用户的计划任务服务</li>
+<li>chkconfig –list # 列出所有系统服务</li>
+<li>chkconfig –list | grep on # 列出所有启动的系统服务程序</li>
+<li>rpm -qa # 查看所有安装的软件包</li>
+<li>cat /proc/cpuinfo # 查看CPU相关参数的linux系统命令</li>
+<li>cat /proc/partitions # 查看linux硬盘和分区信息的系统信息命令</li>
+<li>cat /proc/meminfo # 查看linux系统内存信息的linux系统命令</li>
+<li>cat /proc/version # 查看版本，类似uname -r</li>
+<li>cat /proc/ioports # 查看设备io端口</li>
+<li>cat /proc/interrupts # 查看中断</li>
+<li>cat /proc/pci # 查看pci设备的信息</li>
+<li>cat /proc/swaps # 查看所有swap分区的信息<br>用 yum provides “*/lspci”命令来查询上述命令，然后安装相应的软件包。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/08/" itemprop="url">
                   关于转基因
                 </a>
@@ -1382,132 +1549,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/06/" itemprop="url">
-                  如果我是DNSPod的产品经理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-06T23:25:12+08:00" content="Nov 6 2013">
-              Nov 6 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/IT杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">IT杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/06/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/06/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>   现在看来，DNSPod的技术、运营和客户满意度在国内都已经处于顶尖的位置，我觉得对于DNSPod这类以技术驱动的公司来讲，尤其是DNSPod是已经发展到现在这种规模和状态，产品经理这个职位其实并不像其他的互联网企业显得那么重要。不过，如果我做了阿D的产品经理，我可能会从以下几个方面去完善现在的DNSPod。</p>
-<p>   一、我比较看重社区。我觉得阿D应该有自己的社区和论坛，开放的API和功能可以分为几个阶段，alpha,beta,release,standard等，先在社区论坛试用，通过招募测试员进行试用，给产品提出改进意见，然后根据意见的合理性程度进行评估整改。</p>
-<p>   第三方的项目和插件也可以在社区有更大的发展，甚至通过奖励第三方开发者的方式，让他们与阿D一起给用户们提供更好的服务。我始终觉得一个优秀的产品索要照顾的不仅仅是客户，更是广大的用户。甚至可以邀请一些相关的开源团队或者项目，让他们为阿D的用户开发更好用的插件应用。</p>
-<p>   二、目前DNSPod的客户群体应该主要还是集中于中小网站、站长和私人博客等，但是仍有许多人选择了其他家的解析服务，我觉得DNSPod可以试着去拓宽自己的客户群体。这就可能牵涉到另一个问题，域名解析无非看重三点：速度、稳定和安全。我觉得阿D的最大的特点，就是“专注”。阿D的解析速度和稳定性，我相信业界应该已经达成了共识，但是这个时候专注既是优势，却也成了劣势，专注于DNS解析领域，有时候会让人对于阿D的安全性会有一定的困惑。这个时候，我觉得阿D需要与一些注明的安全厂商携起手来（仅仅有安全宝可不够喔），加强安全方面的合作和探索。根据这个思路，阿D还可以试着与其他相关的企业去合作，如域名注册商，如CDN厂商，如IDC厂商等等，当然更加少不了电信运营商。</p>
-<p>   三、移动互联网时代，我觉得有必要做一个Android<br>HD、iPad和WP HD客户端了，一些在电脑上能完成的操作，通过平板上的移动客户端一样可以实现。手机端屏幕太小，操作起来体验上应该不会好，有短信和微信报警通知就够了。</p>
-<p>   四、我觉得最好有一个比较好的方式将站长们串联起来，让站长之间加强互动，使阿D的口碑在站长圈子里能够口口相传。阿D可以引导站长们在各自所在的城市做组织一些线下的交流活动，平时做一些技术交流分享；甚至阿D自己也可以做一些城市巡回活动，不需要搞的大张旗鼓，小圈子就可以，类似于GDG那样的。</p>
-<p>   以上就是我的一些想法，当然都是一些很粗鄙的想法，作为产品小白，这也算是个开始吧，毕竟自己希望以后有机会去做产品。以后咱也算是混产品界的啦……=_=!!!</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1553,7 +1594,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1561,7 +1602,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1570,7 +1611,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">206</span>
+                <span class="site-state-item-count">208</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

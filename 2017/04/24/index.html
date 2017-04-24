@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="repo,submodule," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="微店工程结构改造历程虽然工程结构、版本控制只是日常开发非常小的一块内容，但是在一个现代的大型项目里，如果构建一个更高效地组织形式，是每一个团队都必须正视和解决的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Repo VS Submodule">
+<meta property="og:url" content="http://www.easydone.cn/2017/04/24/index.html">
+<meta property="og:site_name" content="Just Be Unreserved!">
+<meta property="og:description" content="微店工程结构改造历程虽然工程结构、版本控制只是日常开发非常小的一块内容，但是在一个现代的大型项目里，如果构建一个更高效地组织形式，是每一个团队都必须正视和解决的问题。">
+<meta property="og:updated_time" content="2017-04-24T15:24:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Repo VS Submodule">
+<meta name="twitter:description" content="微店工程结构改造历程虽然工程结构、版本控制只是日常开发非常小的一块内容，但是在一个现代的大型项目里，如果构建一个更高效地组织形式，是每一个团队都必须正视和解决的问题。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Repo VS Submodule | Just Be Unreserved! </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Just Be Unreserved!</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学无止境。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Repo VS Submodule
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-24T23:16:50+08:00" content="Apr 24 2017">
+              Apr 24 2017
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/24/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/24/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="微店工程结构改造历程"><a href="#微店工程结构改造历程" class="headerlink" title="微店工程结构改造历程"></a>微店工程结构改造历程</h2><p>虽然工程结构、版本控制只是日常开发非常小的一块内容，但是在一个现代的大型项目里，如果构建一个更高效地组织形式，是每一个团队都必须正视和解决的问题。<a id="more"></a></p>
+<p>从 16 年的四月份微店 Android 开始了平台化改造，为了配合平台化开发，微店的工程结构经历了多次大的调整。调整之后，稳定使用较长的有两个节点，第一次是全部模块插件化之后，工程结构由一个大的 Git 库改造成了 <code>submodule</code> 的形式；第二次是在使用了较长时间 <code>submodule</code> 之后，遇到了不少问题，经过权衡，改为了 <code>repo</code> 的形式，一直用到现在，目前业务开发反馈良好。</p>
+<h2 id="微店工程结构的特点"><a href="#微店工程结构的特点" class="headerlink" title="微店工程结构的特点"></a>微店工程结构的特点</h2><p>微店工程插件化之后，工程结构呈现这样的形式：一个宿主 module，若干个子 module，最终打包的时候，需要先将子 module 打成一个二进制的文件，然后使用宿主 module 包裹子 module，将宿主 module 打成一个 APK，在运行的时候，动态地去读取二进制的子 module 文件。</p>
+<h2 id="submodule—踩坑之旅"><a href="#submodule—踩坑之旅" class="headerlink" title="submodule—踩坑之旅"></a>submodule—踩坑之旅</h2><p>通过对微店工程结构的描述，我们很容易想到使用 submodule 去管理微店工程。在 submodule 里，每个 module 都是一个 Git 库，各个 module 提交代码相互不干扰，同时一个主 module 管理若干个子 module，这样在同一个工程里，不同的 module 既是相互独立的，所有的 module 代码又可以存在同一个工程里。相互独立就意味着我们各个业务并行开发不受干扰，代码共存又让我们在调试的时候可以引用到其他 module 的代码。仿佛 submodule 就是为了并行开发量身定做的，于是我们花了很大力气将工程切到了 submodule 上，然而理想很美好，现实却是残酷的…</p>
+<p>在 submodule 的主工程里，每个 module 在 Git 库里的表现形式是这个 module 的 name 加上一串数字和字母，这串数字和字母代表的是 Git 提交记录，我们知道每次 Git 提交都会有一个 <strong>sha</strong> 记录值，这个 <strong>sha</strong> 值记录了我们每一次的 Git 提交记录，通过它，我们可以进行克隆、回滚等操作。</p>
+<p>举个例子，小王和小刘同时开发 message 这个模块，当前在主 module 里记录的 message 模块的 <strong>sha</strong> 值是 <code>fc0282f7</code>，也就是 <code>message@fc0282f7</code> ，然后小王提交了代码，假设这次提交记录的 <strong>sha</strong> 是 <code>ab8762f0</code>，这时候小王主 module 管理的 message 版本就是 <code>ab8762f0</code>，但是主 module 的 remote 库里管理的 message 版本还是 <code>fc0282f7</code>，因此为了保持同步，我们在提交了 message 模块的更新之后，必须要把自己主 module 里的这个更新的 <code>sha</code> 值也提交上去。如果小王忘了提交自己主 module 里的 <code>sha</code> 值，这时候小刘也提交了 message 模块的代码，这时候主 module 的 <code>sha</code> 值就会落后两个版本，这样问题就产生了，如果这时候再更新主 module 代码，这个主 module 的 <code>sha</code> 值就会产生冲突，无法更新、无法回滚、无法合并（Android 组同事印象应该会很深刻）。</p>
+<p>由此，可以看到，这些问题是由我们一些根深蒂固的使用习惯造成的，尤其是在多人开发的时候，很难要求每个人都对一个新的技能点能够完全掌握。而且，按照我们的初衷，业务开发只需要负责自己模块的代码就可以了，而 submodule 需要把所有模块的代码都下载到自己本地，并且显式地导入 IDE，这样 <strong>Gradle 的配置检查、同步就会很耗时</strong>。在使用了近半年之后，这种状况依然没有任何好转，我们只好寻求更好的解决方案。</p>
+<p>当然，对于 submodule 的使用，如果能注意以下几点，也能用的很顺畅：</p>
+<ol>
+<li>最最重要的一个原则，也是使用 Git 最基本的一个原则：<strong>先更新再提交</strong>，先更新再提交，先更新再提交；</li>
+<li>尽量使用<strong>命令行终端</strong>，至少要学会基本的 Git 命令，不要太依赖 GUI 工具；</li>
+<li>在子 module 里 push 了代码之后，一定要提交主 module 里对应的 <code>sha</code> 值；</li>
+<li>在主 module 里 <code>git pull</code> 之后，一定要执行 <code>git status</code>，要确认 submodule 是否有修改，如有修改，需执行 <code>git submodule update</code>；</li>
+<li><code>git submodule update</code> 并不会将子 module 切到任何一个分支，而是一个游离状态的 HEAD state（这一点跟 repo 类似，后面也会讲到），因此在做任何子 module 的操作之前，一定要确认子 module 已经在需要操作的分支上；</li>
+<li>假如说在游离的 HEAD state 下进行了代码修改，然后又提交了，这时候可以先切到需要提交的分支，然后再用 <code>git cherry-pick xxx</code>，再 push 即可；</li>
+<li>请尽量使用 <code>git submodule foreach &#39;pwd &amp;&amp; git pull&#39;</code>，这样的组合命令，单引号里的 <code>git pull</code> 可以换成其他的终端命令，而不仅仅是 git 命令（这也和 repo 里的类似）。</li>
+</ol>
+<h2 id="repo—重新上路"><a href="#repo—重新上路" class="headerlink" title="repo—重新上路"></a>repo—重新上路</h2><p>针对我们使用 submodule 过程中遇到的问题，我们希望能找到一种既能满足像 submodule 那样，各模块相互独立以便于开发，各模块的组织结构形式能方便调试，又能避免像 submodule 那样，模块提交代码对其他模块造成影响。于是我们又重新上路了。经过长时间的考察，我们发现 repo 正是这样一种方案。</p>
+<p>repo 引入了一个新角色，这个新角色来管理所有的 module，而不是像 submodule 那样，建立一种主从关系，用主 module 管理子 module。在 repo 里，所有 module 都是平级关系，每个 module 的版本管理完全独立于任何其他 module，不会像 submodule 那样，提交了子 module 代码，也会对主 module 造成影响。</p>
+<p>实际上，我们在使用过程中，还发现了另外一些好处：</p>
+<ol>
+<li>剥离了主 module 和子 module 的关系，检出、同步、提交等操作都比 sumodule 要快了好多倍；</li>
+<li>只需要检出需要开发的模块的代码，代码量减少了很多，正常情况下，本来要检出 30 多个模块代码，现在只需要一个模块代码，考虑到 Gradle 构建生命周期，整个构建时间在我们插件化改造之后又一次大大降低了；</li>
+<li>模块管理配置由一个陌生的 .gitmodules 变成了所有人都更熟悉的 xml 文件，便于配置管理。</li>
+</ol>
+<p>在 repo 真正的工程代码同一级，多出了一个 .repo 目录，默认情况下是隐藏目录，这里面存储了整个 repo 工程的信息。针对 repo，也有一些使用建议：</p>
+<ol>
+<li>最好新建一个空目录，在这个新建的空目录里检出整个 repo 工程，保证 repo 工程与其他目录隔离开来；</li>
+<li>正常情况下，我们没办法把 repo 的工程配置文件 default.xml 和软链接 manifest.xml 导入到 IDE 里，同步不同模块的代码就不太方便，可以新建一个 default.xml 的软链接放在代码工程里，这样就可以在 IDE 操作；</li>
+<li>默认情况下只保留必备的几个 git 库，开发需要哪个模块，就将哪个模块 git 库解开注释；</li>
+<li>请尽量使用 <code>repo forall -c &#39;pwd &amp;&amp; git pull&#39;</code> 这样的组合命令执行代码同步，这一点跟 submodule 类似；</li>
+<li>类似 submodule，使用 repo 把代码下载下来之后，每个 module 同样是一个游离的 HEAD state，需要手动切换到 master 分支（或需要操作的分支），执行 <code>repo forall -c git checkout master</code> 即可，这里有一个坑，可能执行一遍并不能切换到主分支，执行完切换分支任务，需要 <code>repo forall -c &#39;pwd &amp;&amp; git branch&#39;</code> check 一下。</li>
+</ol>
+<h2 id="以后的工作"><a href="#以后的工作" class="headerlink" title="以后的工作"></a>以后的工作</h2><p>在工程模块化的今天，虽然我们已经踩了很多坑，做了很多优化，现在也逐渐适应了 repo 的工作方式，但是还存在如下一些问题：</p>
+<ol>
+<li>一些先进的经验往往伴随着一些新技能的引入，如何让使团队里每个开发人员都尽快接受，这个是重中之重；</li>
+<li>因为权限的问题，我们有非常多的教训，如何对团队里每个人的代码的权限和模块发布权限进行控制，这一点需要不断的完善；</li>
+<li>非自己开发的模块，由源码依赖改为二进制包之后，如何保证调试效率，这是我们至今尚未完美解决的一个难题。</li>
+</ol>
+<p>接下来，我们还会对现有的不断地改进，以期能够达到对日常业务开发更加友好的状态。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/repo/" rel="tag">#repo</a>
+          
+            <a href="/tags/submodule/" rel="tag">#submodule</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/" rel="next" title="你在感动什么">
+                <i class="fa fa-chevron-left"></i> 你在感动什么
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://easydone.qiniudn.com/default_avatar.jpg"
+               alt="Ailurus" />
+          <p class="site-author-name" itemprop="name">Ailurus</p>
+          <p class="site-description motion-element" itemprop="description">Android Developer</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">208</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank" title="G+">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  G+
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liangzhitao" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/liangzhitao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/liangzhitao" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/208087666" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://nicodelee.sinaapp.com" title="日志" target="_blank">日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamwent.github.io" title="大城小黄" target="_blank">大城小黄</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://veaer.com" title="veaer" target="_blank">veaer</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://itangqi.me" title="汤奇" target="_blank">汤奇</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://rarnu.com" title="何老师" target="_blank">何老师</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://fucknmb.com" title="区长" target="_blank">区长</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="大帅" target="_blank">大帅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://kaedea.com" title="卡老师" target="_blank">卡老师</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微店工程结构改造历程"><span class="nav-number">1.</span> <span class="nav-text">微店工程结构改造历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微店工程结构的特点"><span class="nav-number">2.</span> <span class="nav-text">微店工程结构的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#submodule—踩坑之旅"><span class="nav-number">3.</span> <span class="nav-text">submodule—踩坑之旅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repo—重新上路"><span class="nav-number">4.</span> <span class="nav-text">repo—重新上路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以后的工作"><span class="nav-number">5.</span> <span class="nav-text">以后的工作</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2017/04/24/';
+      var disqus_title = 'Repo VS Submodule';
+      var disqus_url = 'http://www.easydone.cn/2017/04/24/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

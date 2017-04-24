@@ -255,6 +255,165 @@
             
               
                 
+                <a class="post-title-link" href="/2012/05/22/" itemprop="url">
+                  tomcat日志设置规范
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-05-22T11:03:52+08:00" content="May 22 2012">
+              May 22 2012
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/05/22/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/05/22/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>涉及两部分：<strong>关闭控制台日志</strong>和<strong>规范程序日志大小和个数</strong>。</p>
+<p><strong>1.tomcat程序日志</strong></p>
+<p>在%TOMCAT_HOME%/conf/logging.properties中设置catalina.org.apache.juli.FileHandler.level = OFF，关闭catalina的输出。</p>
+<p>如需保留catalina输出，可参考文档管理系统经验总结添加自动删除脚本。</p>
+<p><strong>2.程序日志</strong></p>
+<p>编辑log4j.properties文件。一般可见log4j.rootCategory=info,stdout,file，stdout输出到控制台，file输出到文件。</p>
+<p>1)关闭控制台日志输出</p>
+<p>将log4j.appender.stdout=org.apache.log4j.ConsoleAppender注释掉，禁止程序向catalina.out输出控制台信息。</p>
+<p>2)规范程序日志输出</p>
+<p>log4j.appender.file.MaxFileSize=10MB //单个日志大小</p>
+<p>log4j.appender.file.MaxBackupIndex=10 //循环日志个数</p>
+<p>在限定日志大小和数量情况下，可根据项目实际情况设定日志跟踪级别。</p>
+<p><strong>1.堆大小</strong></p>
+<p>普通工控机：-Xmx1g -Xms1g</p>
+<p>高配服务器：-Xmx2g -Xms2g</p>
+<p>初始堆值和最大堆值设置同样大小，一般不超过总内存的1/2，32bit系统下由于寻址问题一般不能超过3GB，系统中有其他重要程序（如数据库）占用内存时，要调小该值。</p>
+<p>常见由堆大小引发的内存溢出：java.lang.OutOfMemory</p>
+<p><strong>2.年轻代大小</strong></p>
+<p>普通工控机：-Xmn512m</p>
+<p>高配服务器：-Xmn1g</p>
+<p>一般为堆大小的3/8-1/2</p>
+<p>常见由年轻代大小引发的内存溢出：java.lang.OutOfMemoryError: Java heap space Heap size</p>
+<p><strong>3.持久代大小</strong></p>
+<p>普通工控机：-XX:PermSize=256m -XX:MaxPermSize=256m</p>
+<p>高配服务器：-XX:PermSize=256m -XX:MaxPermSize=256m</p>
+<p>初始持久代值和最大值设置同样大小，一般值不用调整，若同一tomcat下有多个服务时，可以略微增加。</p>
+<p>常见由持久代大小引发的内存溢出：java.lang.OutOfMemoryError: PermGen space</p>
+<p>编辑tomcat/bin/catalina.sh文件，在文件开头非备注行添加参数:</p>
+<p>JAVA_OPTS=’参数一 参数二……’</p>
+<p>例：</p>
+<p>普通工控机：</p>
+<p>JAVA_OPTS=’-Xms1g -Xmx1g -Xmn512m -XX:PermSize=256m -XX:MaxPermSize=256m’</p>
+<p>高配服务器：</p>
+<p>JAVA_OPTS=’-Xms2g -Xmx2g -Xmn1g -XX:PermSize=256m -XX:MaxPermSize=256m’ </p>
+<p>在不同系统和不同JDK下允许值不一样，事先需进行参数测试，如普通工控机：</p>
+<p>java -Xms1g -Xmx1g -Xmn512m -XX:PermSize=256m -XX:MaxPermSize=256m -version</p>
+<p>输入此命令可以正常返回版本号后，再进行修改。</p>
+<p>修改完成后，重启tomcat，可以观察到ps aux结果中，tomcat的RSS值（实际驻留内存）大幅上升。</p>
+<p><strong>注意：</strong></p>
+<p><strong>JDK 1.5及以前版本对内存默认串行回收，所以没有特殊情况JDK均要求升级至1.6及以上版本。</strong></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/04/13/" itemprop="url">
                   Java基础知识
                 </a>
@@ -1538,131 +1697,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/03/23/" itemprop="url">
-                  与题无关
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-03-23T08:51:36+08:00" content="Mar 23 2011">
-              Mar 23 2011
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/感悟/" itemprop="url" rel="index">
-                    <span itemprop="name">感悟</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/03/23/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2011/03/23/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>每天都是新的。明天，或是下辈子，你永远不知道哪个会先到来。不经意间，好像好多东西或是悄悄地溜走了，或是改变了原来的模样。也不知道这改变是好是坏。每个人都希望能有一个好的未来，可这也许并不是改变的原因。</p>
-<p>前些天跟一高中非常乖又非常单纯的女孩子聊天，她告诉我：其实我真的很想叛逆一次。我突然觉得有点伤感，有过不堪经历的人，希望永远地从记忆里抹去那段曾经；记忆里一片空白的人，又觉得别人的经历即使不堪对于自己也是奢侈。其实，经历过也不一定有收获，许多时候“吃一堑，长一智”并不如老夫子讲授的那样有用。</p>
-<p>姐订婚了，得知这个消息那一刻，觉得非常的突然，当然很快就接受了。之前她经历了一些波折，现如今也总算是有了一个结果了。有一段时间，她很不开心，总给我说她很坚强。坚强很好，可是久了，我也就怕看到“坚强”二字，因为坚强了就意味着过得不好。看到她不开心，我当然也好不到哪儿去，不过现在应该好多了吧，至少比以前好多了，过日子肯定还会有很多烦心事，别人也替不了，平平淡淡、偶尔再发发神经的生活应该很不错，追求完美往往会适得其反。我相信，只要看得开，怎样的日子都能过的有滋有味。</p>
-<p>春天，犯困加上各种蠢蠢欲动的念头，真是最适合交配的季节啊。突然觉得21世纪最值钱的应该是媒婆了，我的若干好同学一阵骚动，都纷纷化身西厢红娘，倾巢而出，奈何错认了张生，又误识了莺莺。哪个不愿情添黄河溢，哪个不愿爱压华岳低，可谁又甘心一个将就误了终身？以我看啊，各位好青年还是收手吧，正所谓“穷则独善其身，达则兼济对象”，等待，终究会在正确的时间，等到正确的人的。</p>
-<p>我还得感谢英明神武的教务处领导们，感谢他们给我安排了一个灰常给力的课表，让我有时间起早贪黑去做钟点工，能有这样一份经历，我很开心也很感激，而且这个学期一直到现在也还没遇到什么难处。接触更多的人，遭遇更多的事，承担更大的责任，付出更多的努力，我不奢望有更好的结果，只求能以一颗如履薄冰的心态让自己得到一些认可。谢谢和我一起的苏阿姨，多好的人啊，做了两周的钟点工，通过苏阿姨，我也了解到学校里好多老师、教授也都是通过自己的努力一步步走到现在，他们的故事分明就是一幕幕励志短剧。每个人的成功总要经历这样那样的磨难，任何时候，人都不该也不能放弃自己的。</p>
-<p>怀着感恩的心去生活不该只是靠自己时不时的提醒，而应该成为习惯。面包会有的，牛奶也会有的，少年，好好干吧。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1708,7 +1742,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-count">138</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1716,7 +1750,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1725,7 +1759,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">206</span>
+                <span class="site-state-item-count">208</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
