@@ -377,160 +377,6 @@
             
               
                 
-                <a class="post-title-link" href="/2017/08/15/" itemprop="url">
-                  未命名
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-15T21:05:04+08:00" content="Aug 15 2017">
-              Aug 15 2017
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/08/15/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/15/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的<strong>有向非循环图</strong>里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 <code>ApplicationVariant#apkLibraries</code> 方法，我发现输出结果时而正确，时而不正确。这段代码我是这样写的：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate &#123;</span><br><span class="line">    android.applicationVariants.all &#123; ApkVariant variant -&gt;</span><br><span class="line">        <span class="keyword">def</span> buildTypeName = variant.buildType.name</span><br><span class="line">        <span class="keyword">def</span> task = project.tasks.create <span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar</span><br><span class="line">        <span class="keyword">def</span> packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)</span><br><span class="line">        task.archiveName = <span class="string">'base.jar'</span></span><br><span class="line">        task.dependsOn packageTask</span><br><span class="line">        packageTask.finalizedBy task</span><br><span class="line">        task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">        variant.apkLibraries.each &#123;</span><br><span class="line">            logger.info(<span class="string">'apkLibraries ===&gt; '</span> + it.absolutePath)</span><br><span class="line">            task.from zipTree(it)</span><br><span class="line">        &#125;</span><br><span class="line">        task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)</span><br><span class="line">        artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其实这个问题困扰我好久了，一直悬而未决，不过好在这一切都发生在编译期，如果结果不正确的话，一切错误都可以在编译期暴露出来，而不会影响发版。因此，在解决方案一直苦求而不得的情况下，我并没有把这个问题的优先级列的很高。直到前些天，我实在受不了了（此处省略了 N 多无奈纠结），只好硬着头皮硬上了。结果就有了这篇文章。</p>
-<h2 id="一些准备工作"><a href="#一些准备工作" class="headerlink" title="一些准备工作"></a>一些准备工作</h2><p>首先，我解释一下这段代码的作用，其实 Gradle 对于没接触过的人和习惯于 Java 的人之所以难懂，是因为大量的语法糖省略了许多代码，而 IDE 本身对于智能不全的支持又相当的鸡肋，不管是读还是写，都特别费劲，我们把这段代码补全之后就容易理解多了。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">project.afterEvaluate(<span class="keyword">new</span> Action&lt;Project&gt;() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="typename">void</span> execute(Project project) &#123;</span><br><span class="line">        com.android.build.gradle.AppExtension android = project.findProperty(<span class="string">'android'</span>)</span><br><span class="line">        android.getApplicationVariants().all(<span class="keyword">new</span> Action&lt;com.android.build.gradle.api.ApplicationVariant&gt;() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="typename">void</span> execute(com.android.build.gradle.api.ApplicationVariant applicationVariant) &#123;</span><br><span class="line">                String buildTypeName = applicationVariant.buildType.name</span><br><span class="line">                Task task = project.tasks.create(<span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar)<span class="comment">//创建任务</span></span><br><span class="line">                Task packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)<span class="comment">//确定需要依赖的任务</span></span><br><span class="line">                task.archiveName = <span class="string">'base.jar'</span><span class="comment">//输出文件名</span></span><br><span class="line">                task.dependsOn(packageTask)<span class="comment">//设置任务依赖的现有构建任务</span></span><br><span class="line">                packageTask.finalizedBy(task)<span class="comment">//设置任务在构建中的执行时机</span></span><br><span class="line">                task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">                Collection&lt;File&gt; apkLibraries = applicationVariant.getApkLibraries()</span><br><span class="line">                <span class="keyword">for</span> (File <span class="string">file :</span> apkLibraries) &#123;</span><br><span class="line">                    project.getLogger().lifecycle(<span class="string">'apkLibraries ===&gt; '</span> + file.getAbsolutePath())</span><br><span class="line">                    task.from zipTree(file)</span><br><span class="line">                &#125;</span><br><span class="line">                task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)<span class="comment">//输出目录</span></span><br><span class="line">                artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>这样再看，是不是就容易理解多了？其中 <code>afterEvaluate</code> 和 <code>logger</code> 都是 <code>project</code> 的方法，在每个 Gradle 工程里都有一个 <code>project</code> 对象，在所有的 <code>build.gradle</code> 文件里都可以直接调用 <code>project</code> 的所有共有方法和变量（所以说，所谓闭包、lambda 绝对不是学会 Gradle 的关键）。这段代码的目的就是为了输出所有最终打进 APK 包里的依赖，也就是在 <code>build.gradle</code> 的 <code>dependencies</code> 结点下面 <code>compile</code> （未来的 Gradle Plugin 版本可能会变）的所有依赖；顺便说一句，如果要获取 <code>dependencies</code> 结点下面所有的依赖，将 <code>apkLibraries</code> 换成 <code>compileLibraries</code> 即可。这两个 API 在 <code>com.android.build.gradle.api.ApkVariant</code> 里，而 <code>ApplicationVariant</code> 继承自 <code>ApkVariant</code>。</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png" alt=""></p>
-<h2 id="现象描述"><a href="#现象描述" class="headerlink" title="现象描述"></a>现象描述</h2><ol>
-<li><p>先从日志输出入手，将正确的结果和不正确的结果放在一起对比后发现，正确的结果里包含两种类型的文件路径，一种是工程 <code>build/intermediates/exploded-aar</code> 目录下的<strong>临时缓存</strong>，另一种是 <code>.gradle</code>、<code>.m2</code> 和 <code>SDK</code> 目录下的<strong>永久缓存</strong>（除非手动删除）；它们还有另外一个特点，前者全都是 aar，后者都是 jar：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-085843.png" alt=""></p>
-</li>
-<li><p>我们再看一下不正确的结果，很容易发现，这结果里只剩下了 <code>.gradle</code>、<code>.m2</code> 和 <code>SDK</code> 目录下的缓存：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-091455.png" alt=""></p>
-<p>也就是说，工程 <code>build</code> 目录下的临时缓存丢掉了，然后我先执行以下 <code>gradle clean</code>，将 <code>build</code> 目录删掉，再重新编译，结果复现了！到了这里，我们可以确认这是个必现的 bug，而不是一开始想的时而正确，时而不正确。</p>
-<p>但是我的打包命令里明明包含了 <code>clean</code> 任务，为什么在 1 里的结果还是正确的呢？其实这时候，如果对 Gradle 的生命周期有了解的话，就可以猜得到结果了，这说明这段日志打印一定是在 Gradle 生命周期的 <strong><code>Configuration</code></strong> 阶段输出的，而 <code>clean</code> 任务的执行必然是在 <strong><code>Configuration</code></strong> 之后的，这也就解释了为什么单独执行 <code>clean</code> 任务，再执行 <code>assembleDebug</code> 任务，得到的结果是错误的，而把 <code>clean</code> 和 <code>assembleDebug</code> 放在一起执行得到的结果是正确的。我们将打包命令后面加上 <code>—info</code> 参数，就可以发现确实是在 <strong><code>Configuration</code></strong> 过程中打印的日志输出。下图是 Gradle 生命周期的图示。</p>
-</li>
-</ol>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/Gradle_LifeCycle.png" alt=""></p>
-<ol>
-<li><p>再接下来，我新建了个 demo，然后继续之前的操作，一个完全干净的工程，没有 <code>buildDir</code>，结果出现了下面的结果：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-102417.png" alt=""></p>
-<p>看到这样的结果，我直接就懵逼了… <code>build/intermediates/exploded-aar</code> 居然消失了！！！跟上面的截图对比之后，发现取而代之的是 <code>$HOME/.android/build-cache</code> 目录，而且即便没有 <code>build</code> 临时缓存目录，得到的结果也是正确的。新建的 demo 构建环境跟我们的业务工程唯一的区别就是 Gradle 版本了，我把 demo 的 Gradle 版本降级到跟业务工程一样，结果完全一样了。看来，Google 也意识到了这个 bug，其实也好理解，工程 <code>buildDir</code> 本就是临时目录，每次 <code>clean</code> 之后都会删除，而如果使用系统级的缓存目录，执行 <code>clean</code> 任务就不影响了。</p>
-</li>
-</ol>
-<h2 id="追本溯源"><a href="#追本溯源" class="headerlink" title="追本溯源"></a>追本溯源</h2><p> 接下来我们来看看最新版本的 Android Gradle Plugin 源码里是怎么处理的吧。</p>
-<ol>
-<li><p>我们在上面的截图里可以看到，调用 <code>androidBuilder.getAllPackagedJars</code> 方法即可得到 <code>apkLibraries</code>， <code>AndroidBuild</code> 里的 <code>getAllPackagedJars</code> 方法如下图：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190719.png" alt=""></p>
-</li>
-<li><p>然后是 <code>VariantConfiguration</code> 里的 <code>getAllPackagedJars</code> 方法：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190914.png" alt=""></p>
-</li>
-<li><p>接着调到了 <code>Dependency</code> 类里的 <code>getClasspathFile</code> 和 <code>getAdditionalClasspath</code> 方法，而 <code>Dependency</code> 是一个接口，我们看它的其中一个实现类（其他的也类似）<code>AndroidDependency</code>，<code>AndroidDependency</code> 的构造方法是私有的，同时它提供了静态的共有 create 方法，因此创建 <code>AndroidDependency</code> 都只能调用这些 create 方法，我们只要找到这些 create 方法调用的地方就可以了。</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-113615.png" alt=""></p>
-</li>
-<li><p>然后我们可以发现在 <code>DependencyManager</code> 里调用了 create 初始化 <code>Dependency</code> 的方法：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-191141.png" alt=""></p>
-<p>到这里，就很明朗了。Gradle 构建过去缓存目录有两种方式，用哪种方式，取决于 <code>PrepareLibraryTask.shouldUseBuildCache(buildCache.isPresent(), mavenCoordinates)</code> 的值，也就是说 <code>buildCache.isPresent()</code> 为 true，同时依赖版本号里含有 <code>-SNAPSHOT</code>，而前者需要 <code>buildCache</code> 不为空：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-114331.png" alt=""></p>
-</li>
-<li><p>接下来我们可以看 <code>com.android.build.gradle.AndroidGradleOptions</code> 这个类，这里我们可以看到只要 <code>isBuildCacheEnabled</code> 这个方法返回 true，上一步里的 <code>buildCache</code> 就不为空，而 <code>DEFAULT_ENABLE_BUILD_CACHE</code> 这个默认值恰恰就是 true，而且我们也可以看到在 <code>getBuildCacheDir</code>  方法里，拼接的 dir 里刚好就有我们上面截图里的 <code>build-cache</code>，也就是说在新版本的 Gradle Plugin 里，走了步骤 4 里的 if 逻辑，而之前版本 Gradle Plugin 走的是 else 的逻辑。</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-115844.png" alt=""></p>
-</li>
-<li><p>这时候我们再看步骤 4 里的 else 逻辑，里面其实就是一个给 <code>explodedDir</code> 的赋值操作，有两个常量字符串，他们的值如下图：</p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120430.png" alt=""></p>
-<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120450.png" alt=""></p>
-<p>拼在一起，刚好就是 <code>build/intermediates/exploded-aar</code>，这也就是为什么在新版本的 Gradle Plugin 里这个目录消失了的原因。</p>
-</li>
-<li><p>然而，难道说要解决这问题，只能升级 Gradle 版本？当然不是，而且我们还可以发现，这样的输出结果并不完全正确，我们想要的是某一个变种（variant）的输出，不同的变种，文件目录是不一样的，而这结果是无论我们是哪一个变种，结果都是所有的变种输出。</p>
-</li>
-</ol>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们有必要再重新审阅一下我们的需求，『在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里』，也就是说这些日志输出应该在 Gradle 生命周期的 <strong><code>Execution</code></strong> 阶段去打印，而不是 <strong><code>Configuration</code></strong> 阶段打印。在明确了这一点之后，另外一个更合适的解决方案就呼之欲出了，一点点修改就可以解决。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate &#123;</span><br><span class="line">    android.applicationVariants.all &#123; ApkVariant variant -&gt;</span><br><span class="line">        <span class="keyword">def</span> buildTypeName = variant.buildType.name</span><br><span class="line">        <span class="keyword">def</span> task = project.tasks.create <span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar</span><br><span class="line">        <span class="keyword">def</span> packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)</span><br><span class="line">        task.archiveName = <span class="string">'base.jar'</span></span><br><span class="line">        task.dependsOn packageTask</span><br><span class="line">        packageTask.finalizedBy task</span><br><span class="line">        task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">        task.doFirst &#123;</span><br><span class="line">            variant.apkLibraries.each &#123;</span><br><span class="line">                logger.info(<span class="string">'apkLibraries ===&gt; '</span> + it.absolutePath)</span><br><span class="line">                task.from zipTree(it)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)</span><br><span class="line">        artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仅仅是加了个 <code>task.doFirst</code> 就彻底解决了这个问题，在 task 执行的最开始先去获取需要处理的文件即可。折腾这么久，这样的结果看上去居然与过程几乎没什么关系…不过这过程才是学习最大的意义所在吧。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2017/04/24/" itemprop="url">
                   Repo VS Submodule
                 </a>
@@ -1489,6 +1335,128 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/24/" itemprop="url">
+                  关于Android插件化的细枝末节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-24T15:59:55+08:00" content="Jul 24 2016">
+              Jul 24 2016
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/24/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/24/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近一直在做插件化相关的工作。现在最常见的方案就是来自阿里的 Atlas 和 360 的 DroidPlugin 了。按照我的理解，对于当前的大多数应用来讲，可能 Atlas 会更适合一些，因为它允许插件与宿主之间，甚至是插件之间可以有互动；而 DroidPlugin 的思想会更先进，可想象空间更大一些，理论上它可以启动任何一个第三方应用，比如虚拟化，可参照物就是 LBE 的平行空间。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/24/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1534,7 +1502,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">139</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

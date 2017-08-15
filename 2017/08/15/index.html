@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,Gradle," />
 
 
 
@@ -86,12 +86,12 @@
 
 
 
-<meta name="description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+<meta name="description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Just Be Unreserved!">
+<meta property="og:title" content="一个关于Gradle构建缓存的问题">
 <meta property="og:url" content="http://www.easydone.cn/2017/08/15/index.html">
 <meta property="og:site_name" content="Just Be Unreserved!">
-<meta property="og:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+<meta property="og:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-085843.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-091455.png">
@@ -105,10 +105,10 @@
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-115844.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120430.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120450.png">
-<meta property="og:updated_time" content="2017-08-15T13:05:03.000Z">
+<meta property="og:updated_time" content="2017-08-15T14:25:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Just Be Unreserved!">
-<meta name="twitter:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+<meta name="twitter:title" content="一个关于Gradle构建缓存的问题">
+<meta name="twitter:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。">
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>  | Just Be Unreserved! </title>
+  <title> 一个关于Gradle构建缓存的问题 | Just Be Unreserved! </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +266,7 @@
             
             
               
-                
+                一个关于Gradle构建缓存的问题
               
             
           </h1>
@@ -278,11 +278,30 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-15T21:05:04+08:00" content="Aug 15 2017">
+            <time itemprop="dateCreated" datetime="2017-08-15T21:16:50+08:00" content="Aug 15 2017">
               Aug 15 2017
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -318,7 +337,7 @@
       
 
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的<strong>有向非循环图</strong>里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 <code>ApplicationVariant#apkLibraries</code> 方法，我发现输出结果时而正确，时而不正确。这段代码我是这样写的：</p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的<strong>有向非循环图</strong>里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 <code>ApplicationVariant#apkLibraries</code> 方法，我发现输出结果时而正确，时而不正确。<a id="more"></a>这段代码我是这样写的：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate &#123;</span><br><span class="line">    android.applicationVariants.all &#123; ApkVariant variant -&gt;</span><br><span class="line">        <span class="keyword">def</span> buildTypeName = variant.buildType.name</span><br><span class="line">        <span class="keyword">def</span> task = project.tasks.create <span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar</span><br><span class="line">        <span class="keyword">def</span> packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)</span><br><span class="line">        task.archiveName = <span class="string">'base.jar'</span></span><br><span class="line">        task.dependsOn packageTask</span><br><span class="line">        packageTask.finalizedBy task</span><br><span class="line">        task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">        variant.apkLibraries.each &#123;</span><br><span class="line">            logger.info(<span class="string">'apkLibraries ===&gt; '</span> + it.absolutePath)</span><br><span class="line">            task.from zipTree(it)</span><br><span class="line">        &#125;</span><br><span class="line">        task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)</span><br><span class="line">        artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实这个问题困扰我好久了，一直悬而未决，不过好在这一切都发生在编译期，如果结果不正确的话，一切错误都可以在编译期暴露出来，而不会影响发版。因此，在解决方案一直苦求而不得的情况下，我并没有把这个问题的优先级列的很高。直到前些天，我实在受不了了（此处省略了 N 多无奈纠结），只好硬着头皮硬上了。结果就有了这篇文章。</p>
 <h2 id="一些准备工作"><a href="#一些准备工作" class="headerlink" title="一些准备工作"></a>一些准备工作</h2><p>首先，我解释一下这段代码的作用，其实 Gradle 对于没接触过的人和习惯于 Java 的人之所以难懂，是因为大量的语法糖省略了许多代码，而 IDE 本身对于智能不全的支持又相当的鸡肋，不管是读还是写，都特别费劲，我们把这段代码补全之后就容易理解多了。</p>
@@ -391,6 +410,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -403,10 +430,6 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/15/" rel="prev" title="一个关于Gradle构建缓存的问题">
-                一个关于Gradle构建缓存的问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -481,7 +504,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">139</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -779,7 +802,7 @@
     <script type="text/javascript">
       var disqus_shortname = 'easydonecn';
       var disqus_identifier = '2017/08/15/';
-      var disqus_title = '';
+      var disqus_title = '一个关于Gradle构建缓存的问题';
       var disqus_url = 'http://www.easydone.cn/2017/08/15/';
 
       function run_disqus_script(disqus_script){
