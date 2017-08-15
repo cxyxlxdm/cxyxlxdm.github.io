@@ -255,6 +255,127 @@
             
               
                 
+                <a class="post-title-link" href="/2012/07/02/" itemprop="url">
+                  Tomcat开机启动脚本
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-02T13:37:46+08:00" content="Jul 2 2012">
+              Jul 2 2012
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/07/02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在/etc/init.d下创建脚本文件tomcat，然后赋予其执行权限：chmod +x tomcat.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/s</span></span><br><span class="line"><span class="comment"># Tomcat auto-star</span></span><br><span class="line"><span class="comment"># chkconfig:2345 90 1</span></span><br><span class="line"><span class="comment"># description: Auto-starts tomca</span></span><br><span class="line"><span class="comment"># processname: tomca</span></span><br><span class="line"><span class="built_in">export</span> CATALINA_HOME=/usr/<span class="built_in">local</span>/src/tomca</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.<span class="number">7.0</span>_0</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:JAVA_HOME/lib/tool.ja</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span>     /*tomcat和jdk环境变量，根据实际情况修改*</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> i</span><br><span class="line"> start</span><br><span class="line"> sh <span class="variable">$CATALINA_HOME</span>/bin/startup.s</span><br><span class="line"> ;</span><br><span class="line"> stop</span><br><span class="line"> sh <span class="variable">$CATALINA_HOME</span>/bin/shutdown.s</span><br><span class="line"> ;</span><br><span class="line"> restart</span><br><span class="line"> sh <span class="variable">$CATALINA_HOME</span>/bin/shutdown.s</span><br><span class="line"> sh <span class="variable">$CATALINA_HOME</span>/bin/startup.s</span><br><span class="line"> ;</span><br><span class="line"> esa</span><br><span class="line"> <span class="built_in">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>使用命令service tomcat start/restart/stop来启动/重启/停止服务。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/06/20/" itemprop="url">
                   Java面向对象
                 </a>
@@ -1723,149 +1844,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/05/31/" itemprop="url">
-                  往事
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-05-31T12:43:00+08:00" content="May 31 2011">
-              May 31 2011
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/05/31/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2011/05/31/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>##强国外交 </p>
-<p>毫无疑问，宋朝时中国战力最弱的朝代，中国每个封建朝代都有自己的特色，重文轻武就是宋朝最大的特色。对于 宋朝这一政治制度，历来褒贬不一，不过貌似喷的 人比较多，因为宋朝时候中国人的民族自豪感被最大限度的打击了。可以说，除了近代清政府时期，就属宋朝时 中国的军事外交最失败了。都说“弱国无外交”，可是宋朝的奇葩之处就在于当时的中国是世界上最发达的国家，那个时候还没有美国，当时中国的经济、文化、科技领先欧洲至少一百年，除了军事。这也是人类历史 上唯一“强国无外交”的特例。</p>
-<p>赵匡胤陈桥兵变，黄袍加身，大家都明白怎么回事，具体情况不用多说，之后又杯酒释兵权，和平解决了夺取天下后可能出现的再次病变问题。不得不说这事中国 历 史上最具光辉性的天子与军士之间的斗争，无论是在陈桥兵变之后对柴家人的安顿，还是黄袍加身后对大将的处置，都展示了赵匡胤仁德的一面，仅凭这一点， 他 绝对称得上是一代贤君。送走了石守信等人，太祖进一步地加快了加强中央集权的步伐，进一步削弱军人的地位，进一步强化文人治国的战略方针。作为开国之君， 赵匡胤的方针政策必然要得到其后代子孙的继续发扬。所以我们看到，中国历朝历代中，唯有宋朝的文人最幸福，宋代政坛上叱咤风云的人物几乎都是流芳百 世的大 学问家，唯有宋朝的政治文人被打倒之后仍然可以保全身家性命。其实我一直“烛影斧声”这个传说耿耿于怀，不管这个故事的可信有多少，身体一向硬朗且正值壮 年的太祖的暴毙总让我觉得心疼。</p>
-<p>有资料里这样形容宋朝的经济发达程度：澶渊之盟宋朝向辽国进贡白银十万两，绢布二十万匹，合岁币三十万，这样的数目宋国一个财主就能付得起。当时全国每 年 的经济收入超过了一个亿岁币。这就是霸气！也就是这每年的三十万岁币换取了宋国一百多年的和平，造就了中国领先世界一百多年的文明。然而物极必反，经 济 的终极发展让人们考虑的物质方面的时间越来越少，人们开始越来越多地考虑自己的精神需求。而宋朝重文的传统又推动了精神文明的进一步发展，不仅仅是一 些文 化方面，更有关乎人们思维走向的思想家的出现。首先，一大批文人大家的出现及占据主流社会，带动了全国人民开始从事文化建设。人民整体文化素质的提 高又促 进了人民内部各种思潮的出现，其中一些大家如程氏兄弟、朱熹等人就通过自身对中国传统文化的理解，总结出了自己的一套理论，也就是影响了中国一千 多年的大名鼎鼎的“程朱理学”。</p>
-<p>思想这种东西真是太厉害了，岁月可以流逝，朝代可以更迭，叱咤风云的文人武将都已烟消云散，但是一些人创立的具有影响力的思想却可以长盛不衰，甚至是经过后人的加工改造而历久弥新。王阳明对“程朱理学”的 发展更是影响了整个明朝的政治局势和中华民族的思想，这都是后话了。对宋朝重文轻武造成的影响历来争 议都很大，好的方面上面都说了，就是经济文化的高度 发展，但是冗官、冗费也让统治者积贫积弱。这个现象也很有趣，就是百姓都很有钱，但是皇帝钱却不够用。不是说税收不高，而是皇帝要养的人太多了。然而众所周知，除了这些，大宋还有更大的麻烦，不是来自国内，而是外面。</p>
-<p>##武将风流</p>
-<p>明嘉靖年间，我国东南沿海开始遭受倭寇自扰，倭寇与当地海盗串通一气，祸害百姓。这时候离戚继光、俞大猷他们抗击倭寇还早，当朝宰相是中国历史上著名 的大奸相严嵩。严嵩搞掉夏言之后，真的算是权倾朝野，一手遮天了。他所任用的人绝对都是他喜欢的人，不管一个人喜不喜欢严嵩，至少在严嵩面前都必须喜欢严嵩，否则就下场就如杨继盛。所以此时如徐阶、张居正之类的千古流名的治世能臣都得“喜欢”严嵩。在这众多“喜欢”严嵩的人中，有一个人叫赵文华，赵文华倒 不足道，但是有一个跟赵文华关系密切的人很足道，他叫胡宗宪。</p>
-<p>胡宗宪死之前在狱中写下了这样的诗句“宝剑埋冤狱，忠魂绕白云”，在那样的一个时代，比胡宗宪更悲剧的大有人在，胡宗宪实现了自己的人生理想，至少说为 自己的理想奋斗至死，最终他的冤情也得到平反昭雪。胡宗宪剿灭海盗期间，一直待在胡宗宪身边的跟他一块儿流芳百世的另一个千古奇人就比他更悲剧，这个人叫 徐渭——徐文长。可见严嵩当道，毁了多少风华绝代的风流人物！如胡宗宪一般文韬武略、智勇双全的一代奇才也必须考巴结严嵩的义子赵文华才能发挥自己的才 能，而徐文长这样既没有背景又对八股没有兴趣的千古奇人则只好待在与自己惺惺相惜的胡宗宪身边做幕僚了。</p>
-<p>张经、李天宠也都算是良臣了，在他们被赵文华陷害致死之后，胡宗宪接替他们的职务，他深知与赵文华共处必须处处谨慎，有时候甚至卑躬屈膝地、极其下作地 巴 结赵文华，因此胡宗宪之后的剿匪工作也得到了赵文华的大力支持。赵文华是一个草包，但胡宗宪不是，一直串通倭寇的海盗汪直、徐海相继被胡宗宪消灭之后， 功劳也被赵草包掠去。徐海的妻子叫王翠翘，本是江南名妓，后被徐海上岸劫走，之后徐海对王翠翘情深意重，王翠翘也就死心塌地跟着徐海了。击败汪徐一 直为胡 宗宪出谋划策的是徐文长，胡宗宪非常喜欢徐文长，徐文长也确实是中国几千年历史中无可替代的唯一。胡宗宪就有意让王翠翘嫁给徐文长，才子佳人本是 人们心目 中的天赐良缘，但是王翠翘的举动也确实无愧于徐文长这样的千古奇人，奋然自尽以报徐海之义。</p>
-<p>最后的结果是，徐阶隐忍了数十年，用自己的聪明才智和阴谋诡计陷害了严嵩，严嵩父子倒台，之前因为谄媚严嵩的胡宗宪也被判做是严党余孽而下狱，胡宗宪冤 死狱中。徐文长做了《十白赋》悼念 他，而此时内阁首辅李春芳严查胡宗宪案，徐文长也受到牵连，他一度因此发狂，三次自杀未遂，而他的满腹经纶和浩瀚如海的才华也再也没人能够赏识，即使是后来的高拱和张居正，最终郁郁而终，终年七十三岁。</p>
-<p>##偶然必然</p>
-<p>1917年11月7日，一个值得全世界无产阶级值得铭记的日子，这一天，发生了十月革命。十月革命对世界历史的发展产生了重大影响。一系列的偶然成就了改变世界的“十月革命”。</p>
-<p>19世纪70年代到20世 纪初，在资本主义世界发生了第二工业革命，生产力的发展极大推动了生产关系的发展，同时也加剧了统治者与普通民众之间的矛盾。此时，欧洲各国又在为自己的利益而摩擦不断，俾斯麦上任普鲁士宰相后，积极推动德意志的统一，因此爆发了普法战争。结果法国大败，普鲁士统一了德意志，两国签订条约，规定法国割 让阿尔萨斯和洛林，并赔款50亿法郎。而这样的结果直接导致了第一次世界大战。</p>
-<p>俾斯麦害怕法国报复，于是拉俄国和奥匈帝国入伙，由于后来与俄国在巴尔干问题上发生冲突，俄国倒戈相向，转投法国阵营。第一次世界大战爆发后，俄国陷入战争泥潭，沙皇依然不顾人民死活，实行高压统治。俄国的皇后（德国人）反对战争，却被污蔑为间谍。皇后党中坚被暗杀，俄国内部矛盾彻底激化。反战者举行示威游行，二月革命爆发，沙皇下台。</p>
-<p>然而，事情到现在才刚刚开始，俄国有迅速分裂为布尔什维克和孟什维克两大阵营。布尔什维克主张停战，孟什维克则希望继续打仗。谁也说不服谁，就打吧。俄国进攻德国失败，给布尔什维克带来了契机，孟什维克威信顿失，十月革命爆发。</p>
-<p>一切看似水到渠成，合情合理，可是我们细细推敲，就会发现其中充斥着偶然的因素。19世纪70年代开始的第二次工业革命极大的推动了生产力的发展，1861年，俄国农奴制改革、美国内战，1862年，俾斯麦上台推行铁血政策，1868年，日本明治维新，我们可以看到，19世纪六七十年代，资本主义世界发生了翻天覆地的变化，所有的变化都是在为资本主义的更好发展服务。而有一个小的细节是只有俄国的变化不彻底，社会制度依然 具有浓厚 的封建色彩，沙皇依然进行着残暴的统治。相对于其他国家，俄国的资产阶级革命显然不够彻底，这是第一个偶然。</p>
-<p>俄国当时的状况与德国颇为相似，同样的内忧外患，人民生活同样水深火热，德国比俄国还要糟糕，尚未实现统一，与周遭邻国的矛盾一触即发。而这第二个偶然就是德国出了个俾斯麦！这个人太厉害，如果没有这个人，我甚至都不敢想像世界现在会是什么样子。俾斯麦为了统一，挑起了普法战争，接着演变为第一 次世界大 战，然后就是俄国二月革命和沙皇下台，最后是十月革命。一系列的连锁反应，有点“叹为观止”了。</p>
-<p>德国一开始选择的同盟是俄国和奥匈帝国，后来俄国反水了。俄国的皇后恰恰是德国人，而正是这位皇后的一封寄往前线要求停战的密信，成了二月革命的导火索。这封信让一些别有用心的人污蔑皇后是德国间谍，于是皇后党领袖被杀，矛盾激化，二月革命爆发。二月革命与十月革命之间的关系我也无须再说。所以，这第三个偶然就是俄国的德国人皇后。</p>
-<p>然而，这么多的偶然加在一起就成为了必然。历史不容假设，不过我相信，如果中减少了任意一个环节的偶然，我们现在置身的必然是另一个世界。</p>
-<p>##梨园名士</p>
-<p>王瑶卿有四个鼎鼎大名的徒弟，就是“四大名旦”——梅兰芳、程砚秋、尚小云、荀慧生，都是唱青衣的，生活在同一个时代的这四个人一直撑起了京剧旦角 的一片天，那个时代虽然国家破败，人民生活水深火热，但依然不妨碍人们对精神生活的追求，那真是京剧最美好的年代。除了“四大名旦”之外，还有“四 大须生”，尤以马连良、余叔岩奚啸伯、谭富英最为有名，其他散家还有武生刀马旦杨小楼、谭鑫培等。</p>
-<p>京剧人才真是层出不穷，而且不断代，谭鑫培 家族七代全是名角，梅兰芳祖父梅巧玲是四喜班班主，几乎所有名角都有一大批传人。中国第一张唱片就是谭鑫培的《定军山》。杨小楼跟梅兰芳的爸爸是一辈的，梅兰芳小时候很调皮，经常被杨小楼逮到不去上课，杨小楼会亲自把他送到学堂，待梅兰芳长大了，他们经常同台 演出。《探寒窑》里梅扮演王宝钏和杨演的薛平贵，还有《霸王别姬》里梅的虞姬和杨的楚霸王都是当时最最经典的剧目。还有其他一些诸如《挑滑车》《长坂坡》《四郎探母》《铁笼山》等等特别有名的戏。那 个时候人们唯一的业余生活就是听戏了，每位京剧名角都是大明星。</p>
-<p>这些名角大部分，特别是老一辈的都有一个很特别的嗜好，就是抽鸦片。杨小楼是有名的大烟鬼，每天必抽。马连良也抽大烟，文革时候因为演了《海瑞罢官》被江青害死。马连良几乎 是我所知道的人中作风最严谨、最一丝不苟的人了。他要求所有的戏服必须没有意思瑕疵，对音乐伴奏、一般的配角甚至龙套演员都必须做到完美。解放后，他被周总理亲自从香港接回大陆，受到了各界的热烈欢迎。一次，章诒和她爹农工民主党主席章伯钧邀请马连良去家里做客吃晚饭，马连良中午就请人去章家里，把他 家里里里外外全刷一遍，厨房的案板刷的 发白才罢休。就是这样干净的人在文革被迫害的时候，路上偶遇章伯钧的妻子，告诉她自己两个星期没洗澡了，而且还向 她要大烟抽。文革时候，众多 的艺术家都遭到了无情的迫害，用章伯钧的一句话说：毛泽东的思想我们搞政治的都理解不了，何况一个小小的马连良？读来真是令人心疼啊。</p>
-<p>梅兰芳是极少数在文革时候没有收到迫害的人，因为他在文革之前就死了。梅的气节大家都知道了，历史课本上有他蓄须明志的故事。其实马连良的死不仅仅因为《海瑞罢官》影射了毛泽东罢免彭德怀，还因为他曾经给日本人唱过戏，尽管党已经说了不会翻旧账，但是那个年代人们的思想很难理 解的。梅 兰芳同样是在世界上享有盛誉的京剧艺术家，电影里只展现了他在美国的成功，其实他在国际上的成功离不开前苏联的一位大艺术理论家——爱森斯坦，梅兰芳和“电影皇后”胡蝶去苏联考察，正是爱森斯坦最早在国际上极力热捧梅兰芳。说句题外话，相对在那个时代更成功的胡蝶，我更喜欢阮玲玉，而事实是阮玲玉对后市的影响确比胡蝶大得多。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1911,7 +1889,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-count">140</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
