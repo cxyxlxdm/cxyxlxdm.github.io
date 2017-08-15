@@ -1,0 +1,807 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Just Be Unreserved!" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Just Be Unreserved!">
+<meta property="og:url" content="http://www.easydone.cn/2017/08/15/index.html">
+<meta property="og:site_name" content="Just Be Unreserved!">
+<meta property="og:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-085843.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-091455.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/Gradle_LifeCycle.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-102417.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190719.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190914.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-113615.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-191141.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-114331.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-115844.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120430.png">
+<meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120450.png">
+<meta property="og:updated_time" content="2017-08-15T13:05:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just Be Unreserved!">
+<meta name="twitter:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。这段代码我">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title>  | Just Be Unreserved! </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Just Be Unreserved!</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">学无止境。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-15T21:05:04+08:00" content="Aug 15 2017">
+              Aug 15 2017
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/15/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/15/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的<strong>有向非循环图</strong>里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 <code>ApplicationVariant#apkLibraries</code> 方法，我发现输出结果时而正确，时而不正确。这段代码我是这样写的：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate &#123;</span><br><span class="line">    android.applicationVariants.all &#123; ApkVariant variant -&gt;</span><br><span class="line">        <span class="keyword">def</span> buildTypeName = variant.buildType.name</span><br><span class="line">        <span class="keyword">def</span> task = project.tasks.create <span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar</span><br><span class="line">        <span class="keyword">def</span> packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)</span><br><span class="line">        task.archiveName = <span class="string">'base.jar'</span></span><br><span class="line">        task.dependsOn packageTask</span><br><span class="line">        packageTask.finalizedBy task</span><br><span class="line">        task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">        variant.apkLibraries.each &#123;</span><br><span class="line">            logger.info(<span class="string">'apkLibraries ===&gt; '</span> + it.absolutePath)</span><br><span class="line">            task.from zipTree(it)</span><br><span class="line">        &#125;</span><br><span class="line">        task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)</span><br><span class="line">        artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实这个问题困扰我好久了，一直悬而未决，不过好在这一切都发生在编译期，如果结果不正确的话，一切错误都可以在编译期暴露出来，而不会影响发版。因此，在解决方案一直苦求而不得的情况下，我并没有把这个问题的优先级列的很高。直到前些天，我实在受不了了（此处省略了 N 多无奈纠结），只好硬着头皮硬上了。结果就有了这篇文章。</p>
+<h2 id="一些准备工作"><a href="#一些准备工作" class="headerlink" title="一些准备工作"></a>一些准备工作</h2><p>首先，我解释一下这段代码的作用，其实 Gradle 对于没接触过的人和习惯于 Java 的人之所以难懂，是因为大量的语法糖省略了许多代码，而 IDE 本身对于智能不全的支持又相当的鸡肋，不管是读还是写，都特别费劲，我们把这段代码补全之后就容易理解多了。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">project.afterEvaluate(<span class="keyword">new</span> Action&lt;Project&gt;() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="typename">void</span> execute(Project project) &#123;</span><br><span class="line">        com.android.build.gradle.AppExtension android = project.findProperty(<span class="string">'android'</span>)</span><br><span class="line">        android.getApplicationVariants().all(<span class="keyword">new</span> Action&lt;com.android.build.gradle.api.ApplicationVariant&gt;() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="typename">void</span> execute(com.android.build.gradle.api.ApplicationVariant applicationVariant) &#123;</span><br><span class="line">                String buildTypeName = applicationVariant.buildType.name</span><br><span class="line">                Task task = project.tasks.create(<span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar)<span class="comment">//创建任务</span></span><br><span class="line">                Task packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)<span class="comment">//确定需要依赖的任务</span></span><br><span class="line">                task.archiveName = <span class="string">'base.jar'</span><span class="comment">//输出文件名</span></span><br><span class="line">                task.dependsOn(packageTask)<span class="comment">//设置任务依赖的现有构建任务</span></span><br><span class="line">                packageTask.finalizedBy(task)<span class="comment">//设置任务在构建中的执行时机</span></span><br><span class="line">                task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">                Collection&lt;File&gt; apkLibraries = applicationVariant.getApkLibraries()</span><br><span class="line">                <span class="keyword">for</span> (File <span class="string">file :</span> apkLibraries) &#123;</span><br><span class="line">                    project.getLogger().lifecycle(<span class="string">'apkLibraries ===&gt; '</span> + file.getAbsolutePath())</span><br><span class="line">                    task.from zipTree(file)</span><br><span class="line">                &#125;</span><br><span class="line">                task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)<span class="comment">//输出目录</span></span><br><span class="line">                artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样再看，是不是就容易理解多了？其中 <code>afterEvaluate</code> 和 <code>logger</code> 都是 <code>project</code> 的方法，在每个 Gradle 工程里都有一个 <code>project</code> 对象，在所有的 <code>build.gradle</code> 文件里都可以直接调用 <code>project</code> 的所有共有方法和变量（所以说，所谓闭包、lambda 绝对不是学会 Gradle 的关键）。这段代码的目的就是为了输出所有最终打进 APK 包里的依赖，也就是在 <code>build.gradle</code> 的 <code>dependencies</code> 结点下面 <code>compile</code> （未来的 Gradle Plugin 版本可能会变）的所有依赖；顺便说一句，如果要获取 <code>dependencies</code> 结点下面所有的依赖，将 <code>apkLibraries</code> 换成 <code>compileLibraries</code> 即可。这两个 API 在 <code>com.android.build.gradle.api.ApkVariant</code> 里，而 <code>ApplicationVariant</code> 继承自 <code>ApkVariant</code>。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png" alt=""></p>
+<h2 id="现象描述"><a href="#现象描述" class="headerlink" title="现象描述"></a>现象描述</h2><ol>
+<li><p>先从日志输出入手，将正确的结果和不正确的结果放在一起对比后发现，正确的结果里包含两种类型的文件路径，一种是工程 <code>build/intermediates/exploded-aar</code> 目录下的<strong>临时缓存</strong>，另一种是 <code>.gradle</code>、<code>.m2</code> 和 <code>SDK</code> 目录下的<strong>永久缓存</strong>（除非手动删除）；它们还有另外一个特点，前者全都是 aar，后者都是 jar：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-085843.png" alt=""></p>
+</li>
+<li><p>我们再看一下不正确的结果，很容易发现，这结果里只剩下了 <code>.gradle</code>、<code>.m2</code> 和 <code>SDK</code> 目录下的缓存：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-091455.png" alt=""></p>
+<p>也就是说，工程 <code>build</code> 目录下的临时缓存丢掉了，然后我先执行以下 <code>gradle clean</code>，将 <code>build</code> 目录删掉，再重新编译，结果复现了！到了这里，我们可以确认这是个必现的 bug，而不是一开始想的时而正确，时而不正确。</p>
+<p>但是我的打包命令里明明包含了 <code>clean</code> 任务，为什么在 1 里的结果还是正确的呢？其实这时候，如果对 Gradle 的生命周期有了解的话，就可以猜得到结果了，这说明这段日志打印一定是在 Gradle 生命周期的 <strong><code>Configuration</code></strong> 阶段输出的，而 <code>clean</code> 任务的执行必然是在 <strong><code>Configuration</code></strong> 之后的，这也就解释了为什么单独执行 <code>clean</code> 任务，再执行 <code>assembleDebug</code> 任务，得到的结果是错误的，而把 <code>clean</code> 和 <code>assembleDebug</code> 放在一起执行得到的结果是正确的。我们将打包命令后面加上 <code>—info</code> 参数，就可以发现确实是在 <strong><code>Configuration</code></strong> 过程中打印的日志输出。下图是 Gradle 生命周期的图示。</p>
+</li>
+</ol>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/Gradle_LifeCycle.png" alt=""></p>
+<ol>
+<li><p>再接下来，我新建了个 demo，然后继续之前的操作，一个完全干净的工程，没有 <code>buildDir</code>，结果出现了下面的结果：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-102417.png" alt=""></p>
+<p>看到这样的结果，我直接就懵逼了… <code>build/intermediates/exploded-aar</code> 居然消失了！！！跟上面的截图对比之后，发现取而代之的是 <code>$HOME/.android/build-cache</code> 目录，而且即便没有 <code>build</code> 临时缓存目录，得到的结果也是正确的。新建的 demo 构建环境跟我们的业务工程唯一的区别就是 Gradle 版本了，我把 demo 的 Gradle 版本降级到跟业务工程一样，结果完全一样了。看来，Google 也意识到了这个 bug，其实也好理解，工程 <code>buildDir</code> 本就是临时目录，每次 <code>clean</code> 之后都会删除，而如果使用系统级的缓存目录，执行 <code>clean</code> 任务就不影响了。</p>
+</li>
+</ol>
+<h2 id="追本溯源"><a href="#追本溯源" class="headerlink" title="追本溯源"></a>追本溯源</h2><p> 接下来我们来看看最新版本的 Android Gradle Plugin 源码里是怎么处理的吧。</p>
+<ol>
+<li><p>我们在上面的截图里可以看到，调用 <code>androidBuilder.getAllPackagedJars</code> 方法即可得到 <code>apkLibraries</code>， <code>AndroidBuild</code> 里的 <code>getAllPackagedJars</code> 方法如下图：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190719.png" alt=""></p>
+</li>
+<li><p>然后是 <code>VariantConfiguration</code> 里的 <code>getAllPackagedJars</code> 方法：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190914.png" alt=""></p>
+</li>
+<li><p>接着调到了 <code>Dependency</code> 类里的 <code>getClasspathFile</code> 和 <code>getAdditionalClasspath</code> 方法，而 <code>Dependency</code> 是一个接口，我们看它的其中一个实现类（其他的也类似）<code>AndroidDependency</code>，<code>AndroidDependency</code> 的构造方法是私有的，同时它提供了静态的共有 create 方法，因此创建 <code>AndroidDependency</code> 都只能调用这些 create 方法，我们只要找到这些 create 方法调用的地方就可以了。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-113615.png" alt=""></p>
+</li>
+<li><p>然后我们可以发现在 <code>DependencyManager</code> 里调用了 create 初始化 <code>Dependency</code> 的方法：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-191141.png" alt=""></p>
+<p>到这里，就很明朗了。Gradle 构建过去缓存目录有两种方式，用哪种方式，取决于 <code>PrepareLibraryTask.shouldUseBuildCache(buildCache.isPresent(), mavenCoordinates)</code> 的值，也就是说 <code>buildCache.isPresent()</code> 为 true，同时依赖版本号里含有 <code>-SNAPSHOT</code>，而前者需要 <code>buildCache</code> 不为空：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-114331.png" alt=""></p>
+</li>
+<li><p>接下来我们可以看 <code>com.android.build.gradle.AndroidGradleOptions</code> 这个类，这里我们可以看到只要 <code>isBuildCacheEnabled</code> 这个方法返回 true，上一步里的 <code>buildCache</code> 就不为空，而 <code>DEFAULT_ENABLE_BUILD_CACHE</code> 这个默认值恰恰就是 true，而且我们也可以看到在 <code>getBuildCacheDir</code>  方法里，拼接的 dir 里刚好就有我们上面截图里的 <code>build-cache</code>，也就是说在新版本的 Gradle Plugin 里，走了步骤 4 里的 if 逻辑，而之前版本 Gradle Plugin 走的是 else 的逻辑。</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-115844.png" alt=""></p>
+</li>
+<li><p>这时候我们再看步骤 4 里的 else 逻辑，里面其实就是一个给 <code>explodedDir</code> 的赋值操作，有两个常量字符串，他们的值如下图：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120430.png" alt=""></p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120450.png" alt=""></p>
+<p>拼在一起，刚好就是 <code>build/intermediates/exploded-aar</code>，这也就是为什么在新版本的 Gradle Plugin 里这个目录消失了的原因。</p>
+</li>
+<li><p>然而，难道说要解决这问题，只能升级 Gradle 版本？当然不是，而且我们还可以发现，这样的输出结果并不完全正确，我们想要的是某一个变种（variant）的输出，不同的变种，文件目录是不一样的，而这结果是无论我们是哪一个变种，结果都是所有的变种输出。</p>
+</li>
+</ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们有必要再重新审阅一下我们的需求，『在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里』，也就是说这些日志输出应该在 Gradle 生命周期的 <strong><code>Execution</code></strong> 阶段去打印，而不是 <strong><code>Configuration</code></strong> 阶段打印。在明确了这一点之后，另外一个更合适的解决方案就呼之欲出了，一点点修改就可以解决。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">afterEvaluate &#123;</span><br><span class="line">    android.applicationVariants.all &#123; ApkVariant variant -&gt;</span><br><span class="line">        <span class="keyword">def</span> buildTypeName = variant.buildType.name</span><br><span class="line">        <span class="keyword">def</span> task = project.tasks.create <span class="string">"jar$&#123;buildTypeName.capitalize()&#125;"</span>, Jar</span><br><span class="line">        <span class="keyword">def</span> packageTask = project.tasks.findByName(<span class="string">"package$&#123;buildTypeName.capitalize()&#125;"</span>)</span><br><span class="line">        task.archiveName = <span class="string">'base.jar'</span></span><br><span class="line">        task.dependsOn packageTask</span><br><span class="line">        packageTask.finalizedBy task</span><br><span class="line">        task.outputs.upToDateWhen &#123; <span class="literal">false</span> &#125;</span><br><span class="line">        task.doFirst &#123;</span><br><span class="line">            variant.apkLibraries.each &#123;</span><br><span class="line">                logger.info(<span class="string">'apkLibraries ===&gt; '</span> + it.absolutePath)</span><br><span class="line">                task.from zipTree(it)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        task.destinationDir = file(project.buildDir.absolutePath + <span class="string">"/outputs/jar"</span>)</span><br><span class="line">        artifacts.add(<span class="string">'archives'</span>, task)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅仅是加了个 <code>task.doFirst</code> 就彻底解决了这个问题，在 task 执行的最开始先去获取需要处理的文件即可。折腾这么久，这样的结果看上去居然与过程几乎没什么关系…不过这过程才是学习最大的意义所在吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/24/" rel="next" title="Repo VS Submodule">
+                <i class="fa fa-chevron-left"></i> Repo VS Submodule
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://easydone.qiniudn.com/default_avatar.jpg"
+               alt="Ailurus" />
+          <p class="site-author-name" itemprop="name">Ailurus</p>
+          <p class="site-description motion-element" itemprop="description">Android Developer</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">208</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank" title="G+">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  G+
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liangzhitao" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/liangzhitao" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/liangzhitao" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/208087666" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dim.red" title="明哥" target="_blank">明哥</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://nicodelee.sinaapp.com" title="日志" target="_blank">日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamwent.github.io" title="大城小黄" target="_blank">大城小黄</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://veaer.com" title="veaer" target="_blank">veaer</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://itangqi.me" title="汤奇" target="_blank">汤奇</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://rarnu.com" title="何老师" target="_blank">何老师</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://fucknmb.com" title="区长" target="_blank">区长</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="大帅" target="_blank">大帅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://kaedea.com" title="卡老师" target="_blank">卡老师</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些准备工作"><span class="nav-number">2.</span> <span class="nav-text">一些准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#现象描述"><span class="nav-number">3.</span> <span class="nav-text">现象描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#追本溯源"><span class="nav-number">4.</span> <span class="nav-text">追本溯源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">5.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ailurus</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'easydonecn';
+      var disqus_identifier = '2017/08/15/';
+      var disqus_title = '';
+      var disqus_url = 'http://www.easydone.cn/2017/08/15/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

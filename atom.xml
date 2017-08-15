@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2017-04-24T15:24:02.000Z</updated>
+  <updated>2017-08-15T13:05:03.000Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://www.easydone.cn/2017/08/15/"/>
+    <id>http://www.easydone.cn/2017/08/15/</id>
+    <published>2017-08-15T13:05:04.000Z</published>
+    <updated>2017-08-15T13:05:03.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的&lt;strong&gt;有向非循环图&lt;/strong&gt;里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 &lt;code&gt;ApplicationVariant#apkLibraries&lt;/code&gt; 方法，我发现输出结果时而正确，时而不正确。这段代码我是这样写的：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;afterEvaluate &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android.applicationVariants.all &amp;#123; ApkVariant variant -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; buildTypeName = variant.buildType.name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; task = project.tasks.create &lt;span class=&quot;string&quot;&gt;&quot;jar$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;, Jar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; packageTask = project.tasks.findByName(&lt;span class=&quot;string&quot;&gt;&quot;package$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.archiveName = &lt;span class=&quot;string&quot;&gt;&#39;base.jar&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.dependsOn packageTask&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        packageTask.finalizedBy task&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.outputs.upToDateWhen &amp;#123; &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        variant.apkLibraries.each &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            logger.info(&lt;span class=&quot;string&quot;&gt;&#39;apkLibraries ===&amp;gt; &#39;&lt;/span&gt; + it.absolutePath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            task.from zipTree(it)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.destinationDir = file(project.buildDir.absolutePath + &lt;span class=&quot;string&quot;&gt;&quot;/outputs/jar&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        artifacts.add(&lt;span class=&quot;string&quot;&gt;&#39;archives&#39;&lt;/span&gt;, task)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其实这个问题困扰我好久了，一直悬而未决，不过好在这一切都发生在编译期，如果结果不正确的话，一切错误都可以在编译期暴露出来，而不会影响发版。因此，在解决方案一直苦求而不得的情况下，我并没有把这个问题的优先级列的很高。直到前些天，我实在受不了了（此处省略了 N 多无奈纠结），只好硬着头皮硬上了。结果就有了这篇文章。&lt;/p&gt;
+&lt;h2 id=&quot;一些准备工作&quot;&gt;&lt;a href=&quot;#一些准备工作&quot; class=&quot;headerlink&quot; title=&quot;一些准备工作&quot;&gt;&lt;/a&gt;一些准备工作&lt;/h2&gt;&lt;p&gt;首先，我解释一下这段代码的作用，其实 Gradle 对于没接触过的人和习惯于 Java 的人之所以难懂，是因为大量的语法糖省略了许多代码，而 IDE 本身对于智能不全的支持又相当的鸡肋，不管是读还是写，都特别费劲，我们把这段代码补全之后就容易理解多了。&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;project.afterEvaluate(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Action&amp;lt;Project&amp;gt;() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;typename&quot;&gt;void&lt;/span&gt; execute(Project project) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        com.android.build.gradle.AppExtension android = project.findProperty(&lt;span class=&quot;string&quot;&gt;&#39;android&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android.getApplicationVariants().all(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Action&amp;lt;com.android.build.gradle.api.ApplicationVariant&amp;gt;() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;typename&quot;&gt;void&lt;/span&gt; execute(com.android.build.gradle.api.ApplicationVariant applicationVariant) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                String buildTypeName = applicationVariant.buildType.name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                Task task = project.tasks.create(&lt;span class=&quot;string&quot;&gt;&quot;jar$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;, Jar)&lt;span class=&quot;comment&quot;&gt;//创建任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                Task packageTask = project.tasks.findByName(&lt;span class=&quot;string&quot;&gt;&quot;package$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;//确定需要依赖的任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                task.archiveName = &lt;span class=&quot;string&quot;&gt;&#39;base.jar&#39;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;//输出文件名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                task.dependsOn(packageTask)&lt;span class=&quot;comment&quot;&gt;//设置任务依赖的现有构建任务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                packageTask.finalizedBy(task)&lt;span class=&quot;comment&quot;&gt;//设置任务在构建中的执行时机&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                task.outputs.upToDateWhen &amp;#123; &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                Collection&amp;lt;File&amp;gt; apkLibraries = applicationVariant.getApkLibraries()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (File &lt;span class=&quot;string&quot;&gt;file :&lt;/span&gt; apkLibraries) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    project.getLogger().lifecycle(&lt;span class=&quot;string&quot;&gt;&#39;apkLibraries ===&amp;gt; &#39;&lt;/span&gt; + file.getAbsolutePath())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    task.from zipTree(file)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                task.destinationDir = file(project.buildDir.absolutePath + &lt;span class=&quot;string&quot;&gt;&quot;/outputs/jar&quot;&lt;/span&gt;)&lt;span class=&quot;comment&quot;&gt;//输出目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                artifacts.add(&lt;span class=&quot;string&quot;&gt;&#39;archives&#39;&lt;/span&gt;, task)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这样再看，是不是就容易理解多了？其中 &lt;code&gt;afterEvaluate&lt;/code&gt; 和 &lt;code&gt;logger&lt;/code&gt; 都是 &lt;code&gt;project&lt;/code&gt; 的方法，在每个 Gradle 工程里都有一个 &lt;code&gt;project&lt;/code&gt; 对象，在所有的 &lt;code&gt;build.gradle&lt;/code&gt; 文件里都可以直接调用 &lt;code&gt;project&lt;/code&gt; 的所有共有方法和变量（所以说，所谓闭包、lambda 绝对不是学会 Gradle 的关键）。这段代码的目的就是为了输出所有最终打进 APK 包里的依赖，也就是在 &lt;code&gt;build.gradle&lt;/code&gt; 的 &lt;code&gt;dependencies&lt;/code&gt; 结点下面 &lt;code&gt;compile&lt;/code&gt; （未来的 Gradle Plugin 版本可能会变）的所有依赖；顺便说一句，如果要获取 &lt;code&gt;dependencies&lt;/code&gt; 结点下面所有的依赖，将 &lt;code&gt;apkLibraries&lt;/code&gt; 换成 &lt;code&gt;compileLibraries&lt;/code&gt; 即可。这两个 API 在 &lt;code&gt;com.android.build.gradle.api.ApkVariant&lt;/code&gt; 里，而 &lt;code&gt;ApplicationVariant&lt;/code&gt; 继承自 &lt;code&gt;ApkVariant&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;现象描述&quot;&gt;&lt;a href=&quot;#现象描述&quot; class=&quot;headerlink&quot; title=&quot;现象描述&quot;&gt;&lt;/a&gt;现象描述&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先从日志输出入手，将正确的结果和不正确的结果放在一起对比后发现，正确的结果里包含两种类型的文件路径，一种是工程 &lt;code&gt;build/intermediates/exploded-aar&lt;/code&gt; 目录下的&lt;strong&gt;临时缓存&lt;/strong&gt;，另一种是 &lt;code&gt;.gradle&lt;/code&gt;、&lt;code&gt;.m2&lt;/code&gt; 和 &lt;code&gt;SDK&lt;/code&gt; 目录下的&lt;strong&gt;永久缓存&lt;/strong&gt;（除非手动删除）；它们还有另外一个特点，前者全都是 aar，后者都是 jar：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-085843.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;我们再看一下不正确的结果，很容易发现，这结果里只剩下了 &lt;code&gt;.gradle&lt;/code&gt;、&lt;code&gt;.m2&lt;/code&gt; 和 &lt;code&gt;SDK&lt;/code&gt; 目录下的缓存：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-091455.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;也就是说，工程 &lt;code&gt;build&lt;/code&gt; 目录下的临时缓存丢掉了，然后我先执行以下 &lt;code&gt;gradle clean&lt;/code&gt;，将 &lt;code&gt;build&lt;/code&gt; 目录删掉，再重新编译，结果复现了！到了这里，我们可以确认这是个必现的 bug，而不是一开始想的时而正确，时而不正确。&lt;/p&gt;
+&lt;p&gt;但是我的打包命令里明明包含了 &lt;code&gt;clean&lt;/code&gt; 任务，为什么在 1 里的结果还是正确的呢？其实这时候，如果对 Gradle 的生命周期有了解的话，就可以猜得到结果了，这说明这段日志打印一定是在 Gradle 生命周期的 &lt;strong&gt;&lt;code&gt;Configuration&lt;/code&gt;&lt;/strong&gt; 阶段输出的，而 &lt;code&gt;clean&lt;/code&gt; 任务的执行必然是在 &lt;strong&gt;&lt;code&gt;Configuration&lt;/code&gt;&lt;/strong&gt; 之后的，这也就解释了为什么单独执行 &lt;code&gt;clean&lt;/code&gt; 任务，再执行 &lt;code&gt;assembleDebug&lt;/code&gt; 任务，得到的结果是错误的，而把 &lt;code&gt;clean&lt;/code&gt; 和 &lt;code&gt;assembleDebug&lt;/code&gt; 放在一起执行得到的结果是正确的。我们将打包命令后面加上 &lt;code&gt;—info&lt;/code&gt; 参数，就可以发现确实是在 &lt;strong&gt;&lt;code&gt;Configuration&lt;/code&gt;&lt;/strong&gt; 过程中打印的日志输出。下图是 Gradle 生命周期的图示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/Gradle_LifeCycle.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;再接下来，我新建了个 demo，然后继续之前的操作，一个完全干净的工程，没有 &lt;code&gt;buildDir&lt;/code&gt;，结果出现了下面的结果：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-102417.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;看到这样的结果，我直接就懵逼了… &lt;code&gt;build/intermediates/exploded-aar&lt;/code&gt; 居然消失了！！！跟上面的截图对比之后，发现取而代之的是 &lt;code&gt;$HOME/.android/build-cache&lt;/code&gt; 目录，而且即便没有 &lt;code&gt;build&lt;/code&gt; 临时缓存目录，得到的结果也是正确的。新建的 demo 构建环境跟我们的业务工程唯一的区别就是 Gradle 版本了，我把 demo 的 Gradle 版本降级到跟业务工程一样，结果完全一样了。看来，Google 也意识到了这个 bug，其实也好理解，工程 &lt;code&gt;buildDir&lt;/code&gt; 本就是临时目录，每次 &lt;code&gt;clean&lt;/code&gt; 之后都会删除，而如果使用系统级的缓存目录，执行 &lt;code&gt;clean&lt;/code&gt; 任务就不影响了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;追本溯源&quot;&gt;&lt;a href=&quot;#追本溯源&quot; class=&quot;headerlink&quot; title=&quot;追本溯源&quot;&gt;&lt;/a&gt;追本溯源&lt;/h2&gt;&lt;p&gt; 接下来我们来看看最新版本的 Android Gradle Plugin 源码里是怎么处理的吧。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;我们在上面的截图里可以看到，调用 &lt;code&gt;androidBuilder.getAllPackagedJars&lt;/code&gt; 方法即可得到 &lt;code&gt;apkLibraries&lt;/code&gt;， &lt;code&gt;AndroidBuild&lt;/code&gt; 里的 &lt;code&gt;getAllPackagedJars&lt;/code&gt; 方法如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190719.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后是 &lt;code&gt;VariantConfiguration&lt;/code&gt; 里的 &lt;code&gt;getAllPackagedJars&lt;/code&gt; 方法：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170807-190914.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;接着调到了 &lt;code&gt;Dependency&lt;/code&gt; 类里的 &lt;code&gt;getClasspathFile&lt;/code&gt; 和 &lt;code&gt;getAdditionalClasspath&lt;/code&gt; 方法，而 &lt;code&gt;Dependency&lt;/code&gt; 是一个接口，我们看它的其中一个实现类（其他的也类似）&lt;code&gt;AndroidDependency&lt;/code&gt;，&lt;code&gt;AndroidDependency&lt;/code&gt; 的构造方法是私有的，同时它提供了静态的共有 create 方法，因此创建 &lt;code&gt;AndroidDependency&lt;/code&gt; 都只能调用这些 create 方法，我们只要找到这些 create 方法调用的地方就可以了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-113615.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后我们可以发现在 &lt;code&gt;DependencyManager&lt;/code&gt; 里调用了 create 初始化 &lt;code&gt;Dependency&lt;/code&gt; 的方法：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170807-191141.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;到这里，就很明朗了。Gradle 构建过去缓存目录有两种方式，用哪种方式，取决于 &lt;code&gt;PrepareLibraryTask.shouldUseBuildCache(buildCache.isPresent(), mavenCoordinates)&lt;/code&gt; 的值，也就是说 &lt;code&gt;buildCache.isPresent()&lt;/code&gt; 为 true，同时依赖版本号里含有 &lt;code&gt;-SNAPSHOT&lt;/code&gt;，而前者需要 &lt;code&gt;buildCache&lt;/code&gt; 不为空：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-114331.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;接下来我们可以看 &lt;code&gt;com.android.build.gradle.AndroidGradleOptions&lt;/code&gt; 这个类，这里我们可以看到只要 &lt;code&gt;isBuildCacheEnabled&lt;/code&gt; 这个方法返回 true，上一步里的 &lt;code&gt;buildCache&lt;/code&gt; 就不为空，而 &lt;code&gt;DEFAULT_ENABLE_BUILD_CACHE&lt;/code&gt; 这个默认值恰恰就是 true，而且我们也可以看到在 &lt;code&gt;getBuildCacheDir&lt;/code&gt;  方法里，拼接的 dir 里刚好就有我们上面截图里的 &lt;code&gt;build-cache&lt;/code&gt;，也就是说在新版本的 Gradle Plugin 里，走了步骤 4 里的 if 逻辑，而之前版本 Gradle Plugin 走的是 else 的逻辑。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-115844.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;这时候我们再看步骤 4 里的 else 逻辑，里面其实就是一个给 &lt;code&gt;explodedDir&lt;/code&gt; 的赋值操作，有两个常量字符串，他们的值如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120430.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/20170808-120450.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;拼在一起，刚好就是 &lt;code&gt;build/intermediates/exploded-aar&lt;/code&gt;，这也就是为什么在新版本的 Gradle Plugin 里这个目录消失了的原因。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然而，难道说要解决这问题，只能升级 Gradle 版本？当然不是，而且我们还可以发现，这样的输出结果并不完全正确，我们想要的是某一个变种（variant）的输出，不同的变种，文件目录是不一样的，而这结果是无论我们是哪一个变种，结果都是所有的变种输出。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h2&gt;&lt;p&gt;我们有必要再重新审阅一下我们的需求，『在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里』，也就是说这些日志输出应该在 Gradle 生命周期的 &lt;strong&gt;&lt;code&gt;Execution&lt;/code&gt;&lt;/strong&gt; 阶段去打印，而不是 &lt;strong&gt;&lt;code&gt;Configuration&lt;/code&gt;&lt;/strong&gt; 阶段打印。在明确了这一点之后，另外一个更合适的解决方案就呼之欲出了，一点点修改就可以解决。&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;afterEvaluate &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android.applicationVariants.all &amp;#123; ApkVariant variant -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; buildTypeName = variant.buildType.name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; task = project.tasks.create &lt;span class=&quot;string&quot;&gt;&quot;jar$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;, Jar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; packageTask = project.tasks.findByName(&lt;span class=&quot;string&quot;&gt;&quot;package$&amp;#123;buildTypeName.capitalize()&amp;#125;&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.archiveName = &lt;span class=&quot;string&quot;&gt;&#39;base.jar&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.dependsOn packageTask&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        packageTask.finalizedBy task&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.outputs.upToDateWhen &amp;#123; &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.doFirst &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            variant.apkLibraries.each &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                logger.info(&lt;span class=&quot;string&quot;&gt;&#39;apkLibraries ===&amp;gt; &#39;&lt;/span&gt; + it.absolutePath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                task.from zipTree(it)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        task.destinationDir = file(project.buildDir.absolutePath + &lt;span class=&quot;string&quot;&gt;&quot;/outputs/jar&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        artifacts.add(&lt;span class=&quot;string&quot;&gt;&#39;archives&#39;&lt;/span&gt;, task)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;仅仅是加了个 &lt;code&gt;task.doFirst&lt;/code&gt; 就彻底解决了这个问题，在 task 执行的最开始先去获取需要处理的文件即可。折腾这么久，这样的结果看上去居然与过程几乎没什么关系…不过这过程才是学习最大的意义所在吧。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Repo VS Submodule</title>
@@ -918,47 +990,6 @@
     
     
       <category term="总结" scheme="http://www.easydone.cn/tags/%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>面试题第一波－GrowingIO</title>
-    <link href="http://www.easydone.cn/2015/11/25/"/>
-    <id>http://www.easydone.cn/2015/11/25/</id>
-    <published>2015-11-25T13:32:08.000Z</published>
-    <updated>2015-12-15T02:24:04.000Z</updated>
-    
-    <content type="html">&lt;p&gt;从今天开始，正式开启了漫漫的面试之路。感谢简寻，一家非常靠谱的招聘网站，推荐的公司也都像简寻一样 nice 。今天要说的就是面试的第一站－GrowingIO ，一家做数据挖掘的公司。面我的面试官技术非常厉害，提的问题大部分也都很有深度，根据问题和我的回答，大致总结一下，希望能对大家有所帮助。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Android APP 优化一般都涉及哪些方面？&lt;/li&gt;
-&lt;li&gt;自定义控件里，如果出现了锯齿，是为什么？该怎么处理？&lt;/li&gt;
-&lt;li&gt;Glide 是如何设计的？相比 Picasso 有哪些优点和不足？Fresco 有什么特点？&lt;/li&gt;
-&lt;li&gt;MVP ，MVVM ；&lt;/li&gt;
-&lt;li&gt;onDraw 方法怎么去画一个图形？&lt;/li&gt;
-&lt;li&gt;Activity 为什么有那么多生命周期？&lt;/li&gt;
-&lt;li&gt;纵横屏切换怎么处理？&lt;/li&gt;
-&lt;li&gt;加密算法有哪几种？MD5 有什么特点？&lt;/li&gt;
-&lt;li&gt;算法和数据结构一笔带过；&lt;/li&gt;
-&lt;li&gt;RPC 工作原理；&lt;/li&gt;
-&lt;li&gt;Handler , AsyncTask 工作原理，怎么处理内存泄漏？&lt;/li&gt;
-&lt;li&gt;RxJava 相关；&lt;/li&gt;
-&lt;li&gt;GreenDAO 和 ORMLite 实现方式有什么不同，GreenDAO 的升级和存取；&lt;/li&gt;
-&lt;li&gt;Socket （自己也就随便扯了点 WebSocket 的东西）通信同样一笔带过…&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大致就这么多问题，由于有比较大一部分问题，我所了解的都基本上等于0，所以面试官就都一笔带过了。题目涉及面还是比较广的，对我来说，还很深啊…有不少问题，一听就是一脸黑线，茫然不知所措…当然，自己也现场请教了不少问题，收获还是蛮大的。&lt;/p&gt;
-&lt;p&gt;总之，这是一家非常棒的公司，不过最终由于时间上的关系，恐怕去不了了。有兴趣的小伙伴，可以去看看，绝对不会后悔的。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;从今天开始，正式开启了漫漫的面试之路。感谢简寻，一家非常靠谱的招聘网站，推荐的公司也都像简寻一样 nice 。今天要说的就是面试的第一站－GrowingIO ，一家做数据挖掘的公司。面我的面试官技术非常厉害，提的问题大部分也都很有深度，根据问题和我的回答，大致总结一下，希望能对大家有所帮助。
-    
-    </summary>
-    
-      <category term="工作" scheme="http://www.easydone.cn/categories/%E5%B7%A5%E4%BD%9C/"/>
-    
-    
-      <category term="面试" scheme="http://www.easydone.cn/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   

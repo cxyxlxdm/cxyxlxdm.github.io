@@ -255,6 +255,136 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/14/" itemprop="url">
+                  Error for compiling Nagios-Plugins On CentOS
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-14T20:04:58+08:00" content="Jan 14 2014">
+              Jan 14 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/14/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/14/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###<strong>Environment:</strong></p>
+<ul>
+<li>System:CentOS release 6.3 (Final)</li>
+<li>SoftWare:Nagios-Plugins-1.4.14</li>
+</ul>
+<p>###<strong>Problem Description:</strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BEGIN failed--compilation aborted at Makefile.<span class="keyword">PL</span> <span class="keyword">line</span> 11.</span><br><span class="line">Can't <span class="keyword">run</span> perl Makefile.<span class="keyword">PL</span> at ../tools/build_perl_modules <span class="keyword">line</span> 68.</span><br><span class="line">make[2]: *** [all-<span class="keyword">local</span>] <span class="keyword">Error</span> 2</span><br><span class="line">make[2]: Leaving directory `/usr/<span class="keyword">local</span>/package/nagios-plugins-1.4.14/perlmods'</span><br><span class="line">make[1]: *** [all-recursive] <span class="keyword">Error</span> 1</span><br><span class="line">make[1]: Leaving directory `/usr/<span class="keyword">local</span>/package/nagios-plugins-1.4.14'</span><br><span class="line">make: *** [all] <span class="keyword">Error</span> 2</span><br></pre></td></tr></table></figure>
+<p>###<strong>Solution:</strong></p>
+<p>The package<a href="http://search.cpan.org/~mschwern/ExtUtils-MakeMaker-6.64/lib/ExtUtils/MakeMaker.pm" target="_blank" rel="external"><strong>ExtUtils-MakeMaker</strong></a>has to be installed first. Additionally, perl-devel is also needed to compile it. Then, reconfigure nagios-plugins.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="operator"><span class="keyword">install</span> perl</span><br><span class="line">yum <span class="keyword">install</span> perl-devel</span><br><span class="line">wget <span class="keyword">http</span>://<span class="keyword">search</span>.cpan.org/CPAN/<span class="keyword">authors</span>/<span class="keyword">id</span>/<span class="keyword">M</span>/MS/MSCHWERN/ExtUtils-MakeMaker-<span class="number">6.64</span>.tar.gz</span><br><span class="line">tar -zxvf ExtUtils-MakeMaker-<span class="number">6.64</span>.tar.gz</span><br><span class="line">cd ExtUtils-MakeMaker-<span class="number">6.64</span></span><br><span class="line">perl Makefile.PL</span><br><span class="line">make </span><br><span class="line">make <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure>
+<p>Then,we can continue the nagios-plugin installling.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/13/" itemprop="url">
                   CentOS查看系统硬件信息
                 </a>
@@ -1425,130 +1555,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/10/" itemprop="url">
-                  Shell脚本实现服务器单板快速登录切换
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-10T22:43:39+08:00" content="Nov 10 2013">
-              Nov 10 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/11/10/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>实际工作中，有很多的服务器，为保证安全性和时效性，一般会取一台跳板机服务器作为外网连接媒介，把其他所有服务器都放在内网，所有服务都通过跳板机提供对外接口，若是要执行线上维护，就都先登录跳板机，然后由跳板机切换登录到其他服务器。如果每次切换都ssh+Server IP，那效率就太低了……</p>
-<p>下面是一个效率比较高也比较可靠的方案：</p>
-<p>①在跳板机上设置登录到各个内网服务器的ssh证书，ssh登录的时候就不需要再输入密码，直接通过证书加解密会非常方便，安全性也会提高。</p>
-<p>②通过以下脚本，实现快速切换登录：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#!/bin/bash</span></span><br><span class="line"><span class="preprocessor">#</span></span><br><span class="line"><span class="preprocessor"># Source function library</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">"$1"</span> in</span><br><span class="line">master)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.101</span></span><br><span class="line">  ;;</span><br><span class="line">slave)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.102</span></span><br><span class="line">  ;;</span><br><span class="line">web1)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.103</span></span><br><span class="line">  ;;</span><br><span class="line">web2)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.104</span></span><br><span class="line">  ;;</span><br><span class="line">web3)</span><br><span class="line">  ssh <span class="number">192.168</span><span class="number">.10</span><span class="number">.105</span></span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  echo <span class="string">"useage: con &#123;master|slave|web1|web2|web3&#125;"</span></span><br><span class="line">  ;;</span><br><span class="line">esac</span><br><span class="line"><span class="built_in">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
-<p>  将以上脚本命名为con，放入/bin文件夹下，赋予执行权限，然后就可以使用con master|slave|web1|web2|web3来切换登录到各个服务器了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1594,7 +1600,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-count">139</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
