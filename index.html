@@ -255,6 +255,185 @@
             
               
                 
+                <a class="post-title-link" href="/2017/11/07/" itemprop="url">
+                  在 Android Application 里 provided aar
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-07T21:44:18+08:00" content="Nov 7 2017">
+              Nov 7 2017
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/11/07/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/07/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先得声明一下，其实 <code>provided aar</code> 这样的需求场景非常少。在 <code>com.android.library</code> 里可以直接 <code>provided aar</code>，因此这样的需求只会在 <code>com.android.application</code> 里存在。同时还得再声明一下，这里说的 <code>provided</code> 一个 <code>aar</code>，是只引用 <code>aar</code> 里的类，而 <code>aar</code> 里的资源还是没办法引用的。</p>
+<p>而完成插件化之后的微店，就恰恰对这样的需求非常强烈。一个 <code>application module</code> 里 <code>compile</code> 了一个<code>aar</code>，在其他 <code>application moduel</code> 里也想用这个 <code>aar</code> 里的类，而作者在发布 <code>aar</code> 的时候，并没有发布对应的 <code>jar</code>，这时候我们的做法往往是手动地解压出来 <code>aar</code> 里的 <code>classes.jar</code>，然后再在 <code>dependencies</code> 里添加这个 <code>classes.jar</code> 的 <code>provided</code> 依赖。看上去很简单嘛，可问题是遇到一个就要这样做一次，这就好麻烦了。那么有没有一种纯自动的方式去做这个事情呢？这篇文章讲的就是这个事情。</p>
+<h3 id="需要解决的问题"><a href="#需要解决的问题" class="headerlink" title="需要解决的问题"></a>需要解决的问题</h3><p>首先，我们有必要把这个问题给拆解一下，看上去貌似只是一个解压一个 <code>aar</code>（其实就是一个 zip 压缩包），然后拿到其中一个叫 <code>classes.jar</code> 的 <code>entry</code>。可真要将其完全融入整个项目构建，做成完全自动化的一个过程，其中可能遇到的难点可能远超你我的想象。</p>
+<ol>
+<li>直接 <code>provided</code> 一个 <code>aar</code>，在编译过程中是一定会抛出 <code>provided dependencies can only be jars</code> 这样的异常的，那我们该<strong>如何添加</strong>这样一个依赖？</li>
+<li>Gradle 是有离线编译功能的，如果本地缓存里已经有了这个依赖，那么开启离线编译模式，一样可以进行编译，我们 <code>provided aar</code> 怎么做到<strong>离线编译</strong>呢？</li>
+<li>上一个步骤里，我们说了要能够从本地缓存取依赖，那么都有<strong>哪些本地缓存</strong>呢？</li>
+<li>如果不是离线编译，本地缓存没有这个依赖，需要从远程仓库下载这个依赖，我们又该<strong>怎么下载</strong>这个远程依赖呢？</li>
+<li>与步骤3类似的问题，上一步骤里我们说要从远程仓库下载这个依赖，那么我们怎么知道从<strong>哪些远程仓库</strong>下载依赖呢？</li>
+<li>我们需要将整个过程完美地嵌入到构建之中，那么应该<strong>怎样嵌入</strong>到构建过程中的<strong>哪些步骤</strong>之间呢？</li>
+<li>如何实现自动化从 <code>aar</code> 里取到 <code>jar</code>，同时又将 <code>jar</code> 添加到依赖里去呢？</li>
+</ol>
+<p>这样分析下来，你会发现如果不是对 Android 构建有比较深入的了解，每一个问题都不是那么容易就能搞的定的。而实际上，真正把所有的问题都解决掉，只需要不到 150 行代码。下面，我们就一步步去解决这些问题。</p>
+<h3 id="自定义-Android-Dependency-Scope"><a href="#自定义-Android-Dependency-Scope" class="headerlink" title="自定义 Android Dependency Scope"></a>自定义 Android Dependency Scope</h3><p>我们经常看到 <code>provided</code> <code>compile</code> <code>apt</code> <code>annotationProcessor</code> 这样的字符串，这其实就是 <code>Dependency Scope</code>，也是 Gradle 项目的 <code>configuration</code>，我们通过调用如下的 api，就可以获取这个 <code>configuration</code> 包含哪些依赖：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project.configurations.getByName(<span class="string">'provided'</span>).dependencies <span class="comment">// provided/compile/apt...</span></span><br></pre></td></tr></table></figure>
+<p>我们既然要实现 <code>providedAar</code>，现有的 <code>Dependency Scope</code> 都不满足我们的需求，那就需要像 <code>apt</code> 那样去自定义一个 <code>Scope</code>，其实也就是 <code>configuration</code> 了：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project.configurations.create(<span class="string">'providedAar'</span>)</span><br></pre></td></tr></table></figure>
+<p>当然，这都是一些 api 调用，没什么难度，我们只需要记住 <code>configuration</code> <code>Dependency Scope</code> 这些概念就可以了。</p>
+<h3 id="加载缓存"><a href="#加载缓存" class="headerlink" title="加载缓存"></a>加载缓存</h3><p>Android 编译用到的缓存从以下几个地方去取：</p>
+<ol>
+<li><code>mavenLocal</code> 和 <code>gradle.user.home</code>（不要问我怎么知道的，看源码吧）；</li>
+<li>在 Android 项目里，还会有一个 SDK 目录下的仓库路径；</li>
+<li>旧版本的 Gradle Plugin 会从 <code>$buildDir/intermediates/exploded-aar</code> （这是个临时路径，每次 clean 都会被清空）去读取，新版本会从 <code>$HOME/.android/build-cache</code> （这不是临时路径，执行 clean 不会被清空）读取，当然，这个是有开关，可以选择是否开启的；</li>
+</ol>
+<p><code>mavenLocal</code> 里的依赖的父目录路径大致是这样的：<code>~/.m2/repository/com/google/code/gson/gson/2.7</code>，这路径下面就是具体的 <code>jar</code> <code>aar</code> <code>pom</code> 等文件。根据这些现象，我们再去看源码，就很容易会发现 <code>mavenLocal</code> 里的依赖父目录路径遵循以下规律（<code>mavenLocal</code> 路径，与依赖的 <code>groupId</code> <code>artifactId</code> <code>version</code> 拼接而成）：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project.repositories.mavenLocal().url.toString() - <span class="string">'file:'</span> + group.replace(<span class="string">'.'</span>, <span class="string">'/'</span>) + <span class="string">'/'</span> + name.replace(<span class="string">'.'</span>, <span class="string">'/'</span>) + <span class="string">'/'</span> + version <span class="comment">// name  对应的就是依赖的 artifactId</span></span><br></pre></td></tr></table></figure>
+<p>同理，<code>gradle.user.home</code> 下的依赖父目录路径大致是这样：<code>~/.gradle/caches/modules-2/files-2.1/com.google.gson/gson/2.6.2/</code>，这里要注意，gradle 缓存的 <code>jar</code> <code>aar</code> 和 <code>pom</code> 文件不是在同一个目录的，目录树结构如下图：</p>
+<p><img src="http://7x2wvb.com1.z0.glb.clouddn.com/20171112-111644@2x.png" alt=""></p>
+<p>获取 Gradle Cache 路径的代码如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> String getGradleCachePath() &#123;</span><br><span class="line">    <span class="keyword">def</span> defaultGradleUserHome = <span class="keyword">new</span> File(<span class="string">"$&#123;SystemProperties.instance.userHome&#125;/.gradle"</span>)</span><br><span class="line">    <span class="keyword">def</span> gradleUserHome = System.getProperty(<span class="string">'gradle.user.home'</span>)</span><br><span class="line">    <span class="keyword">if</span> (gradleUserHome == <span class="literal">null</span>) &#123;</span><br><span class="line">        gradleUserHome = System.getenv(<span class="string">"GRADLE_USER_HOME"</span>)</span><br><span class="line">        <span class="keyword">if</span> (gradleUserHome == <span class="literal">null</span>) &#123;</span><br><span class="line">            gradleUserHome = defaultGradleUserHome.absolutePath</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">"$&#123;gradleUserHome&#125;/caches/modules-2/files-2.1/"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再加上依赖的 <code>groupId</code> <code>artifactId</code> <code>version</code> 就可以确定此依赖的父目录路径，跟 <code>mavenLocal</code> 不同的是，它的的 <code>groupId</code> 本身就是个目录，而无需使用 “/“ 替换 “.”：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getGradleCachePath() + group + <span class="string">'/'</span> + name.replace(<span class="string">'.'</span>, <span class="string">'/'</span>) + <span class="string">'/'</span> + version <span class="comment">// name  对应的就是依赖的 artifactId</span></span><br></pre></td></tr></table></figure>
+<p>不过实际上不管是哪种缓存，我们只要拿到它的父目录，就可以遍历父目录，然后拿到这个具体的依赖，然后加载这个依赖缓存。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> File getAar(String aarParentPath) &#123;</span><br><span class="line">    <span class="keyword">def</span> aar = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">def</span> file = <span class="keyword">new</span> File(aarParentPath)</span><br><span class="line">    <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">        <span class="keyword">return</span> aar</span><br><span class="line">    &#125;</span><br><span class="line">    file.eachFileRecurse &#123;</span><br><span class="line">        <span class="keyword">if</span> (it.isFile() &amp;&amp; it.absolutePath.endsWith(<span class="string">'.aar'</span>)) &#123;</span><br><span class="line">            aar = it</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> aar</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h3><p>在 Gradle 里下载依赖有多种方式，而且代码实现都极其简单：</p>
+<ol>
+<li><p>直接获取要下载的依赖的 url，然后下载，这样整个逻辑就都要自己处理了；</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> repoUrls = <span class="keyword">new</span> HashSet()</span><br><span class="line">repoUrls.add(project.repositories.jcenter().url.toString())</span><br><span class="line">repoUrls.add(project.repositories.mavenCentral().url.toString())</span><br><span class="line"><span class="comment">//      repoUrls.add(project.repositories.google().url.toString())  gradle plugin 3.0 版本之后要加此仓库</span></span><br><span class="line">project.repositories.each &#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 不处理 FlatDirectoryArtifactRepository 和 IvyArtifactRepository</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">if</span> (!(it <span class="keyword">instanceof</span> DefaultMavenLocalArtifactRepository) &amp;&amp; (it <span class="keyword">instanceof</span> MavenArtifactRepository)) &#123;</span><br><span class="line">        repoUrls.add(it.url)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> String getDependencyByDownload(Project project, String dependency, HashSet&lt;String&gt; repoUrls, String mavenLocalDepPath) &#123;</span><br><span class="line">    <span class="keyword">def</span> aarPath = <span class="string">''</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> providedAarParent = <span class="keyword">new</span> File(mavenLocalDepPath)</span><br><span class="line">        <span class="keyword">if</span> (!providedAarParent.exists()) &#123;</span><br><span class="line">            providedAarParent.mkdirs()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">def</span> split = dependency.split(<span class="string">':'</span>)</span><br><span class="line">        <span class="keyword">def</span> depPath = split[<span class="number">0</span>].replace(<span class="string">'.'</span>, <span class="string">'/'</span>) + <span class="string">'/'</span> + split[<span class="number">1</span>].replace(<span class="string">'.'</span>, <span class="string">'/'</span>) + <span class="string">'/'</span> + split[<span class="number">2</span>]</span><br><span class="line">        <span class="keyword">def</span> depName = split[<span class="number">1</span>] + <span class="string">'-'</span> + split[<span class="number">2</span>] + <span class="string">'.aar'</span></span><br><span class="line">        <span class="keyword">def</span> depFile = <span class="keyword">new</span> File(providedAarParent, depName)</span><br><span class="line">        <span class="keyword">if</span> (depFile.exists()) &#123;</span><br><span class="line">            <span class="keyword">return</span> depFile.absolutePath</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (String <span class="string">url :</span> repoUrls) &#123;</span><br><span class="line">            <span class="keyword">def</span> repoDepUrl = url.toString() + depPath + <span class="string">'/'</span> + depName</span><br><span class="line">            <span class="keyword">if</span> (!repoDepUrl.startsWith(<span class="string">'file:'</span>)) &#123;</span><br><span class="line">                project.logger.info <span class="string">'repoDepUrl : '</span> + repoDepUrl</span><br><span class="line">                FileUtils.copyURLToFile(<span class="keyword">new</span> URL(repoDepUrl), depFile)</span><br><span class="line">                aarPath = <span class="string">"$&#123;providedAarParent.absolutePath&#125;/$&#123;depName&#125;"</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        project.logger.error e.toString()</span><br><span class="line">        aarPath = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> aarPath</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>detachedConfiguration</code> ，这可能是最常用最正规的方式了（atlas 里是这么做的）；</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> String getDependencyByDownload(Project project, String dependency) &#123;</span><br><span class="line">    <span class="keyword">def</span> configuration = project.configurations.detachedConfiguration(project.dependencies.create(dependency))</span><br><span class="line">    configuration.setTransitive(<span class="literal">false</span>)</span><br><span class="line">    configuration.singleFile.absolutePath</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义 <code>Dependency Scope</code>，使其继承（<code>extendsFrom</code>） <code>Gradle</code> 提供的已有的 <code>Dependency Scope</code>，这是最投机取巧也最省时省力的方式（apt 就是这么做的）；</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project.configurations.create(<span class="string">'providedAar'</span>).extendsFrom(project.configurations.getByName(<span class="string">'provided'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>那么，我们这里下载依赖应该选取哪种方式呢？答案是只能是<strong>第一种</strong>方式。那么问题来了，这是为什么呢？这个问题的答案也是下面一节要讲述的的内容。</p>
+<h3 id="生命周期之解决依赖关系"><a href="#生命周期之解决依赖关系" class="headerlink" title="生命周期之解决依赖关系"></a>生命周期之解决依赖关系</h3><p>Gradle 整个构建过程，生命周期分为三个阶段：<code>Initiliazatin</code> <code>Configuration</code> <code>Execution</code>，而 <code>resolveDependencies</code> 之前，调用 <code>detachedConfiguration</code> 是没有用的，而我们要去 hook 的是<code>resolveDependencies</code> 这个过程，显然 <code>detachedConfiguration</code> 这种方式就不合适了。</p>
+<p>而第三种方式，老实讲，我不知道为什么不行，按照我的有限理解，应该是可以的，但是我试了之后，确实不可以，这个问题留待以后再看吧。</p>
+<p>所以我们直接使用第一种方式是不是就可以正常下载了呢？其实也不是。还是考虑到生命周期的问题，我们必须要去 hook <code>resolveDependencies</code> 这个过程，不是我们经常看到的 <code>afterEvaluate</code> 或者 <code>beforeEvaluate</code>，因此，我们只能通过给 gradle 添加监听去实现，而且在 hook 之后，要手动 remove 这个监听。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">project.gradle.addListener(<span class="keyword">new</span> DependencyResolutionListener() &#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="typename">void</span> beforeResolve(ResolvableDependencies dependencies) &#123;</span><br><span class="line">        project.configurations.getByName(<span class="string">'providedAar'</span>).dependencies.each &#123;</span><br><span class="line">            <span class="keyword">def</span> group = it.group</span><br><span class="line">            <span class="keyword">def</span> name = it.name</span><br><span class="line">            <span class="keyword">def</span> version = it.version</span><br><span class="line">            <span class="keyword">def</span> dependency = <span class="string">"$&#123;it.group&#125;:$&#123;name&#125;:$&#123;version&#125;"</span></span><br><span class="line">            project.logger.info <span class="string">'dependency : '</span> + dependency</span><br><span class="line">        &#125;</span><br><span class="line">        project.gradle.removeListener(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="typename">void</span> afterResolve(ResolvableDependencies dependencies) &#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="从-Aar-里获取-Jar"><a href="#从-Aar-里获取-Jar" class="headerlink" title="从 Aar 里获取 Jar"></a>从 Aar 里获取 Jar</h3><p>这一步就比较简单了，就是从 zip 包里读取一个 entry，然后输入输出流转成文件存储即可。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="typename">void</span> getJarFromAar(Project project, File aar) &#123;</span><br><span class="line">    <span class="keyword">def</span> aarName = aar.name</span><br><span class="line">    <span class="keyword">def</span> zipFile = <span class="keyword">new</span> ZipFile(aar)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> entries = zipFile.entries()</span><br><span class="line">        <span class="keyword">while</span> (entries.hasMoreElements()) &#123;</span><br><span class="line">            <span class="keyword">def</span> element = entries.nextElement()</span><br><span class="line">            project.logger.info element.name</span><br><span class="line">            <span class="keyword">if</span> (element.name == <span class="string">'classes.jar'</span>) &#123;</span><br><span class="line">                InputStream inputStream = zipFile.getInputStream(element)</span><br><span class="line">                <span class="keyword">def</span> file = <span class="keyword">new</span> File(aar.parent, aarName - <span class="string">'.aar'</span> + <span class="string">'.jar'</span>)</span><br><span class="line">                project.logger.info file.absolutePath</span><br><span class="line">                OutputStream outputStream = <span class="keyword">new</span> FileOutputStream(file)</span><br><span class="line">                IOUtils.copy(inputStream, outputStream)</span><br><span class="line">                outputStream.close()</span><br><span class="line">                inputStream.close()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        project.logger.error e.toString()</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        zipFile.close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>最后，还有两个我个人的实践经验：</p>
+<ol>
+<li>从 remote repository 里下载 aar 的存放路径，我是存放在了 <code>mavenLocal()</code> 里，这是最简单的方式，因为它的匹配规则最简单；</li>
+<li>我在解出来 jar 之后，直接把 jar 放在了 aar 所在的路径，一是因为这是永久缓存，除非你手动删除它，二同样是因为这样最简单。</li>
+</ol>
+<p>这就是整个过程了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/11/05/" itemprop="url">
                   不要盲目拒绝计划之外的代码调试
                 </a>
@@ -1334,134 +1513,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/25/" itemprop="url">
-                  关于oasis的组件化思想的一些思考
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-25T19:43:36+08:00" content="Sep 25 2016">
-              Sep 25 2016
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/25/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/25/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>插件化技术发展到现在其实已经很成熟了，但是相应的问题，如果没有真正地去实践过，根本不了解其中有多少问题，会牵涉到多少技术细节，多少被外人膜拜的外表光鲜的技术大牛都被『插件化』这三个字折磨地死去活来，这对于 Android 整个生态的损害也让人无法忽视。</p>
-<p>昨天的 MDCC ，冯森林老师提出了一个很有意思的思路『组件化』。
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/25/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1502,7 +1558,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">141</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1519,7 +1575,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">209</span>
+                <span class="site-state-item-count">211</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

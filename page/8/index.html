@@ -255,6 +255,131 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/23/" itemprop="url">
+                  域名那点事
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-23T16:25:45+08:00" content="Jan 23 2014">
+              Jan 23 2014
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/教程/" itemprop="url" rel="index">
+                    <span itemprop="name">教程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/23/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/23/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  这两天一直在整域名的事，走了很多弯路，折腾的很，搞的很郁闷啊！本来想在godaddy上申请购买www.easydone.com的域名，godaddy也提示域名没被占用，可以购买，但是点击加入购物车的时候，又弹出一堆单词，大意是说他们的商务代表会随后跟我联系，跟他们谈过之后才可以买，真他妈蛋疼！这种情况，以前从没遇到过，估计遇到过这种情况的人也很少吧……最后还是放弃了，退而求其次，只好在国内的买了，结果国内还没有卖www.easydone.com这个域名的，只有cn了，对比了各家之后，大概算了一下，长期购买还是万网便宜一些。于是，就在万网搞了！</p>
+<p>买了域名之后，接下来要做的就是把OpenShift的二级域名绑定为新域名了，由于之前没接触过，就网上搜资料，搜到一篇教程，大概流程就是用SSH登录OpenShift空间（SSH登录OpenShift空间也是要证书的，用Xshell生成证书，然后添加内容到OpenShift后台即可），生成证书，然后上传到OpenShift后台，然后在设置alias别名。由于众所周知的原因，国内SSH登录OpenShift空间非常卡，甚至经常登录不了，所以虽然教程看起来不复杂，但是依然很折腾，搞的很郁闷！最后绑定域名后，登录OpenShift后台，我才发现原来特么的根本不用这么折腾，在<strong>OpenShift</strong>后台本来就用添加别名的按钮，直接点击，把新域名填上就可以了……</p>
+<p>然后就是搞域名解析和CDN加速了。本来域名解析我是选了DNSPOD，CDN选了Incapsula的，搞了一半，突然想起来了百度加速乐，结果就贱兮兮地把DNSPOD抛在一边，用了百度加速乐和Incapsula的方案。这两部做完之后，访问网站，发现图片都不见了，点击任何一篇文章，又会自动跳转到原来的二级域名下，又经过一番折腾，发现<strong>WordPress后台没有把域名改过来，而且域名一定要加上http</strong>！紧接着又遇到另外一个问题，由于WordPress默认admin文件夹被强制加了SSL认证，但是免费版的Incapsula是不提供SSL证书的，于是又<strong>SSH进入OpenShift空间，修改了wp-config.php，把admin文件夹的SSL认证参数改成了false，</strong>然后访问就没问题了。</p>
+<p>由于加速乐除了域名解析外，也有CDN的功能，这部分与Incapsula功能是重复的，但是加速乐需要备案。加速乐有审核，在审核通过之前，一切都看起来很完美，我试着ping了一下，结果延时降到了不到200，心里美滋滋的。但是加速乐审核完成后，貌似这时候才开启了加速乐的CDN缓存，我猜想可能加速乐的CDN和Incapsula的CDN冲突了，反正最终的结果就是网站直接400了。</p>
+<p>这时候，我慌了……于是我又删除了在加速乐上添加的域名，换回了DNSPOD的解析，与此同时还要回到万网修改DNS，修改DNS生效时间也比较长，接下来就是等了。结果等了一天，我ping新域名www.easydone.cn，已经获取到了Incapsula提供的IP，说明解析已经生效，但是网站怎么还是400啊？起初我猜测可能是加速乐的缓存，很快我否定了这个设想，因为我已经在加速乐上删除了添加的域名，新解析生效后，与加速乐没有任何关系了！于是我试了很多方法，都搞不定，心里很烦躁！</p>
+<p>这时候，只好使出杀手锏了！我直接越过Incapsula即CDN，把<strong>原先的二级域名作为CNAME添加到DNSPOD，直接解析到新域名www.easydone.cn</strong>，然后惊喜的发现，正常访问了！很显然，问题出在了Incapsula上，加速乐的缓存和Incapsula的缓存冲突了！于是，我进入Incapsula后台删除了域名之后重新添加，再到DNSPOD重新解析Incapsula提供的新IP和CNAME。最终，完美解决！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/15/" itemprop="url">
                   Nagios+NRPE+PNP4Nagios配置详解
                 </a>
@@ -1490,156 +1615,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/12/07/" itemprop="url">
-                  Linux设置core文件介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-12-07T14:21:08+08:00" content="Dec 7 2013">
-              Dec 7 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/12/07/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/07/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>①ulimit -a查看操作系统limit信息，显示结果如下：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">core file size          <span class="list">(<span class="keyword">blocks</span>, -c)</span> <span class="number">5120</span></span><br><span class="line"></span><br><span class="line">data seg size           <span class="list">(<span class="keyword">kbytes</span>, -d)</span> unlimited</span><br><span class="line"></span><br><span class="line">scheduling priority             <span class="list">(<span class="keyword">-e</span>)</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">file size               <span class="list">(<span class="keyword">blocks</span>, -f)</span> unlimited</span><br><span class="line"></span><br><span class="line">pending signals                 <span class="list">(<span class="keyword">-i</span>)</span> <span class="number">240561</span></span><br><span class="line"></span><br><span class="line">max locked memory       <span class="list">(<span class="keyword">kbytes</span>, -l)</span> <span class="number">64</span></span><br><span class="line"></span><br><span class="line">max memory size         <span class="list">(<span class="keyword">kbytes</span>, -m)</span> unlimited</span><br><span class="line"></span><br><span class="line">open files                      <span class="list">(<span class="keyword">-n</span>)</span> <span class="number">1024</span></span><br><span class="line"></span><br><span class="line">pipe size            <span class="list">(<span class="number">512</span> bytes, -p)</span> <span class="number">8</span></span><br><span class="line"></span><br><span class="line">POSIX message queues     <span class="list">(<span class="keyword">bytes</span>, -q)</span> <span class="number">819200</span></span><br><span class="line"></span><br><span class="line">real-time priority              <span class="list">(<span class="keyword">-r</span>)</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">stack size              <span class="list">(<span class="keyword">kbytes</span>, -s)</span> <span class="number">10240</span></span><br><span class="line"></span><br><span class="line">cpu time               <span class="list">(<span class="keyword">seconds</span>, -t)</span> unlimited</span><br><span class="line"></span><br><span class="line">max user processes              <span class="list">(<span class="keyword">-u</span>)</span> <span class="number">1024</span></span><br><span class="line"></span><br><span class="line">virtual memory          <span class="list">(<span class="keyword">kbytes</span>, -v)</span> unlimited</span><br><span class="line"></span><br><span class="line">file locks                      <span class="list">(<span class="keyword">-x</span>)</span> unlimited</span><br></pre></td></tr></table></figure></p>
-<p>其中第一行显示的就是core文件的配置信息。</p>
-<p>当系统中的一些程序在遇到一些错误以及crash时，系统会自动产生core文件记录crash时刻系统信息，包括内存和寄存器信息，用以程序员日后debug时可以使用。这些错误包括段错误、非法指令、总线错误或用户自己生成的退出信息等等。 </p>
-<p>②设置core文件主要有如下几种方法：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/<span class="keyword">profile</span></span><br></pre></td></tr></table></figure></p>
-<p>添加以下内容：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># No core files by default</span></span><br><span class="line">ulimit -S -c <span class="number">0</span> &gt; /dev/null <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">vim /etc/security/limits.conf</span><br></pre></td></tr></table></figure></p>
-<p>注释掉以下内容<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*               </span>soft    core            0</span><br></pre></td></tr></table></figure></p>
-<p>以上两种方法都是设置禁止系统所有用户产生core文件。<br>生产环境中，需要对产生的core文件进行调试，因此一般情况下会对core文件进行一些设置。</p>
-<p>设置允许某个用户产生core文件，即不限制大小<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">vim</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
-<p>添加下面这行内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -c unlimited</span><br></pre></td></tr></table></figure></p>
-<p>③下面是对ulimit这个命令的一些具体描述</p>
-<p>ulimit用于shell启动进程所占用的资源，属于shell内建命令</p>
-<p> 语法格式：ulimit</p>
-<p> 参数介绍：</p>
-<p> -H 设置硬件资源限制。</p>
-<p> -S 设置软件资源限制。</p>
-<p> -a 显示当前所有的资源限制。</p>
-<p> -c size：设置core文件的最大值，单位：blocks</p>
-<p> -d size：设置数据段的最大值，单位：kbytes</p>
-<p> -f size：设置创建文件的最大值，单位：blocks</p>
-<p> -l size：设置在内存中锁定进程的最大值，单位：kbytes</p>
-<p> -m size：设置可以使用的常驻内存的最大值，单位：kbytes</p>
-<p> -n size：设置内核可以同时打开的文件描述符的最大值，单位：n</p>
-<p> -p size：设置管道缓冲区的最大值，单位：kbytes</p>
-<p> -s size：设置堆栈的最大值.单位：kbytes</p>
-<p> -t size：设置CPU使用时间的最大上限，单位：seconds</p>
-<p> -v size：设置虚拟内存的最大值，单位：kbytes</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1680,7 +1660,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-count">141</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1697,7 +1677,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">209</span>
+                <span class="site-state-item-count">211</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
