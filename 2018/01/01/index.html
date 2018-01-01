@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_17-54-35.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_17-56-49.png">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_18-29-16.png">
-<meta property="og:updated_time" content="2018-01-01T11:46:38.068Z">
+<meta property="og:updated_time" content="2018-01-01T12:04:41.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 repo 组织 Android 工程">
 <meta name="twitter:description" content="关于 Repo 的文章，我之前写过一篇：Repo VS Submodule，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。">
@@ -381,6 +381,7 @@
 <p>当然不！有了 repo，这个问题就简单了，我们可以通过脚本，去解析我们放在 rootProject 目录下的 xml 软链接文件，读取到的 project 节点就是我们要 include 的子项目（当然，最小运行单元最好还是单独 include 进来）。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">include <span class="string">':host'</span><span class="comment">//最小运行单元</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> manifest = <span class="keyword">new</span> XmlParser().parse(<span class="string">"$&#123;rootProject.projectDir&#125;/default.xml"</span>)</span><br><span class="line">manifest.project.each &#123;</span><br><span class="line">    it.attributes().each &#123; k, v -&gt;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="string">'path'</span> &amp;&amp; !v.contains(<span class="string">'host'</span>)) &#123;</span><br><span class="line">            include v.replace(<span class="string">'/'</span>, <span class="string">':'</span>) - rootProject.name</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这就是 gradle 工程动态添加子项目。</p>
+<p>在<a href="https://github.com/liangzhitao/repo-manifest" target="_blank" rel="external">这里</a>可以下载代码演示查看。</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>以上就是关于 repo 在 Android 工程里全部的实践经验。我们可以看到，这完全不是从无到有的颠覆性的开发方式创新，而是针对现有工程的简单改造优化，而这些简单的优化带来的收益是非常显著的。当然，这也只是一家之言，也欢迎有兴趣的朋友多多尝试，以寻求更优更好的开发方式。</p>
 
       
