@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.easydone.cn/"/>
-  <updated>2017-11-15T15:54:23.274Z</updated>
+  <updated>2018-01-01T11:46:38.068Z</updated>
   <id>http://www.easydone.cn/</id>
   
   <author>
@@ -14,6 +14,87 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 repo 组织 Android 工程</title>
+    <link href="http://www.easydone.cn/2018/01/01/"/>
+    <id>http://www.easydone.cn/2018/01/01/</id>
+    <published>2018-01-01T11:02:17.000Z</published>
+    <updated>2018-01-01T11:46:38.068Z</updated>
+    
+    <content type="html">&lt;p&gt;关于 Repo 的文章，我之前写过一篇：&lt;a href=&quot;https://www.easydone.cn/2017/04/24/&quot;&gt;Repo VS Submodule&lt;/a&gt;，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;工程结构的变化&quot;&gt;&lt;a href=&quot;#工程结构的变化&quot; class=&quot;headerlink&quot; title=&quot;工程结构的变化&quot;&gt;&lt;/a&gt;工程结构的变化&lt;/h2&gt;&lt;p&gt;项目达到的一定的阶段，业务的组件化是必经之路，这一点毋庸置疑。如今，已经很少有项目还是一个子工程了，对于 Android 项目来讲，一般也都是基于 Gradle 的多 project 项目。Android Studio 默认创建项目，也是 multi-project 的形式，大致可能如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;根目录下一个 setting.gradle 文件和 build.gradle 文件，setting.gradle 里配置此项目包含的子项目，build.gradle 里包含整个工程所需要的 gradle 插件和子项目依赖所需的仓库地址；&lt;/li&gt;
+&lt;li&gt;根目录下有一个或者多个子 module，这些子 module 就是整个工程的子项目，在子项目里，有自己独立的 build.gradle 文件，里面包含了此子项目所需的各种配置；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_17-54-35.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;center&gt;host、library1、library2、library3、library4 是工程里的子项目&lt;/center&gt;
+
+&lt;p&gt;今天我们要讲 repo，那如果把我们的工程结构进行 repo 改造之后，会是什么样呢？实际上，还是跟上面讲的一模一样。我们首先要明确 repo 只是一个版本控制管理工具，因此项目在形式上跟之前是没有区别的。但是从版本控制的角度讲，区别就大了。以前不管有多少个子项目，我们所有的代码都是在一个 git 仓库里，而 repo 改造之后，我们的宿主项目和其他所有的子项目都分别是一个独立的 git 仓库了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_17-56-49.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;从上面的目录树截图，我们可以看到，相对于我们常见的工程结构，在项目的 rootProject 同一级多了一个 .repo 目录，因此这里就出现了第一个实践经验：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果是一个 repo 工程的话，我们最好新建一个空目录，然后在这个空目录里 init 我们的 repo 工程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 repo 里，每个子项目都是一个独立的 git 仓库，而且所有的子项目都是平级的，不存在任何从属关系，只是对一个 App 来讲，子 module 项目需要依附于宿主 module 才能打包安装运行。因此，这里又出现了第二个实践经验：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我们可以把工程的 rootProject 和宿主 module 合并起来作为一个 git 仓库，这也是我们打包运行 App 的&lt;strong&gt;最小单元&lt;/strong&gt;。而其他的子 module，也完全可以像宿主 module 一样，单独导入 IDE 进行开发，编译打包成 aar。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;repo 是通过 .repo/manifest/default.xml 文件来管理项目的，xml 里每个 project 节点代表一个项目，管理多少个项目，就有多少个 project 节点。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_18-29-16.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;然而我们看到这个 xml 文件是在 .repo/manifest 目录的，而我们导入 IDE 的是 projects 这个目录，这样在 IDE 里我们就看不到 .repo 目录，这对我们管理子项目是非常不方便的，因此这里又出现一个实践经验：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在主工程目录里创建一个 .repo/manifest/default.xml 的软链接，default.xml 初始化完毕之后（默认只有最小单元不被注释掉，其他所有的子 module 都会被注释掉），将其加入 .gitignore 里，这样我们本地开发就可以随意更改这个文件，同时也不会影响到其他人。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;主-module-与子-module-的互动&quot;&gt;&lt;a href=&quot;#主-module-与子-module-的互动&quot; class=&quot;headerlink&quot; title=&quot;主 module 与子 module 的互动&quot;&gt;&lt;/a&gt;主 module 与子 module 的互动&lt;/h2&gt;&lt;p&gt;我们拆分 module 的目的是什么呢？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;厘清业务职责边界，避免模块间过多的相互影响；&lt;/li&gt;
+&lt;li&gt;业务模块独立开发编译打包，提高并行开发效率；&lt;/li&gt;
+&lt;li&gt;业务模块独立发布到 maven 上维护，宿主引用 maven 上的依赖，提高编译速度。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;既然业务 module 要独立开发编译，那将这个模块作为一个单独的 git 仓库，一定是要比跟其他 module 杂糅到一起，效率要高很多，但是独立出来，打出来一个 aar，也并没有什么卵用，还需要上传到 maven 上，然后宿主 module 再去引用打包才可以。这就牵涉到主 module 与子 module 的互动问题，怎样互动效率才最高呢？基于 repo，我们就可以这样做：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将 repo 里打包运行 App 的最小单元（即 rootProject 和宿主 module）导入 IDE；&lt;/li&gt;
+&lt;li&gt;修改我们创建的软链接，如果我们要开发 library1 模块，那就将 default.xml 里 library1 这个模块的注释放开；&lt;/li&gt;
+&lt;li&gt;在 rootProject 目录里，执行 &lt;code&gt;repo sync library1&lt;/code&gt; 即可检出 library1 的代码；&lt;/li&gt;
+&lt;li&gt;在宿主 module 里 &lt;code&gt;implementation project(&amp;#39;:library1&amp;#39;) //compile project(&amp;#39;:library1&amp;#39;)&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这样比起将 library1 单独导入到一个 IDE，然后宿主 module 通过 maven 依赖还有一个好处，就是调试起来会更方便了，无需每次修改一点代码，就要打包上传 maven。&lt;/p&gt;
+&lt;p&gt;这是日常业务开发层面的问题，但是我们只是解决了我们要开发的 module 与宿主 module 之间的互动问题，那那些不是我们当前要开发的模块怎么办呢？当然是直接使用 maven 上的了。但是这样显然就太麻烦了，每次都要手动改一堆东西，所幸这里我们可以通过 gradle 脚本来让整个过程自动化。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;我们可以在宿主 module 的 gradle.properties 里列出来宿主 module 依赖的各个 module 打包出来的 aar 的版本号：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;library1=1.0.0-SANPSHOT&amp;#10;library2=1.0.0-SANPSHOT&amp;#10;library3=1.0.0-SANPSHOT&amp;#10;library4=1.0.0-SANPSHOT&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在宿主的 build.gradle 里我们可以这样去声明依赖：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; moduleVersions = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Properties()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; moduleVersionsFile = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; File(&lt;span class=&quot;string&quot;&gt;&quot;$&amp;#123;project.projectDir&amp;#125;/gradle.properties&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;moduleVersions.load(moduleVersionsFile.newDataInputStream())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dependencies &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; projects = moduleVersions.stringPropertyNames()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rootProject.subprojects.each &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (it.name != &lt;span class=&quot;string&quot;&gt;&#39;host&#39;&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            implementation it&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            projects.remove(it.name)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    projects.each &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//为了方便引用，这里要求我们上传到 maven 的各模块的包遵循一定的规则，groupid 需要保持一致，&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// artifactid 最好是以子 module 的 project.name 来命名，如果不是这样的规则，就需要自己修改 gradle 脚本啦&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        implementation &lt;span class=&quot;string&quot;&gt;&quot;me.ailurus.repo:$&amp;#123;it&amp;#125;:$&amp;#123;moduleVersions.getProperty(it)&amp;#125;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这样就保证了本地代码里没有子 module，可以自动引用 maven 上的 module 依赖。&lt;/p&gt;
+&lt;h2 id=&quot;工程动态添加子项目&quot;&gt;&lt;a href=&quot;#工程动态添加子项目&quot; class=&quot;headerlink&quot; title=&quot;工程动态添加子项目&quot;&gt;&lt;/a&gt;工程动态添加子项目&lt;/h2&gt;&lt;p&gt;其实关于 repo 的实践，上面的部分基本已经讲完了，不过既然是实践经验，在这样的工程结构，附带的还有一点可以优化。&lt;/p&gt;
+&lt;p&gt;我们都知道，在 gradle 工程里，由于 gradle 的生命周期的存在，任何一个子项目的编译，都要经过&lt;strong&gt;所有子项目&lt;/strong&gt;的 configuration 阶段，如果有什么依赖的 maven 坐标定位缓慢或者依赖本身下载缓慢，这个阶段将会非常耗时。因此要解决这个问题，最行之有效的手段就是减少子项目数量。那么问题又来了，我们总不能每次都手动去注释 setting.gradle 的 include 的子项目吧。&lt;/p&gt;
+&lt;p&gt;当然不！有了 repo，这个问题就简单了，我们可以通过脚本，去解析我们放在 rootProject 目录下的 xml 软链接文件，读取到的 project 节点就是我们要 include 的子项目（当然，最小运行单元最好还是单独 include 进来）。&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;include &lt;span class=&quot;string&quot;&gt;&#39;:host&#39;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;//最小运行单元&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; manifest = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; XmlParser().parse(&lt;span class=&quot;string&quot;&gt;&quot;$&amp;#123;rootProject.projectDir&amp;#125;/default.xml&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;manifest.project.each &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    it.attributes().each &amp;#123; k, v -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (k == &lt;span class=&quot;string&quot;&gt;&#39;path&#39;&lt;/span&gt; &amp;amp;&amp;amp; !v.contains(&lt;span class=&quot;string&quot;&gt;&#39;host&#39;&lt;/span&gt;)) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            include v.replace(&lt;span class=&quot;string&quot;&gt;&#39;/&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;:&#39;&lt;/span&gt;) - rootProject.name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这就是 gradle 工程动态添加子项目。&lt;/p&gt;
+&lt;h2 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h2&gt;&lt;p&gt;以上就是关于 repo 在 Android 工程里全部的实践经验。我们可以看到，这完全不是从无到有的颠覆性的开发方式创新，而是针对现有工程的简单改造优化，而这些简单的优化带来的收益是非常显著的。当然，这也只是一家之言，也欢迎有兴趣的朋友多多尝试，以寻求更优更好的开发方式。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于 Repo 的文章，我之前写过一篇：&lt;a href=&quot;https://www.easydone.cn/2017/04/24/&quot;&gt;Repo VS Submodule&lt;/a&gt;，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。
+    
+    </summary>
+    
+      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+    
+      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+    
+      <category term="repo" scheme="http://www.easydone.cn/tags/repo/"/>
+    
+  </entry>
   
   <entry>
     <title>在 Android Application 里 provided aar</title>
@@ -1017,38 +1098,6 @@
       <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
     
       <category term="Tablayout" scheme="http://www.easydone.cn/tags/Tablayout/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一月</title>
-    <link href="http://www.easydone.cn/2016/02/02/"/>
-    <id>http://www.easydone.cn/2016/02/02/</id>
-    <published>2016-02-02T04:06:22.000Z</published>
-    <updated>2016-02-02T05:32:03.000Z</updated>
-    
-    <content type="html">&lt;p&gt;2016年的1月1号上了最后一天班之后，我就辞职了，手续什么的办理的也都很顺利。一切都在按计划进行，结束了长久以来自己都不甚满意的工作，感觉蛮好的。尚未辞职之前，接下来的整个1月，都已经被自己的计划给排的满满当当，比较幸运的是，在自由的1月里，基本算是完成了自己的计划。过年这段时间，可以针对一些还不是很完善的地方，做一些具体的补充。总之，还是蛮充实的。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;花了大概两周时间，确定了新工作，年后入职，当然，找工作这段时间里，也有不少闲暇的等待时间。去凯哥家里蹭了顿饭，凯哥亲自炖的排骨，炒的西红柿鸡蛋，还跟凯哥在优衣库前面自拍了一发。重新学习了一下 RxJava 的操作符，工作流程什么的，又学习了 Realm ，Retrofit2，OkHttp3 的 API ，遇到了一些小困难，写了一些小 demo ，不过还好基本也都能解决，当然，还是要继续加深理解，路还很长。期间还不间断地帮原公司的项目做一些小修小补。&lt;/p&gt;
-&lt;p&gt;工作确定了之后，原公司刚招的一位 Android 开发离职了，于是又回去顶了一周，基本确立了技术选型，把整个框架搭了起来，也写了几个页面。把代码从 SVN 迁移到了 BitBucket ，又因为各种各样的原因，又从 BitBucket 迁到了 Coding.net ，有一句说一句，相对 BitBucket ，Coding 的代码托管还是不错的。做了一周之后，实在是做不下去了，再加上真的有点打乱自己之前的计划了，就又回家休息了。在家里又继续维护了一段时间老项目，这老项目值得吐槽的地方太多了，当时我的想法就是赶紧弄完，以后跟这东西彻底撇清关系，以后再也不要再找我。直到昨天晚上，才算是真正彻底没了任何关系（也许）。&lt;/p&gt;
-&lt;p&gt;接着，又跟 Maxiee 同学面基了两次，Maxiee 马上要研究生毕业了，现在在中关村优酷土豆，第一次就是在中关村，再次回到中关村，还是感慨良多，第二次在 MDAY 上，在 MDAY 上还见到了 andyiac , 咕咚和鲍老爷，鲍老爷带的妹子很好看。那天实在是太冷，结束后也就没多聊，跟 Maxiee 一起吃了个饭，就各回各家各找各妈了。&lt;/p&gt;
-&lt;p&gt;再接着几天就一直在家，翻译了几篇文章，校对了几篇别人的翻译。学习了一下 Google 的 Databinding ，配合 Realm ，RxJava 写了一些代码，对 Realm 了解又多了一些，感觉 Realm 有可能真的能一定程度上完全替代 Sqlite ，当然，MVVM 现在在 Android 里还很不完善，而且一些小的 sample ，其实并不能感受到多少优势，反而由于 IDE 的提示功能不完善，很多东西只能靠背，写起来好烦。希望这种尴尬在16年能有比较大的改善吧。&lt;/p&gt;
-&lt;p&gt;然后，去参加了 OPEN 的年会，见到了他们的 Android 开发 Yat3s，很有意思一个小孩儿，很棒的一个 party ，可惜基本上我睡也不认识，搞得略显尴尬。遇到一哥们儿，又跟他聊了半天 .net ，ASP 和数据库，一个 party 就这么度过了…过了一会儿，他跟一个漂亮妹子一起走了，我一直以为他也是一个人呢…再接着遇到一位 CSDN 的人，整个过程搞得自己很生气。总结一句话就是：狗眼看人低。后来我在朋友圈喷了 CSDN ，非常有必要在博客里再发一次，因为我真的很生气，毕竟被伤过：以前黑过不少次某 DN （其实不算黑，只是讲出了一些事实），今天遇上一个某 DN 大忽悠，更加坚定了我对某 DN 的看法，沽名钓誉，哗众取宠，简直业界毒瘤。不必说某 DN 博客系统烂到多么令人发指，也不必说论坛早已彻底堕落却毫无补救措施，就单单是动不动搞个大会高价卖票圈钱造星，制造虚假繁荣，就该把它钉在开发界耻辱柱上。&lt;/p&gt;
-&lt;p&gt;紧接着，就开始写 MVP + Clean Architecture 了，这个算是最头疼，MVP + Clean Architecture ，看上去很美好，其实尔尔，至少是我个人是这种感觉，现在最大的感受就是 MVP 被神话了，天天都看到无数的 MVP 的 sample 和文章，都在吹嘘多么多么好，实际体验下来，真正提高的效率，从我个人来讲，是完全没感受到，当然，自己也只是很粗浅的一些理解，还需要更深入地去学习。当然，MVP 到 Clean Architecture 的距离就很近了，把非 View 层抽离成为 library 就可以了。本来是准备弃坑的，可是一想到，别人都在用，如果自己轻易就放弃了，在一些场合，岂不是很没面子，就又硬着头皮写了一些 MVP 的代码，虽然暂时还是没感受到 MVP 的好处。这一块儿算是接下来学习的一个重点了。&lt;/p&gt;
-&lt;p&gt;前两天去看了电影《功夫熊猫》，很棒的动画片，我给满分。&lt;/p&gt;
-&lt;p&gt;另外，这个月很多时间都是自己做饭，厨艺也长进了一点。&lt;/p&gt;
-&lt;p&gt;总结下来，这个月虽然没上班，总算是也没被荒废掉，最大的收获就是写了不少代码，都是自己以前比较薄弱的知识点，然后就是彻底跟自己不喜欢的工作说拜拜了。这也算是这一年一个美好的开始吧。希望这一年都像这个月一样。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;2016年的1月1号上了最后一天班之后，我就辞职了，手续什么的办理的也都很顺利。一切都在按计划进行，结束了长久以来自己都不甚满意的工作，感觉蛮好的。尚未辞职之前，接下来的整个1月，都已经被自己的计划给排的满满当当，比较幸运的是，在自由的1月里，基本算是完成了自己的计划。过年这段时间，可以针对一些还不是很完善的地方，做一些具体的补充。总之，还是蛮充实的。
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://www.easydone.cn/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
