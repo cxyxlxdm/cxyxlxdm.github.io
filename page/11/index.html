@@ -255,6 +255,149 @@
             
               
                 
+                <a class="post-title-link" href="/2013/02/01/" itemprop="url">
+                  ListView控件的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-01T22:16:41+08:00" content="Feb 1 2013">
+              Feb 1 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/02/01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ListView是一个用于<strong>列表显示数据</strong>的高级控件。</p>
+<p>使用ListView控件的前提条件是每个条目都非常类似。</p>
+<p>使用ListView必须要有适配器，除了可以自定义适配器，常用的适配器还有<strong>ArrayAdapter（数组适配器）和SimpleAdapter（简单适配器）</strong>，这些适配器都是继承了<strong>BaseAdapter</strong>，实现BaseAdapter中的getCount()，getItem(int position)，getItemId(int position)，getView(int position, View convertView, ViewGroup parent)这四个方法。</p>
+<p>##ArrayAdapter的使用##</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组适配器</span></span><br><span class="line"><span class="built_in">String</span>[] objects = <span class="keyword">new</span> <span class="built_in">String</span>[]&#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>&#125;;</span><br><span class="line">ListView lv = (ListView) findViewById(R.id.lv);</span><br><span class="line"></span><br><span class="line"><span class="comment">//ArrayAdapter只能显示文本控件 并且只能是一个文本控件</span></span><br><span class="line">ArrayAdapter&lt;<span class="built_in">String</span>&gt; adapter = <span class="keyword">new</span> ArrayAdapter&lt;<span class="built_in">String</span>&gt;(<span class="keyword">this</span>,<span class="comment">//上下文</span></span><br><span class="line">		android.R.layout.simple_list_item_1,<span class="comment">//条目的布局   android系统底层会有一些简单的布局 引用android底层的资源</span></span><br><span class="line">		android.R.id.text1,<span class="comment">//条目里面的控件的id</span></span><br><span class="line">		objects);<span class="comment">//要显示的数据</span></span><br><span class="line">lv.setAdapter(adapter);</span><br><span class="line"><span class="comment">//如果以后开发看到简单的文字列表显示那么使用ArrayAdapter是最方便</span></span><br></pre></td></tr></table></figure>
+<p>##SimpleAdapter的使用##</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//简单适配器</span></span><br><span class="line"><span class="keyword">String</span>[] objects = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>,<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>&#125;;</span><br><span class="line">ListView lv = (ListView) findViewById(R.id.lv);</span><br><span class="line"></span><br><span class="line"><span class="keyword">String</span>[] from = <span class="keyword">new</span> <span class="keyword">String</span>[]&#123;<span class="string">"name"</span>,<span class="string">"age"</span>&#125;;</span><br><span class="line"><span class="built_in">int</span>[] to = <span class="keyword">new</span> <span class="built_in">int</span>[]&#123;android.R.id.text1,android.R.id.text2&#125;;</span><br><span class="line"><span class="keyword">final</span> SimpleAdapter adapter = <span class="keyword">new</span> SimpleAdapter(<span class="keyword">this</span>,<span class="comment">//上下文</span></span><br><span class="line">		data,<span class="comment">//数据 List&lt;? extends Map&lt;String, ?&gt;&gt; data</span></span><br><span class="line">		android.R.layout.simple_list_item_2,<span class="comment">//条目的布局文件</span></span><br><span class="line">		from,<span class="comment">//String[] from 数据从哪里来</span></span><br><span class="line">		to);<span class="comment">//int[] to</span></span><br><span class="line">lv.setAdapter(adapter);</span><br><span class="line"><span class="comment">//给ListView的条目设置条目点击监听</span></span><br><span class="line">lv.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</span><br><span class="line">	<span class="comment">//点击条目的时候，方法别调用  int position 条目的位置</span></span><br><span class="line">	@Override</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> onItemClick(AdapterView&lt;?&gt; parent, View view, <span class="built_in">int</span> position, <span class="keyword">long</span> id) &#123;</span><br><span class="line">		<span class="comment">//适配器提供了一个方法getItem(position) 可以获取条目对应的数据</span></span><br><span class="line">		Map&lt;<span class="keyword">String</span>,<span class="keyword">Object</span>&gt; <span class="built_in">map</span> = (Map&lt;<span class="keyword">String</span>, <span class="keyword">Object</span>&gt;) adapter.getItem(position);</span><br><span class="line">		<span class="keyword">String</span> <span class="built_in">text</span> = <span class="string">"姓名:"</span>+<span class="built_in">map</span>.<span class="built_in">get</span>(<span class="string">"name"</span>)+<span class="string">",age:"</span>+<span class="built_in">map</span>.<span class="built_in">get</span>(<span class="string">"age"</span>);</span><br><span class="line">		Toast.makeText(getApplicationContext(), <span class="built_in">text</span>, <span class="number">1</span>).show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>##开发中ListView的使用步骤##</p>
+<ol>
+<li>在布局中写好ListView控件；</li>
+<li>使用findViewById(R.id.lv)获取空间；</li>
+<li>给ListView设置适配器lv.setAdapter()；</li>
+</ol>
+<p>其中重点和难点都是给ListView设置适配器这部分：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义适配器继承BaseAdapter</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Context context;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Student&gt; students;</span><br><span class="line">    <span class="comment">//布局加载器</span></span><br><span class="line">	<span class="keyword">private</span> LayoutInflater mInflater;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyAdapter</span><span class="params">(Context context, List&lt;Student&gt; students)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.context = context;</span><br><span class="line">		<span class="keyword">this</span>.students = students;</span><br><span class="line">		mInflater = LayoutInflater.from(context);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取ListView条目的数量</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> students.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="function">Object <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">return</span> students.<span class="title">get</span><span class="params">(position)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="function">View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//使用布局加载器加载布局文件，此处的ViewGroup指向ListView，只是加载布局，而不是加在内容，因此应为null</span></span><br><span class="line">		View view = mInflater.inflate(R.layout.item, <span class="keyword">null</span>);</span><br><span class="line">		<span class="comment">//从view中获取对应的控件</span></span><br><span class="line">		<span class="comment">//findViewById(id);   findViewById(id)是加载Activity布局文件的控件，而此处是从view中获取对应控件，因此一定不能忘记要使用下面的方式获取，前面要加上view</span></span><br><span class="line">		TextView tv_name = (TextView) view.findViewById(R.id.tv_name);</span><br><span class="line">		TextView tv_age = (TextView) view.findViewById(R.id.tv_age);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取条目对应的数据</span></span><br><span class="line">		Student student = students.get(position);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//把数据绑定给指定的控件</span></span><br><span class="line">		tv_name.setText(student.name);</span><br><span class="line">        <span class="comment">//age是int类型，而setText()方法传入的参数有两种形式，一种是String，直接将需要的属性传进去，还有一种是int，这个int指的是resid，即资源id，会出现资源找不到异常</span></span><br><span class="line">		tv_age.setText(student.age+<span class="string">""</span>);</span><br><span class="line">		<span class="comment">//返回view，一定要返回view，否则会出现空指针异常</span></span><br><span class="line">		<span class="keyword">return</span> view;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码里，其中创建ListView显示的条目又可以分为以下几个步骤：</p>
+<p>View getView() {</p>
+<ul>
+<li>使用布局加载器加载布局；</li>
+<li>找到布局中的控件；</li>
+<li>找到条目对应的数据；</li>
+<li>把数据绑定给对应控件；</li>
+<li>返回条目</li>
+</ul>
+<p>}</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/16/" itemprop="url">
                   离职感想
                 </a>
@@ -2070,136 +2213,6 @@ super.方法名()    --    父类的
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/12/24/" itemprop="url">
-                  我回来了
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-12-24T12:09:39+08:00" content="Dec 24 2011">
-              Dec 24 2011
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/12/24/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2011/12/24/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>半年实训终于结束了，这半年来，习惯了每天早上按时起床去公司，习惯了上下班打卡考勤，习惯了时不时的加班，虽然名义上还是一名大四学生，但是却已经在平日的言行举止中不自觉地把自己当成已经工作了的人。</p>
-<p>这半年，有喜有悲，虽然说在公司实训目的是为了更有目的的学习，巩固基础和弥补自己在学校学习的不足，都是与学习相关的；但是作为我个人更多的感慨却来自平日里生活和工作中的点点滴滴，在此之前我从来没想过自己会有现在的思想转变。从一开始四个刚刚踏出校门的懵懂少年，到现在只剩下两个仿佛是看透世事一般的过气青年。“想要一直走，永远不回头”，原来就是我现在这么个状态，渴望未知的刺激和新鲜感，却又留恋稳定给自己的心安和平静。时间一直都在向前走，生活永远都不会在意自己的喜怒哀乐，我想说，我一直在进步。</p>
-<p>刚来公司的时候，生活方式的突然转变让我们几个人有点措手不及，但是却如同发现新大陆一般，前所未有的新鲜感支撑着我们继续探索的步伐，刚过了两周，几个人聊起来就都说感觉最近提高了很多。没有哪个人不渴望上进，所以这样的感受让我们很兴奋。但是又过了几天，实训过程中的困难越来越多，那点未知的新鲜感和仅有的一点成就感在这困难面前，却又显得是那么的微不足道，这个时候，一些与我们彼时水平并不相称的实训题目却一个个地压了下来。同时对比于其他同学所参加的校外实训，我们的状态与自己心里所想的差距简直就是无限大。再加上打扫卫生、搬运器材、收拾东西等各种乱七八糟的事情，这不是我们想要的实训啊。</p>
-<p>我们所有的人都动摇了。</p>
-<p>刚过了一个月，我们中唯一的一名女生离开了，反倒是平时牢骚最多的一名男生仍然安稳地坐在那儿。与此同时，我纠结了好久好久，还是推掉了姐姐给我介绍的去电厂的面试机会。我总觉得人不管做什么事，最起码得需要一个看上去稍显正面的姿态，哪怕这姿态是装出来的，哪怕是被人骂做虚伪。当然，我也不否定别人做出的无关于原则的任何决定。路是自己走出来的，每个人都有选择的权利。</p>
-<p>接下来就是我们三个人了。其实在来这里之前，我们三个人相互都不认识，也从未相互听说过、见过面，我也没必要讳言在这里这段日子里与他们有过一些矛盾。当然，这只代表我们价值观相差太多，做不了朋友，可关系也不算坏。他们每天都回家，中午也回宿舍吃饭休息，而我一直在孤独地路人，虽然觉得孤单，不过好在我已习惯。一个人上下班、一个人吃饭、一个人坐偌大一张双人桌子、一个人对着电脑一整天苦乐，麻木了也就没什么了，而且我也一直都很看的开，生性乐观，从不会让不开心的事一直困扰着自己。</p>
-<p>同时我也极度地渴望融入公司同事的圈子里，生活中点点滴滴的积累终究会融化人与人之间的隔膜，我很感激这里的每一个人，有时候想起来眼睛会禁不住湿润起来。如今，吃饭的时候我再也不是一个人，工作上有什么事也不会没有人说，平日里也经常接受同事的帮忙，无论以后我在哪里，我都会永远记得这里的朋友。谢谢你们。</p>
-<p>最开心的还是那次一起去吃烧烤、玩儿真人CS枪战。</p>
-<p>在这段美其名曰“自学”，实则更像是混日子的时光里，漫无目的又好像毫无希望的工作生活在一点点消磨着我们的热情，学习从来都是一件很痛苦的事，几个月无人问津，几个月公式化行动，几个月的“自娱自乐”，几个月的心情签到都是“慵懒”……哈，年轻人精力好旺盛啊，总想找点事情做。公司里的有一些问题，即使所有人都看得到，但是好像从来没有一个人说，在离开学校之前，我这也在不知不觉之中学乖了。偶尔发个牢骚，也要极力地稳住情绪：“1、向来就是有啥说啥；2、对现在的工作有情绪；3、将心比心不要总对别人说；4、千万不要装；5、对事不对人；6、喜欢绝大多数的同事；7、最讨厌被人怀疑；8、讨厌人可以但请尊重人。”有时候会觉得很累啊。</p>
-<p>接着在这个学期行将结束的时候，又走了一个，只剩我们两个人，面对面，只不过隔着一块儿玻璃。一直以为自己在这儿荒废了不少日子，可是在做年末实训报告的时候，对比一下在学校的同学，突然发现自己好高端啊，这段日子，潜移默化里，原来自己真的成长了许多。不过我还是愿意相信其实每个人都比自己想象的要强。</p>
-<p>再次谢谢在这里自己接触到的所有的人。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2245,7 +2258,7 @@ super.方法名()    --    父类的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-count">143</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2262,7 +2275,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">211</span>
+                <span class="site-state-item-count">212</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
