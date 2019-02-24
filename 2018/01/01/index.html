@@ -89,7 +89,7 @@
 <meta name="description" content="关于 Repo 的文章，我之前写过一篇：Repo VS Submodule，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 repo 组织 Android 工程">
-<meta property="og:url" content="http://www.easydone.cn/2018/01/01/index.html">
+<meta property="og:url" content="http://www.liangzhitao.com/2018/01/01/index.html">
 <meta property="og:site_name" content="Just Be Unreserved!">
 <meta property="og:description" content="关于 Repo 的文章，我之前写过一篇：Repo VS Submodule，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/2018-01-01_17-54-35.png">
@@ -327,7 +327,7 @@
       
 
       
-        <p>关于 Repo 的文章，我之前写过一篇：<a href="https://www.easydone.cn/2017/04/24/">Repo VS Submodule</a>，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。<a id="more"></a></p>
+        <p>关于 Repo 的文章，我之前写过一篇：<a href="https://www.easydone.cn/2017/04/24/" target="_blank" rel="external">Repo VS Submodule</a>，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。<a id="more"></a></p>
 <h2 id="工程结构的变化"><a href="#工程结构的变化" class="headerlink" title="工程结构的变化"></a>工程结构的变化</h2><p>项目达到的一定的阶段，业务的组件化是必经之路，这一点毋庸置疑。如今，已经很少有项目还是一个子工程了，对于 Android 项目来讲，一般也都是基于 Gradle 的多 project 项目。Android Studio 默认创建项目，也是 multi-project 的形式，大致可能如下：</p>
 <ol>
 <li>根目录下一个 setting.gradle 文件和 build.gradle 文件，setting.gradle 里配置此项目包含的子项目，build.gradle 里包含整个工程所需要的 gradle 插件和子项目依赖所需的仓库地址；</li>
@@ -494,7 +494,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://easydone.qiniudn.com/default_avatar.jpg"
+               src="/images/avatar.gif"
                alt="Ailurus" />
           <p class="site-author-name" itemprop="name">Ailurus</p>
           <p class="site-description motion-element" itemprop="description">Android Developer</p>
@@ -538,15 +538,6 @@
 
         <div class="links-of-author motion-element">
           
-            
-              <span class="links-of-author-item">
-                <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank" title="G+">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  G+
-                </a>
-              </span>
             
               <span class="links-of-author-item">
                 <a href="https://github.com/liangzhitao" target="_blank" title="Github">
@@ -604,14 +595,6 @@
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://nicodelee.sinaapp.com" title="日志" target="_blank">日志</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://iamwent.github.io" title="大城小黄" target="_blank">大城小黄</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="http://veaer.com" title="veaer" target="_blank">veaer</a>
                 </li>
               
@@ -624,19 +607,7 @@
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://itangqi.me" title="汤奇" target="_blank">汤奇</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://rarnu.com" title="何老师" target="_blank">何老师</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="https://fucknmb.com" title="区长" target="_blank">区长</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.zhaiyifan.cn/" title="大帅" target="_blank">大帅</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
@@ -674,7 +645,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  2012 - 
+  &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -801,7 +772,7 @@
       var disqus_shortname = 'easydonecn';
       var disqus_identifier = '2018/01/01/';
       var disqus_title = '使用 repo 组织 Android 工程';
-      var disqus_url = 'http://www.easydone.cn/2018/01/01/';
+      var disqus_url = 'http://www.liangzhitao.com/2018/01/01/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

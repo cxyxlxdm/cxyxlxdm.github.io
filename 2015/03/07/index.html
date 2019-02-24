@@ -89,7 +89,7 @@
 <meta name="description" content="昨天体验了一把从去年开始就非常火的Docker,刚好今天准备把图片外链都迁到七牛上,于是就决定把这过程记录一下,以后也慢慢地把以前的博客整理一下,把所有的图片都迁到七牛上去.以前接触虚拟化的东西多一些,ESX,KVM,Xen,Hyper-V,都有用过,所以一直都想体验一把Docker,可是由于现在专职做Android应用开发了,项目比较忙.而且也苦于一直没有一台Linux宿主机,就放在一边了.最近">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker之初体验">
-<meta property="og:url" content="http://www.easydone.cn/2015/03/07/index.html">
+<meta property="og:url" content="http://www.liangzhitao.com/2015/03/07/index.html">
 <meta property="og:site_name" content="Just Be Unreserved!">
 <meta property="og:description" content="昨天体验了一把从去年开始就非常火的Docker,刚好今天准备把图片外链都迁到七牛上,于是就决定把这过程记录一下,以后也慢慢地把以前的博客整理一下,把所有的图片都迁到七牛上去.以前接触虚拟化的东西多一些,ESX,KVM,Xen,Hyper-V,都有用过,所以一直都想体验一把Docker,可是由于现在专职做Android应用开发了,项目比较忙.而且也苦于一直没有一台Linux宿主机,就放在一边了.最近">
 <meta property="og:image" content="http://easydone.qiniudn.com/1.png">
@@ -349,7 +349,7 @@
 <p>启动docker,启动完成boot2docker那个logo还是很有爱的.<br><img src="http://easydone.qiniudn.com/7.png" alt=""><br><img src="http://easydone.qiniudn.com/8.png" alt=""><br><img src="http://easydone.qiniudn.com/9.png" alt=""></p>
 <p>查看IP,记下eth0的IP,然后就可以使用ssh连接管理了,还是默认的22端口,需要注意的一点是虽然当前用户是root@boot2docker,但是一些敏感操作还是要加sudo的.<br><img src="http://easydone.qiniudn.com/10.png" alt=""><br><img src="http://easydone.qiniudn.com/11.png" alt=""><br><img src="http://easydone.qiniudn.com/12.png" alt=""></p>
 <p>然后就是挂载外部虚拟磁盘,创建应用了.<br><img src="http://easydone.qiniudn.com/13.png" alt=""><br><img src="http://easydone.qiniudn.com/14.png" alt=""><br><img src="http://easydone.qiniudn.com/15.png" alt=""></p>
-<p>上面就是挂载磁盘的过程,一些命令,挂载硬盘的教程我13年的时候写过一篇,参看<a href="http://www.easydone.cn/2013/10/31/Linux%E6%8C%82%E8%BD%BD%E7%A3%81%E7%9B%98%E6%95%99%E7%A8%8B/">Linux挂载磁盘教程</a>,如果提示挂载失败,可以将格式化磁盘之前的步骤(不包括格式化磁盘这一步)再重新执行一次即可.</p>
+<p>上面就是挂载磁盘的过程,一些命令,挂载硬盘的教程我13年的时候写过一篇,参看<a href="http://www.easydone.cn/2013/10/31/Linux%E6%8C%82%E8%BD%BD%E7%A3%81%E7%9B%98%E6%95%99%E7%A8%8B/" target="_blank" rel="external">Linux挂载磁盘教程</a>,如果提示挂载失败,可以将格式化磁盘之前的步骤(不包括格式化磁盘这一步)再重新执行一次即可.</p>
 <p>最后就是创建应用了,这些在网上应该到处都是,根据自己需求创建即可.当然,用Hyper-V创建Docker应用不是最好的方案,只能体验,实际生产还是最好使用一台Linux服务器,否则很多操作会很麻烦,而且网上资料也比较少.Docker创建完成之后,是不能设置静态IP的(至少在使用Hyper-V,我是没找到解决方案),如果是其他方案,要设置静态IP,可以看这篇文章<a href="http://huataihuang.github.io/2014/10/05/docker-container-static-ip/" target="_blank" rel="external">配置docker容器静态IP地址</a>.关于docker的更多资料,还是翻看官方文档最靠谱,<a href="https://docs.docker.com/" target="_blank" rel="external">docs for docker</a>.</p>
 <p>顺便提一句,我用的Xshell配色是Ubuntu配色,下面是色值配置文件:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[Ubuntu]</span><br><span class="line"><span class="function"><span class="title">text</span><span class="params">(bold)</span></span>=ffffff</span><br><span class="line"><span class="function"><span class="title">magenta</span><span class="params">(bold)</span></span>=ad7fa8</span><br><span class="line">text=ffffff</span><br><span class="line"><span class="function"><span class="title">white</span><span class="params">(bold)</span></span>=eeeeec</span><br><span class="line">green=<span class="number">4</span>e9a06</span><br><span class="line"><span class="function"><span class="title">red</span><span class="params">(bold)</span></span>=ef2929</span><br><span class="line"><span class="function"><span class="title">green</span><span class="params">(bold)</span></span>=<span class="number">8</span>ae234</span><br><span class="line"><span class="function"><span class="title">black</span><span class="params">(bold)</span></span>=<span class="number">555753</span></span><br><span class="line">red=cc0000</span><br><span class="line">blue=<span class="number">3465</span>a4</span><br><span class="line">black=<span class="number">000000</span></span><br><span class="line"><span class="function"><span class="title">blue</span><span class="params">(bold)</span></span>=<span class="number">729</span>fcf</span><br><span class="line"><span class="function"><span class="title">yellow</span><span class="params">(bold)</span></span>=fce94f</span><br><span class="line"><span class="function"><span class="title">cyan</span><span class="params">(bold)</span></span>=<span class="number">34</span>e2e2</span><br><span class="line">yellow=c4a000</span><br><span class="line">magenta=<span class="number">75507</span>b</span><br><span class="line"><span class="attribute">background</span>=<span class="number">300</span>a24</span><br><span class="line">white=d3d7cf</span><br><span class="line">cyan=<span class="number">06989</span>a</span><br><span class="line">[Names]</span><br><span class="line">count=<span class="number">1</span></span><br><span class="line">name0=Ubuntu</span><br></pre></td></tr></table></figure></p>
 <p>同时用的比较多的还有一款配色是Kepbod<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[Names]</span><br><span class="line">count=<span class="number">1</span></span><br><span class="line">name0=Kepbod</span><br><span class="line">[Kepbod]</span><br><span class="line"><span class="function"><span class="title">text</span><span class="params">(bold)</span></span>=f9f8f5</span><br><span class="line"><span class="function"><span class="title">magenta</span><span class="params">(bold)</span></span>=e1a3ee</span><br><span class="line">text=f9f8f5</span><br><span class="line"><span class="function"><span class="title">white</span><span class="params">(bold)</span></span>=f9f8f5</span><br><span class="line">green=a6e22e</span><br><span class="line"><span class="function"><span class="title">red</span><span class="params">(bold)</span></span>=deaf8f</span><br><span class="line"><span class="function"><span class="title">green</span><span class="params">(bold)</span></span>=acc267</span><br><span class="line"><span class="function"><span class="title">black</span><span class="params">(bold)</span></span>=<span class="number">383830</span></span><br><span class="line">red=fb9fb1</span><br><span class="line">blue=<span class="number">66</span>d9ef</span><br><span class="line">black=<span class="number">272822</span></span><br><span class="line"><span class="function"><span class="title">blue</span><span class="params">(bold)</span></span>=<span class="number">6</span>fc2ef</span><br><span class="line"><span class="function"><span class="title">yellow</span><span class="params">(bold)</span></span>=f4bf75</span><br><span class="line"><span class="function"><span class="title">cyan</span><span class="params">(bold)</span></span>=<span class="number">12</span>cfc0</span><br><span class="line">yellow=fd971f</span><br><span class="line">magenta=ae81ff</span><br><span class="line"><span class="attribute">background</span>=<span class="number">272822</span></span><br><span class="line">white=f5f4f1</span><br><span class="line">cyan=a1efe4</span><br></pre></td></tr></table></figure></p>
@@ -463,7 +463,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://easydone.qiniudn.com/default_avatar.jpg"
+               src="/images/avatar.gif"
                alt="Ailurus" />
           <p class="site-author-name" itemprop="name">Ailurus</p>
           <p class="site-description motion-element" itemprop="description">Android Developer</p>
@@ -507,15 +507,6 @@
 
         <div class="links-of-author motion-element">
           
-            
-              <span class="links-of-author-item">
-                <a href="https://plus.google.com/u/0/105488752510871319253" target="_blank" title="G+">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  G+
-                </a>
-              </span>
             
               <span class="links-of-author-item">
                 <a href="https://github.com/liangzhitao" target="_blank" title="Github">
@@ -573,14 +564,6 @@
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://nicodelee.sinaapp.com" title="日志" target="_blank">日志</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://iamwent.github.io" title="大城小黄" target="_blank">大城小黄</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="http://veaer.com" title="veaer" target="_blank">veaer</a>
                 </li>
               
@@ -593,19 +576,7 @@
                 </li>
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://itangqi.me" title="汤奇" target="_blank">汤奇</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://rarnu.com" title="何老师" target="_blank">何老师</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
                   <a href="https://fucknmb.com" title="区长" target="_blank">区长</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.zhaiyifan.cn/" title="大帅" target="_blank">大帅</a>
                 </li>
               
                 <li class="links-of-blogroll-item">
@@ -643,7 +614,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  2012 - 
+  &copy; 
   <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -770,7 +741,7 @@
       var disqus_shortname = 'easydonecn';
       var disqus_identifier = '2015/03/07/';
       var disqus_title = 'Docker之初体验';
-      var disqus_url = 'http://www.easydone.cn/2015/03/07/';
+      var disqus_url = 'http://www.liangzhitao.com/2015/03/07/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

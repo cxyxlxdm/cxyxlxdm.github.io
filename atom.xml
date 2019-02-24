@@ -4,9 +4,9 @@
   <subtitle>学无止境。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.easydone.cn/"/>
+  <link href="http://www.liangzhitao.com/"/>
   <updated>2019-02-24T11:35:34.241Z</updated>
-  <id>http://www.easydone.cn/</id>
+  <id>http://www.liangzhitao.com/</id>
   
   <author>
     <name>Ailurus</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>说说近况</title>
-    <link href="http://www.easydone.cn/2019/01/05/"/>
-    <id>http://www.easydone.cn/2019/01/05/</id>
+    <link href="http://www.liangzhitao.com/2019/01/05/"/>
+    <id>http://www.liangzhitao.com/2019/01/05/</id>
     <published>2019-01-05T14:06:30.000Z</published>
     <updated>2019-02-24T11:35:34.241Z</updated>
     
@@ -36,21 +36,21 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="家庭" scheme="http://www.easydone.cn/tags/%E5%AE%B6%E5%BA%AD/"/>
+      <category term="家庭" scheme="http://www.liangzhitao.com/tags/%E5%AE%B6%E5%BA%AD/"/>
     
-      <category term="工作" scheme="http://www.easydone.cn/tags/%E5%B7%A5%E4%BD%9C/"/>
+      <category term="工作" scheme="http://www.liangzhitao.com/tags/%E5%B7%A5%E4%BD%9C/"/>
     
-      <category term="近况" scheme="http://www.easydone.cn/tags/%E8%BF%91%E5%86%B5/"/>
+      <category term="近况" scheme="http://www.liangzhitao.com/tags/%E8%BF%91%E5%86%B5/"/>
     
   </entry>
   
   <entry>
     <title>Flutter之我见</title>
-    <link href="http://www.easydone.cn/2018/06/29/"/>
-    <id>http://www.easydone.cn/2018/06/29/</id>
+    <link href="http://www.liangzhitao.com/2018/06/29/"/>
+    <id>http://www.liangzhitao.com/2018/06/29/</id>
     <published>2018-06-29T15:58:31.000Z</published>
     <updated>2018-06-29T16:14:15.257Z</updated>
     
@@ -69,20 +69,20 @@
     </summary>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Flutter" scheme="http://www.easydone.cn/tags/Flutter/"/>
+      <category term="Flutter" scheme="http://www.liangzhitao.com/tags/Flutter/"/>
     
   </entry>
   
   <entry>
     <title>使用 repo 组织 Android 工程</title>
-    <link href="http://www.easydone.cn/2018/01/01/"/>
-    <id>http://www.easydone.cn/2018/01/01/</id>
+    <link href="http://www.liangzhitao.com/2018/01/01/"/>
+    <id>http://www.liangzhitao.com/2018/01/01/</id>
     <published>2018-01-01T11:02:17.000Z</published>
     <updated>2018-01-01T12:04:41.421Z</updated>
     
-    <content type="html">&lt;p&gt;关于 Repo 的文章，我之前写过一篇：&lt;a href=&quot;https://www.easydone.cn/2017/04/24/&quot;&gt;Repo VS Submodule&lt;/a&gt;，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;关于 Repo 的文章，我之前写过一篇：&lt;a href=&quot;https://www.easydone.cn/2017/04/24/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Repo VS Submodule&lt;/a&gt;，不过只是讲了 Repo 和 Submodule 的区别，以及 Repo 使用过程中的一些注意事项，然而在具体的项目里的所谓的最佳实践却并没有涉及。这篇文章，我想谈一下关于实践的内容，当然，是不是“最佳”实践，我也不敢妄言，每个人能有自己的理解，如果我能够抛砖引玉，引申出其他人更优的实践方案，那就很好了。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;工程结构的变化&quot;&gt;&lt;a href=&quot;#工程结构的变化&quot; class=&quot;headerlink&quot; title=&quot;工程结构的变化&quot;&gt;&lt;/a&gt;工程结构的变化&lt;/h2&gt;&lt;p&gt;项目达到的一定的阶段，业务的组件化是必经之路，这一点毋庸置疑。如今，已经很少有项目还是一个子工程了，对于 Android 项目来讲，一般也都是基于 Gradle 的多 project 项目。Android Studio 默认创建项目，也是 multi-project 的形式，大致可能如下：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;根目录下一个 setting.gradle 文件和 build.gradle 文件，setting.gradle 里配置此项目包含的子项目，build.gradle 里包含整个工程所需要的 gradle 插件和子项目依赖所需的仓库地址；&lt;/li&gt;
@@ -146,21 +146,21 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
     
-      <category term="repo" scheme="http://www.easydone.cn/tags/repo/"/>
+      <category term="repo" scheme="http://www.liangzhitao.com/tags/repo/"/>
     
   </entry>
   
   <entry>
     <title>在 Android Application 里 provided aar</title>
-    <link href="http://www.easydone.cn/2017/11/07/"/>
-    <id>http://www.easydone.cn/2017/11/07/</id>
+    <link href="http://www.liangzhitao.com/2017/11/07/"/>
+    <id>http://www.liangzhitao.com/2017/11/07/</id>
     <published>2017-11-07T13:44:18.000Z</published>
     <updated>2017-11-15T15:54:23.274Z</updated>
     
@@ -233,23 +233,23 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
     
-      <category term="aar" scheme="http://www.easydone.cn/tags/aar/"/>
+      <category term="aar" scheme="http://www.liangzhitao.com/tags/aar/"/>
     
-      <category term="provided" scheme="http://www.easydone.cn/tags/provided/"/>
+      <category term="provided" scheme="http://www.liangzhitao.com/tags/provided/"/>
     
   </entry>
   
   <entry>
     <title>不要盲目拒绝计划之外的代码调试</title>
-    <link href="http://www.easydone.cn/2017/11/05/"/>
-    <id>http://www.easydone.cn/2017/11/05/</id>
+    <link href="http://www.liangzhitao.com/2017/11/05/"/>
+    <id>http://www.liangzhitao.com/2017/11/05/</id>
     <published>2017-11-05T07:03:05.000Z</published>
     <updated>2017-11-05T13:43:02.000Z</updated>
     
@@ -272,17 +272,17 @@
     
     </summary>
     
-      <category term="Tech" scheme="http://www.easydone.cn/categories/Tech/"/>
+      <category term="Tech" scheme="http://www.liangzhitao.com/categories/Tech/"/>
     
     
-      <category term="debug" scheme="http://www.easydone.cn/tags/debug/"/>
+      <category term="debug" scheme="http://www.liangzhitao.com/tags/debug/"/>
     
   </entry>
   
   <entry>
     <title>一个关于Gradle构建缓存的问题</title>
-    <link href="http://www.easydone.cn/2017/08/15/"/>
-    <id>http://www.easydone.cn/2017/08/15/</id>
+    <link href="http://www.liangzhitao.com/2017/08/15/"/>
+    <id>http://www.liangzhitao.com/2017/08/15/</id>
     <published>2017-08-15T13:16:50.000Z</published>
     <updated>2017-08-15T14:25:12.000Z</updated>
     
@@ -348,19 +348,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
     
   </entry>
   
   <entry>
     <title>Repo VS Submodule</title>
-    <link href="http://www.easydone.cn/2017/04/24/"/>
-    <id>http://www.easydone.cn/2017/04/24/</id>
+    <link href="http://www.liangzhitao.com/2017/04/24/"/>
+    <id>http://www.liangzhitao.com/2017/04/24/</id>
     <published>2017-04-24T15:16:50.000Z</published>
     <updated>2017-04-24T15:24:02.000Z</updated>
     
@@ -412,19 +412,19 @@
     
     </summary>
     
-      <category term="Tech" scheme="http://www.easydone.cn/categories/Tech/"/>
+      <category term="Tech" scheme="http://www.liangzhitao.com/categories/Tech/"/>
     
     
-      <category term="repo" scheme="http://www.easydone.cn/tags/repo/"/>
+      <category term="repo" scheme="http://www.liangzhitao.com/tags/repo/"/>
     
-      <category term="submodule" scheme="http://www.easydone.cn/tags/submodule/"/>
+      <category term="submodule" scheme="http://www.liangzhitao.com/tags/submodule/"/>
     
   </entry>
   
   <entry>
     <title>你在感动什么</title>
-    <link href="http://www.easydone.cn/2017/02/28/"/>
-    <id>http://www.easydone.cn/2017/02/28/</id>
+    <link href="http://www.liangzhitao.com/2017/02/28/"/>
+    <id>http://www.liangzhitao.com/2017/02/28/</id>
     <published>2017-02-28T15:38:56.000Z</published>
     <updated>2017-02-28T16:05:01.000Z</updated>
     
@@ -441,19 +441,19 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="独立思考" scheme="http://www.easydone.cn/tags/%E7%8B%AC%E7%AB%8B%E6%80%9D%E8%80%83/"/>
+      <category term="独立思考" scheme="http://www.liangzhitao.com/tags/%E7%8B%AC%E7%AB%8B%E6%80%9D%E8%80%83/"/>
     
-      <category term="白夜行" scheme="http://www.easydone.cn/tags/%E7%99%BD%E5%A4%9C%E8%A1%8C/"/>
+      <category term="白夜行" scheme="http://www.liangzhitao.com/tags/%E7%99%BD%E5%A4%9C%E8%A1%8C/"/>
     
   </entry>
   
   <entry>
     <title>选择</title>
-    <link href="http://www.easydone.cn/2017/02/03/"/>
-    <id>http://www.easydone.cn/2017/02/03/</id>
+    <link href="http://www.liangzhitao.com/2017/02/03/"/>
+    <id>http://www.liangzhitao.com/2017/02/03/</id>
     <published>2017-02-03T13:51:04.000Z</published>
     <updated>2017-02-03T15:41:11.000Z</updated>
     
@@ -478,17 +478,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="选择，电影" scheme="http://www.easydone.cn/tags/%E9%80%89%E6%8B%A9%EF%BC%8C%E7%94%B5%E5%BD%B1/"/>
+      <category term="选择，电影" scheme="http://www.liangzhitao.com/tags/%E9%80%89%E6%8B%A9%EF%BC%8C%E7%94%B5%E5%BD%B1/"/>
     
   </entry>
   
   <entry>
     <title>ProGuard在插件化里的应用</title>
-    <link href="http://www.easydone.cn/2017/01/02/"/>
-    <id>http://www.easydone.cn/2017/01/02/</id>
+    <link href="http://www.liangzhitao.com/2017/01/02/"/>
+    <id>http://www.liangzhitao.com/2017/01/02/</id>
     <published>2017-01-02T02:48:03.000Z</published>
     <updated>2017-01-02T06:51:40.000Z</updated>
     
@@ -634,25 +634,25 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Obfuscate" scheme="http://www.easydone.cn/tags/Obfuscate/"/>
+      <category term="Obfuscate" scheme="http://www.liangzhitao.com/tags/Obfuscate/"/>
     
-      <category term="Optimize" scheme="http://www.easydone.cn/tags/Optimize/"/>
+      <category term="Optimize" scheme="http://www.liangzhitao.com/tags/Optimize/"/>
     
-      <category term="Preverify" scheme="http://www.easydone.cn/tags/Preverify/"/>
+      <category term="Preverify" scheme="http://www.liangzhitao.com/tags/Preverify/"/>
     
-      <category term="ProGuard" scheme="http://www.easydone.cn/tags/ProGuard/"/>
+      <category term="ProGuard" scheme="http://www.liangzhitao.com/tags/ProGuard/"/>
     
-      <category term="Shink" scheme="http://www.easydone.cn/tags/Shink/"/>
+      <category term="Shink" scheme="http://www.liangzhitao.com/tags/Shink/"/>
     
   </entry>
   
   <entry>
     <title>一个不得已的解释</title>
-    <link href="http://www.easydone.cn/2016/12/30/"/>
-    <id>http://www.easydone.cn/2016/12/30/</id>
+    <link href="http://www.liangzhitao.com/2016/12/30/"/>
+    <id>http://www.liangzhitao.com/2016/12/30/</id>
     <published>2016-12-30T12:32:52.000Z</published>
     <updated>2016-12-30T12:45:22.000Z</updated>
     
@@ -680,17 +680,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="解释" scheme="http://www.easydone.cn/tags/%E8%A7%A3%E9%87%8A/"/>
+      <category term="解释" scheme="http://www.liangzhitao.com/tags/%E8%A7%A3%E9%87%8A/"/>
     
   </entry>
   
   <entry>
     <title>这一年</title>
-    <link href="http://www.easydone.cn/2016/12/25/"/>
-    <id>http://www.easydone.cn/2016/12/25/</id>
+    <link href="http://www.liangzhitao.com/2016/12/25/"/>
+    <id>http://www.liangzhitao.com/2016/12/25/</id>
     <published>2016-12-25T14:46:45.000Z</published>
     <updated>2016-12-25T14:46:56.000Z</updated>
     
@@ -715,21 +715,21 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="克制" scheme="http://www.easydone.cn/tags/%E5%85%8B%E5%88%B6/"/>
+      <category term="克制" scheme="http://www.liangzhitao.com/tags/%E5%85%8B%E5%88%B6/"/>
     
-      <category term="焦虑" scheme="http://www.easydone.cn/tags/%E7%84%A6%E8%99%91/"/>
+      <category term="焦虑" scheme="http://www.liangzhitao.com/tags/%E7%84%A6%E8%99%91/"/>
     
-      <category term="责任" scheme="http://www.easydone.cn/tags/%E8%B4%A3%E4%BB%BB/"/>
+      <category term="责任" scheme="http://www.liangzhitao.com/tags/%E8%B4%A3%E4%BB%BB/"/>
     
   </entry>
   
   <entry>
     <title>故事要开始了吗</title>
-    <link href="http://www.easydone.cn/2016/12/08/"/>
-    <id>http://www.easydone.cn/2016/12/08/</id>
+    <link href="http://www.liangzhitao.com/2016/12/08/"/>
+    <id>http://www.liangzhitao.com/2016/12/08/</id>
     <published>2016-12-08T09:46:02.000Z</published>
     <updated>2016-12-08T12:22:35.000Z</updated>
     
@@ -747,17 +747,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="Google" scheme="http://www.easydone.cn/tags/Google/"/>
+      <category term="Google" scheme="http://www.liangzhitao.com/tags/Google/"/>
     
   </entry>
   
   <entry>
     <title>关于oasis的组件化思想的一些思考</title>
-    <link href="http://www.easydone.cn/2016/09/25/"/>
-    <id>http://www.easydone.cn/2016/09/25/</id>
+    <link href="http://www.liangzhitao.com/2016/09/25/"/>
+    <id>http://www.liangzhitao.com/2016/09/25/</id>
     <published>2016-09-25T11:43:36.000Z</published>
     <updated>2016-12-08T11:21:04.000Z</updated>
     
@@ -793,23 +793,23 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.easydone.cn/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
     
-      <category term="插件化" scheme="http://www.easydone.cn/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
+      <category term="插件化" scheme="http://www.liangzhitao.com/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
     
-      <category term="组件化" scheme="http://www.easydone.cn/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/"/>
+      <category term="组件化" scheme="http://www.liangzhitao.com/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>关于Android插件化的细枝末节</title>
-    <link href="http://www.easydone.cn/2016/07/24/"/>
-    <id>http://www.easydone.cn/2016/07/24/</id>
+    <link href="http://www.liangzhitao.com/2016/07/24/"/>
+    <id>http://www.liangzhitao.com/2016/07/24/</id>
     <published>2016-07-24T07:59:55.000Z</published>
     <updated>2016-07-24T13:56:39.000Z</updated>
     
@@ -847,19 +847,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.easydone.cn/tags/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
     
-      <category term="Plugin" scheme="http://www.easydone.cn/tags/Plugin/"/>
+      <category term="Plugin" scheme="http://www.liangzhitao.com/tags/Plugin/"/>
     
   </entry>
   
   <entry>
     <title>Scala之旅-函数式编程简介</title>
-    <link href="http://www.easydone.cn/2016/05/12/"/>
-    <id>http://www.easydone.cn/2016/05/12/</id>
+    <link href="http://www.liangzhitao.com/2016/05/12/"/>
+    <id>http://www.liangzhitao.com/2016/05/12/</id>
     <published>2016-05-12T15:43:44.000Z</published>
     <updated>2016-05-12T16:19:32.000Z</updated>
     
@@ -902,17 +902,17 @@
     
     </summary>
     
-      <category term="Scala" scheme="http://www.easydone.cn/categories/Scala/"/>
+      <category term="Scala" scheme="http://www.liangzhitao.com/categories/Scala/"/>
     
     
-      <category term="Scala" scheme="http://www.easydone.cn/tags/Scala/"/>
+      <category term="Scala" scheme="http://www.liangzhitao.com/tags/Scala/"/>
     
   </entry>
   
   <entry>
     <title>所有的期待</title>
-    <link href="http://www.easydone.cn/2016/05/08/"/>
-    <id>http://www.easydone.cn/2016/05/08/</id>
+    <link href="http://www.liangzhitao.com/2016/05/08/"/>
+    <id>http://www.liangzhitao.com/2016/05/08/</id>
     <published>2016-05-08T11:18:48.000Z</published>
     <updated>2016-05-09T00:09:06.000Z</updated>
     
@@ -931,19 +931,19 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="家人" scheme="http://www.easydone.cn/tags/%E5%AE%B6%E4%BA%BA/"/>
+      <category term="家人" scheme="http://www.liangzhitao.com/tags/%E5%AE%B6%E4%BA%BA/"/>
     
-      <category term="生活" scheme="http://www.easydone.cn/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://www.liangzhitao.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
     <title>当EventBus遇上RxJava</title>
-    <link href="http://www.easydone.cn/2016/03/29/"/>
-    <id>http://www.easydone.cn/2016/03/29/</id>
+    <link href="http://www.liangzhitao.com/2016/03/29/"/>
+    <id>http://www.liangzhitao.com/2016/03/29/</id>
     <published>2016-03-29T13:26:48.000Z</published>
     <updated>2016-05-08T09:44:36.000Z</updated>
     
@@ -992,19 +992,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="EventBus" scheme="http://www.easydone.cn/tags/EventBus/"/>
+      <category term="EventBus" scheme="http://www.liangzhitao.com/tags/EventBus/"/>
     
-      <category term="RxJava" scheme="http://www.easydone.cn/tags/RxJava/"/>
+      <category term="RxJava" scheme="http://www.liangzhitao.com/tags/RxJava/"/>
     
   </entry>
   
   <entry>
     <title>给自己一个标杆</title>
-    <link href="http://www.easydone.cn/2016/03/27/"/>
-    <id>http://www.easydone.cn/2016/03/27/</id>
+    <link href="http://www.liangzhitao.com/2016/03/27/"/>
+    <id>http://www.liangzhitao.com/2016/03/27/</id>
     <published>2016-03-27T14:10:26.000Z</published>
     <updated>2016-03-27T14:21:42.000Z</updated>
     
@@ -1028,17 +1028,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.easydone.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="经历" scheme="http://www.easydone.cn/tags/%E7%BB%8F%E5%8E%86/"/>
+      <category term="经历" scheme="http://www.liangzhitao.com/tags/%E7%BB%8F%E5%8E%86/"/>
     
   </entry>
   
   <entry>
     <title>记一次微信朋友圈逆向</title>
-    <link href="http://www.easydone.cn/2016/02/27/"/>
-    <id>http://www.easydone.cn/2016/02/27/</id>
+    <link href="http://www.liangzhitao.com/2016/02/27/"/>
+    <id>http://www.liangzhitao.com/2016/02/27/</id>
     <published>2016-02-27T00:04:30.000Z</published>
     <updated>2016-03-07T01:06:04.000Z</updated>
     
@@ -1092,14 +1092,14 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.easydone.cn/categories/Android/"/>
+      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
     
     
-      <category term="APK逆向" scheme="http://www.easydone.cn/tags/APK%E9%80%86%E5%90%91/"/>
+      <category term="APK逆向" scheme="http://www.liangzhitao.com/tags/APK%E9%80%86%E5%90%91/"/>
     
-      <category term="apktool" scheme="http://www.easydone.cn/tags/apktool/"/>
+      <category term="apktool" scheme="http://www.liangzhitao.com/tags/apktool/"/>
     
-      <category term="smali" scheme="http://www.easydone.cn/tags/smali/"/>
+      <category term="smali" scheme="http://www.liangzhitao.com/tags/smali/"/>
     
   </entry>
   
