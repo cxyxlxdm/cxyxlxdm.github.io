@@ -89,7 +89,7 @@
 <meta name="description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个关于Gradle构建缓存的问题">
-<meta property="og:url" content="http://www.liangzhitao.com/2017/08/15/index.html">
+<meta property="og:url" content="http://liangzhitao.github.io/2017/08/15/index.html">
 <meta property="og:site_name" content="Just Be Unreserved!">
 <meta property="og:description" content="问题我们的项目构建中，有这样一个需求，在编译过程中，将最重要打到 APK 包里的 jar 库全都合并到一个 jar 里。于是，我新建了一个合并 jar 包的任务，插入到了 Gradle Tasks 的有向非循环图里，但是这个过程中遇到这样一个问题：在 Gradle 构建脚本里，调用 ApplicationVariant#apkLibraries 方法，我发现输出结果时而正确，时而不正确。">
 <meta property="og:image" content="http://7x2wvb.com1.z0.glb.clouddn.com/20170807-185058.png">
@@ -778,7 +778,7 @@
       var disqus_shortname = 'easydonecn';
       var disqus_identifier = '2017/08/15/';
       var disqus_title = '一个关于Gradle构建缓存的问题';
-      var disqus_url = 'http://www.liangzhitao.com/2017/08/15/';
+      var disqus_url = 'http://liangzhitao.github.io/2017/08/15/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

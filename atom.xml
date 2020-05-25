@@ -4,9 +4,9 @@
   <subtitle>学无止境。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.liangzhitao.com/"/>
+  <link href="http://liangzhitao.github.io/"/>
   <updated>2020-05-25T10:25:44.038Z</updated>
-  <id>http://www.liangzhitao.com/</id>
+  <id>http://liangzhitao.github.io/</id>
   
   <author>
     <name>Ailurus</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>身世浮沉雨打萍</title>
-    <link href="http://www.liangzhitao.com/2020/05/25/"/>
-    <id>http://www.liangzhitao.com/2020/05/25/</id>
+    <link href="http://liangzhitao.github.io/2020/05/25/"/>
+    <id>http://liangzhitao.github.io/2020/05/25/</id>
     <published>2020-05-25T09:42:48.000Z</published>
     <updated>2020-05-25T10:25:44.038Z</updated>
     
@@ -40,17 +40,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="中年" scheme="http://www.liangzhitao.com/tags/%E4%B8%AD%E5%B9%B4/"/>
+      <category term="中年" scheme="http://liangzhitao.github.io/tags/%E4%B8%AD%E5%B9%B4/"/>
     
   </entry>
   
   <entry>
     <title>说说近况</title>
-    <link href="http://www.liangzhitao.com/2019/01/05/"/>
-    <id>http://www.liangzhitao.com/2019/01/05/</id>
+    <link href="http://liangzhitao.github.io/2019/01/05/"/>
+    <id>http://liangzhitao.github.io/2019/01/05/</id>
     <published>2019-01-05T14:06:30.000Z</published>
     <updated>2020-05-25T09:44:15.671Z</updated>
     
@@ -68,21 +68,21 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="家庭" scheme="http://www.liangzhitao.com/tags/%E5%AE%B6%E5%BA%AD/"/>
+      <category term="家庭" scheme="http://liangzhitao.github.io/tags/%E5%AE%B6%E5%BA%AD/"/>
     
-      <category term="工作" scheme="http://www.liangzhitao.com/tags/%E5%B7%A5%E4%BD%9C/"/>
+      <category term="工作" scheme="http://liangzhitao.github.io/tags/%E5%B7%A5%E4%BD%9C/"/>
     
-      <category term="近况" scheme="http://www.liangzhitao.com/tags/%E8%BF%91%E5%86%B5/"/>
+      <category term="近况" scheme="http://liangzhitao.github.io/tags/%E8%BF%91%E5%86%B5/"/>
     
   </entry>
   
   <entry>
     <title>Flutter之我见</title>
-    <link href="http://www.liangzhitao.com/2018/06/29/"/>
-    <id>http://www.liangzhitao.com/2018/06/29/</id>
+    <link href="http://liangzhitao.github.io/2018/06/29/"/>
+    <id>http://liangzhitao.github.io/2018/06/29/</id>
     <published>2018-06-29T15:58:31.000Z</published>
     <updated>2018-06-29T16:14:15.257Z</updated>
     
@@ -101,16 +101,16 @@
     </summary>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Flutter" scheme="http://www.liangzhitao.com/tags/Flutter/"/>
+      <category term="Flutter" scheme="http://liangzhitao.github.io/tags/Flutter/"/>
     
   </entry>
   
   <entry>
     <title>使用 repo 组织 Android 工程</title>
-    <link href="http://www.liangzhitao.com/2018/01/01/"/>
-    <id>http://www.liangzhitao.com/2018/01/01/</id>
+    <link href="http://liangzhitao.github.io/2018/01/01/"/>
+    <id>http://liangzhitao.github.io/2018/01/01/</id>
     <published>2018-01-01T11:02:17.000Z</published>
     <updated>2018-01-01T12:04:41.421Z</updated>
     
@@ -178,21 +178,21 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://liangzhitao.github.io/tags/Gradle/"/>
     
-      <category term="repo" scheme="http://www.liangzhitao.com/tags/repo/"/>
+      <category term="repo" scheme="http://liangzhitao.github.io/tags/repo/"/>
     
   </entry>
   
   <entry>
     <title>在 Android Application 里 provided aar</title>
-    <link href="http://www.liangzhitao.com/2017/11/07/"/>
-    <id>http://www.liangzhitao.com/2017/11/07/</id>
+    <link href="http://liangzhitao.github.io/2017/11/07/"/>
+    <id>http://liangzhitao.github.io/2017/11/07/</id>
     <published>2017-11-07T13:44:18.000Z</published>
     <updated>2017-11-15T15:54:23.274Z</updated>
     
@@ -265,23 +265,23 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://liangzhitao.github.io/tags/Gradle/"/>
     
-      <category term="aar" scheme="http://www.liangzhitao.com/tags/aar/"/>
+      <category term="aar" scheme="http://liangzhitao.github.io/tags/aar/"/>
     
-      <category term="provided" scheme="http://www.liangzhitao.com/tags/provided/"/>
+      <category term="provided" scheme="http://liangzhitao.github.io/tags/provided/"/>
     
   </entry>
   
   <entry>
     <title>不要盲目拒绝计划之外的代码调试</title>
-    <link href="http://www.liangzhitao.com/2017/11/05/"/>
-    <id>http://www.liangzhitao.com/2017/11/05/</id>
+    <link href="http://liangzhitao.github.io/2017/11/05/"/>
+    <id>http://liangzhitao.github.io/2017/11/05/</id>
     <published>2017-11-05T07:03:05.000Z</published>
     <updated>2017-11-05T13:43:02.000Z</updated>
     
@@ -304,17 +304,17 @@
     
     </summary>
     
-      <category term="Tech" scheme="http://www.liangzhitao.com/categories/Tech/"/>
+      <category term="Tech" scheme="http://liangzhitao.github.io/categories/Tech/"/>
     
     
-      <category term="debug" scheme="http://www.liangzhitao.com/tags/debug/"/>
+      <category term="debug" scheme="http://liangzhitao.github.io/tags/debug/"/>
     
   </entry>
   
   <entry>
     <title>一个关于Gradle构建缓存的问题</title>
-    <link href="http://www.liangzhitao.com/2017/08/15/"/>
-    <id>http://www.liangzhitao.com/2017/08/15/</id>
+    <link href="http://liangzhitao.github.io/2017/08/15/"/>
+    <id>http://liangzhitao.github.io/2017/08/15/</id>
     <published>2017-08-15T13:16:50.000Z</published>
     <updated>2017-08-15T14:25:12.000Z</updated>
     
@@ -380,19 +380,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://liangzhitao.github.io/tags/Gradle/"/>
     
   </entry>
   
   <entry>
     <title>Repo VS Submodule</title>
-    <link href="http://www.liangzhitao.com/2017/04/24/"/>
-    <id>http://www.liangzhitao.com/2017/04/24/</id>
+    <link href="http://liangzhitao.github.io/2017/04/24/"/>
+    <id>http://liangzhitao.github.io/2017/04/24/</id>
     <published>2017-04-24T15:16:50.000Z</published>
     <updated>2017-04-24T15:24:02.000Z</updated>
     
@@ -444,19 +444,19 @@
     
     </summary>
     
-      <category term="Tech" scheme="http://www.liangzhitao.com/categories/Tech/"/>
+      <category term="Tech" scheme="http://liangzhitao.github.io/categories/Tech/"/>
     
     
-      <category term="repo" scheme="http://www.liangzhitao.com/tags/repo/"/>
+      <category term="repo" scheme="http://liangzhitao.github.io/tags/repo/"/>
     
-      <category term="submodule" scheme="http://www.liangzhitao.com/tags/submodule/"/>
+      <category term="submodule" scheme="http://liangzhitao.github.io/tags/submodule/"/>
     
   </entry>
   
   <entry>
     <title>你在感动什么</title>
-    <link href="http://www.liangzhitao.com/2017/02/28/"/>
-    <id>http://www.liangzhitao.com/2017/02/28/</id>
+    <link href="http://liangzhitao.github.io/2017/02/28/"/>
+    <id>http://liangzhitao.github.io/2017/02/28/</id>
     <published>2017-02-28T15:38:56.000Z</published>
     <updated>2017-02-28T16:05:01.000Z</updated>
     
@@ -473,19 +473,19 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="独立思考" scheme="http://www.liangzhitao.com/tags/%E7%8B%AC%E7%AB%8B%E6%80%9D%E8%80%83/"/>
+      <category term="独立思考" scheme="http://liangzhitao.github.io/tags/%E7%8B%AC%E7%AB%8B%E6%80%9D%E8%80%83/"/>
     
-      <category term="白夜行" scheme="http://www.liangzhitao.com/tags/%E7%99%BD%E5%A4%9C%E8%A1%8C/"/>
+      <category term="白夜行" scheme="http://liangzhitao.github.io/tags/%E7%99%BD%E5%A4%9C%E8%A1%8C/"/>
     
   </entry>
   
   <entry>
     <title>选择</title>
-    <link href="http://www.liangzhitao.com/2017/02/03/"/>
-    <id>http://www.liangzhitao.com/2017/02/03/</id>
+    <link href="http://liangzhitao.github.io/2017/02/03/"/>
+    <id>http://liangzhitao.github.io/2017/02/03/</id>
     <published>2017-02-03T13:51:04.000Z</published>
     <updated>2017-02-03T15:41:11.000Z</updated>
     
@@ -510,17 +510,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="选择，电影" scheme="http://www.liangzhitao.com/tags/%E9%80%89%E6%8B%A9%EF%BC%8C%E7%94%B5%E5%BD%B1/"/>
+      <category term="选择，电影" scheme="http://liangzhitao.github.io/tags/%E9%80%89%E6%8B%A9%EF%BC%8C%E7%94%B5%E5%BD%B1/"/>
     
   </entry>
   
   <entry>
     <title>ProGuard在插件化里的应用</title>
-    <link href="http://www.liangzhitao.com/2017/01/02/"/>
-    <id>http://www.liangzhitao.com/2017/01/02/</id>
+    <link href="http://liangzhitao.github.io/2017/01/02/"/>
+    <id>http://liangzhitao.github.io/2017/01/02/</id>
     <published>2017-01-02T02:48:03.000Z</published>
     <updated>2017-01-02T06:51:40.000Z</updated>
     
@@ -666,25 +666,25 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Obfuscate" scheme="http://www.liangzhitao.com/tags/Obfuscate/"/>
+      <category term="Obfuscate" scheme="http://liangzhitao.github.io/tags/Obfuscate/"/>
     
-      <category term="Optimize" scheme="http://www.liangzhitao.com/tags/Optimize/"/>
+      <category term="Optimize" scheme="http://liangzhitao.github.io/tags/Optimize/"/>
     
-      <category term="Preverify" scheme="http://www.liangzhitao.com/tags/Preverify/"/>
+      <category term="Preverify" scheme="http://liangzhitao.github.io/tags/Preverify/"/>
     
-      <category term="ProGuard" scheme="http://www.liangzhitao.com/tags/ProGuard/"/>
+      <category term="ProGuard" scheme="http://liangzhitao.github.io/tags/ProGuard/"/>
     
-      <category term="Shink" scheme="http://www.liangzhitao.com/tags/Shink/"/>
+      <category term="Shink" scheme="http://liangzhitao.github.io/tags/Shink/"/>
     
   </entry>
   
   <entry>
     <title>一个不得已的解释</title>
-    <link href="http://www.liangzhitao.com/2016/12/30/"/>
-    <id>http://www.liangzhitao.com/2016/12/30/</id>
+    <link href="http://liangzhitao.github.io/2016/12/30/"/>
+    <id>http://liangzhitao.github.io/2016/12/30/</id>
     <published>2016-12-30T12:32:52.000Z</published>
     <updated>2016-12-30T12:45:22.000Z</updated>
     
@@ -712,17 +712,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="解释" scheme="http://www.liangzhitao.com/tags/%E8%A7%A3%E9%87%8A/"/>
+      <category term="解释" scheme="http://liangzhitao.github.io/tags/%E8%A7%A3%E9%87%8A/"/>
     
   </entry>
   
   <entry>
     <title>这一年</title>
-    <link href="http://www.liangzhitao.com/2016/12/25/"/>
-    <id>http://www.liangzhitao.com/2016/12/25/</id>
+    <link href="http://liangzhitao.github.io/2016/12/25/"/>
+    <id>http://liangzhitao.github.io/2016/12/25/</id>
     <published>2016-12-25T14:46:45.000Z</published>
     <updated>2016-12-25T14:46:56.000Z</updated>
     
@@ -747,21 +747,21 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="克制" scheme="http://www.liangzhitao.com/tags/%E5%85%8B%E5%88%B6/"/>
+      <category term="克制" scheme="http://liangzhitao.github.io/tags/%E5%85%8B%E5%88%B6/"/>
     
-      <category term="焦虑" scheme="http://www.liangzhitao.com/tags/%E7%84%A6%E8%99%91/"/>
+      <category term="焦虑" scheme="http://liangzhitao.github.io/tags/%E7%84%A6%E8%99%91/"/>
     
-      <category term="责任" scheme="http://www.liangzhitao.com/tags/%E8%B4%A3%E4%BB%BB/"/>
+      <category term="责任" scheme="http://liangzhitao.github.io/tags/%E8%B4%A3%E4%BB%BB/"/>
     
   </entry>
   
   <entry>
     <title>故事要开始了吗</title>
-    <link href="http://www.liangzhitao.com/2016/12/08/"/>
-    <id>http://www.liangzhitao.com/2016/12/08/</id>
+    <link href="http://liangzhitao.github.io/2016/12/08/"/>
+    <id>http://liangzhitao.github.io/2016/12/08/</id>
     <published>2016-12-08T09:46:02.000Z</published>
     <updated>2016-12-08T12:22:35.000Z</updated>
     
@@ -779,17 +779,17 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="Google" scheme="http://www.liangzhitao.com/tags/Google/"/>
+      <category term="Google" scheme="http://liangzhitao.github.io/tags/Google/"/>
     
   </entry>
   
   <entry>
     <title>关于oasis的组件化思想的一些思考</title>
-    <link href="http://www.liangzhitao.com/2016/09/25/"/>
-    <id>http://www.liangzhitao.com/2016/09/25/</id>
+    <link href="http://liangzhitao.github.io/2016/09/25/"/>
+    <id>http://liangzhitao.github.io/2016/09/25/</id>
     <published>2016-09-25T11:43:36.000Z</published>
     <updated>2016-12-08T11:21:04.000Z</updated>
     
@@ -825,23 +825,23 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Gradle" scheme="http://www.liangzhitao.com/tags/Gradle/"/>
+      <category term="Gradle" scheme="http://liangzhitao.github.io/tags/Gradle/"/>
     
-      <category term="插件化" scheme="http://www.liangzhitao.com/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
+      <category term="插件化" scheme="http://liangzhitao.github.io/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/"/>
     
-      <category term="组件化" scheme="http://www.liangzhitao.com/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/"/>
+      <category term="组件化" scheme="http://liangzhitao.github.io/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>关于Android插件化的细枝末节</title>
-    <link href="http://www.liangzhitao.com/2016/07/24/"/>
-    <id>http://www.liangzhitao.com/2016/07/24/</id>
+    <link href="http://liangzhitao.github.io/2016/07/24/"/>
+    <id>http://liangzhitao.github.io/2016/07/24/</id>
     <published>2016-07-24T07:59:55.000Z</published>
     <updated>2016-07-24T13:56:39.000Z</updated>
     
@@ -879,19 +879,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="Android" scheme="http://www.liangzhitao.com/tags/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/tags/Android/"/>
     
-      <category term="Plugin" scheme="http://www.liangzhitao.com/tags/Plugin/"/>
+      <category term="Plugin" scheme="http://liangzhitao.github.io/tags/Plugin/"/>
     
   </entry>
   
   <entry>
     <title>Scala之旅-函数式编程简介</title>
-    <link href="http://www.liangzhitao.com/2016/05/12/"/>
-    <id>http://www.liangzhitao.com/2016/05/12/</id>
+    <link href="http://liangzhitao.github.io/2016/05/12/"/>
+    <id>http://liangzhitao.github.io/2016/05/12/</id>
     <published>2016-05-12T15:43:44.000Z</published>
     <updated>2016-05-12T16:19:32.000Z</updated>
     
@@ -934,17 +934,17 @@
     
     </summary>
     
-      <category term="Scala" scheme="http://www.liangzhitao.com/categories/Scala/"/>
+      <category term="Scala" scheme="http://liangzhitao.github.io/categories/Scala/"/>
     
     
-      <category term="Scala" scheme="http://www.liangzhitao.com/tags/Scala/"/>
+      <category term="Scala" scheme="http://liangzhitao.github.io/tags/Scala/"/>
     
   </entry>
   
   <entry>
     <title>所有的期待</title>
-    <link href="http://www.liangzhitao.com/2016/05/08/"/>
-    <id>http://www.liangzhitao.com/2016/05/08/</id>
+    <link href="http://liangzhitao.github.io/2016/05/08/"/>
+    <id>http://liangzhitao.github.io/2016/05/08/</id>
     <published>2016-05-08T11:18:48.000Z</published>
     <updated>2016-05-09T00:09:06.000Z</updated>
     
@@ -963,19 +963,19 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="家人" scheme="http://www.liangzhitao.com/tags/%E5%AE%B6%E4%BA%BA/"/>
+      <category term="家人" scheme="http://liangzhitao.github.io/tags/%E5%AE%B6%E4%BA%BA/"/>
     
-      <category term="生活" scheme="http://www.liangzhitao.com/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://liangzhitao.github.io/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
     <title>当EventBus遇上RxJava</title>
-    <link href="http://www.liangzhitao.com/2016/03/29/"/>
-    <id>http://www.liangzhitao.com/2016/03/29/</id>
+    <link href="http://liangzhitao.github.io/2016/03/29/"/>
+    <id>http://liangzhitao.github.io/2016/03/29/</id>
     <published>2016-03-29T13:26:48.000Z</published>
     <updated>2016-05-08T09:44:36.000Z</updated>
     
@@ -1024,19 +1024,19 @@
     
     </summary>
     
-      <category term="Android" scheme="http://www.liangzhitao.com/categories/Android/"/>
+      <category term="Android" scheme="http://liangzhitao.github.io/categories/Android/"/>
     
     
-      <category term="EventBus" scheme="http://www.liangzhitao.com/tags/EventBus/"/>
+      <category term="EventBus" scheme="http://liangzhitao.github.io/tags/EventBus/"/>
     
-      <category term="RxJava" scheme="http://www.liangzhitao.com/tags/RxJava/"/>
+      <category term="RxJava" scheme="http://liangzhitao.github.io/tags/RxJava/"/>
     
   </entry>
   
   <entry>
     <title>给自己一个标杆</title>
-    <link href="http://www.liangzhitao.com/2016/03/27/"/>
-    <id>http://www.liangzhitao.com/2016/03/27/</id>
+    <link href="http://liangzhitao.github.io/2016/03/27/"/>
+    <id>http://liangzhitao.github.io/2016/03/27/</id>
     <published>2016-03-27T14:10:26.000Z</published>
     <updated>2016-03-27T14:21:42.000Z</updated>
     
@@ -1060,10 +1060,10 @@
     
     </summary>
     
-      <category term="随笔" scheme="http://www.liangzhitao.com/categories/%E9%9A%8F%E7%AC%94/"/>
+      <category term="随笔" scheme="http://liangzhitao.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-      <category term="经历" scheme="http://www.liangzhitao.com/tags/%E7%BB%8F%E5%8E%86/"/>
+      <category term="经历" scheme="http://liangzhitao.github.io/tags/%E7%BB%8F%E5%8E%86/"/>
     
   </entry>
   
