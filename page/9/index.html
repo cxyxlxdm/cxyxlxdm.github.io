@@ -255,6 +255,134 @@
             
               
                 
+                <a class="post-title-link" href="/2013/12/12/" itemprop="url">
+                  使用mod_limitipconn.so限制apache的并发连接数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-12T10:49:40+08:00" content="Dec 12 2013">
+              Dec 12 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Server/" itemprop="url" rel="index">
+                    <span itemprop="name">Server</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/12/12/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前些日子，部署了nagios监控，部署快完成的时候，遇到一个问题，当时忘了记录具体怎么描述的了，现在只知道是apache的并发连接数超过了限制。最终找到了如下的解决方案。</p>
+<p>1、下载mod_limitipconn-0.24.tar.bz2，解压并编译安装。</p>
+<p>2、apache编译安装目录为/usr/local/apache2,执行以下两条命令：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make APXS=<span class="regexp">/usr/</span>local<span class="regexp">/apache2/</span>bin<span class="regexp">/apxs /</span>usr<span class="regexp">/local/</span>apache2/mod_limitipconn</span><br><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/apache2/</span>bin<span class="regexp">/apxs -c mod_limitipconn.c -o ./</span>mod_limitipconn.so</span><br></pre></td></tr></table></figure></p>
+<p>3、修改apache的配置文件httpd.conf</p>
+<p>找到这一行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">“LoadModule limitipconn_module modules/mod_limitipconn.<span class="keyword">so</span>”</span><br></pre></td></tr></table></figure></p>
+<p>去掉注释；</p>
+<p>然后增加如下内容：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ExtendedStatus On</span><br><span class="line"><span class="variable">&lt;IfModule limitipconn_module&gt;</span></span><br><span class="line">       <span class="variable">&lt;Location /usr/local/nagios/share&gt;</span></span><br><span class="line">       MaxConnPerIP 3</span><br><span class="line">       NoIPLimit image/<span class="keyword">*</span></span><br><span class="line">       <span class="variable">&lt;/Location&gt;</span></span><br><span class="line">       <span class="variable">&lt;Location /usr/local/nagios/sbin&gt;</span></span><br><span class="line">       MaxConnPerIP 3</span><br><span class="line">       NoIPLimit image/<span class="keyword">*</span></span><br><span class="line">       <span class="variable">&lt;/Location&gt;</span></span><br><span class="line"><span class="variable">&lt;/IfModule&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>/usr/local/nagios是我的nagios安装目录。</p>
+<p>4、重启apache服务。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/12/10/" itemprop="url">
                   nagios配置内存检测Shell脚本
                 </a>
@@ -1387,134 +1515,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/31/" itemprop="url">
-                  Linux挂载磁盘教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-31T20:23:52+08:00" content="Oct 31 2013">
-              Oct 31 2013
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/31/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/10/31/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>###挂载前查看各分区基本情况：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="preprocessor"># df -h</span></span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/xvda2             <span class="number">36</span>G  <span class="number">2.3</span>G   <span class="number">32</span>G   <span class="number">7</span>% /</span><br><span class="line">tmpfs                  <span class="number">15</span>G     <span class="number">0</span>   <span class="number">15</span>G   <span class="number">0</span>% /dev/shm</span><br></pre></td></tr></table></figure></p>
-<p>###查看各磁盘基本情况：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="comment">@localhost ~]# fdisk -l </span></span><br><span class="line"><span class="label">Disk</span> /dev/xvda: <span class="number">42</span>.<span class="number">9</span> GB, <span class="number">42949672960</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">5221</span> cylinders</span><br><span class="line"><span class="label">Units</span> = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Sector</span> size (logical/physical): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span>I/O size (minimum/optimal): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Disk</span> identifier: <span class="number">0x00014faa</span></span><br><span class="line">    Device <span class="keyword">Boot </span>     Start         <span class="preprocessor">End</span>      <span class="keyword">Blocks </span>  Id  System</span><br><span class="line">/dev/xvda1               <span class="number">1</span>         <span class="number">523</span>     <span class="number">4194304</span>   <span class="number">82</span>  Linux swap / Solaris</span><br><span class="line"><span class="label">Partition</span> <span class="number">1</span> does not <span class="preprocessor">end</span> on cylinder <span class="keyword">boundary.</span><br><span class="line"></span>/dev/xvda2   *         <span class="number">523</span>        <span class="number">5222</span>    <span class="number">37747712</span>   <span class="number">83</span>  Linux</span><br><span class="line"><span class="label">Disk</span> /dev/xvde: <span class="number">493</span>.<span class="number">9</span> GB, <span class="number">493921239040</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">60049</span> cylinders</span><br><span class="line"><span class="label">Units</span> = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Sector</span> size (logical/physical): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span>I/O size (minimum/optimal): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Disk</span> identifier: <span class="number">0x00000000</span></span><br></pre></td></tr></table></figure></p>
-<p>###挂载磁盘/dev/xvde的具体步骤：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# fdisk /dev/xvde </span><br><span class="line">Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel</span><br><span class="line">Building a new DOS disklabel with disk identifier 0xb28f7207.</span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">After that, of course, the previous content won't be recoverable.</span><br><span class="line">Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)</span><br><span class="line">WARNING: DOS-compatible mode is deprecated. It's strongly recommended to</span><br><span class="line">         switch off the mode (command 'c') and <span class="operator"><span class="keyword">change</span> display units <span class="keyword">to</span></span><br><span class="line">         sectors (command <span class="string">'u'</span>).</span><br><span class="line">Command (<span class="keyword">m</span> <span class="keyword">for</span> <span class="keyword">help</span>): <span class="keyword">p</span>^H</span><br><span class="line">Disk /dev/xvde: <span class="number">493.9</span> GB, <span class="number">493921239040</span> <span class="keyword">bytes</span></span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">60049</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> <span class="keyword">bytes</span></span><br><span class="line">Sector <span class="keyword">size</span> (<span class="keyword">logical</span>/<span class="keyword">physical</span>): <span class="number">512</span> <span class="keyword">bytes</span> / <span class="number">512</span> <span class="keyword">bytes</span></span><br><span class="line"><span class="keyword">I</span>/O <span class="keyword">size</span> (<span class="keyword">minimum</span>/<span class="keyword">optimal</span>): <span class="number">512</span> <span class="keyword">bytes</span> / <span class="number">512</span> <span class="keyword">bytes</span></span><br><span class="line">Disk identifier: <span class="number">0xb28f7207</span></span><br><span class="line">    Device Boot      <span class="keyword">Start</span>         <span class="keyword">End</span>      Blocks   <span class="keyword">Id</span>  <span class="keyword">System</span></span><br><span class="line">Command (<span class="keyword">m</span> <span class="keyword">for</span> <span class="keyword">help</span>): <span class="keyword">m</span></span><br><span class="line">Command <span class="keyword">action</span></span><br><span class="line">   a   toggle a bootable flag</span><br><span class="line">   b   edit bsd disklabel</span><br><span class="line">   <span class="keyword">c</span>   toggle the dos <span class="keyword">compatibility</span> flag</span><br><span class="line">   <span class="keyword">d</span>   <span class="keyword">delete</span> a <span class="keyword">partition</span></span><br><span class="line">   <span class="keyword">l</span>   <span class="keyword">list</span> known <span class="keyword">partition</span> types</span><br><span class="line">   <span class="keyword">m</span>   print this menu</span><br><span class="line">   <span class="keyword">n</span>   <span class="keyword">add</span> a <span class="keyword">new</span> <span class="keyword">partition</span></span><br><span class="line">   o   <span class="keyword">create</span> a <span class="keyword">new</span> <span class="keyword">empty</span> DOS <span class="keyword">partition</span> <span class="keyword">table</span></span><br><span class="line">   <span class="keyword">p</span>   print the <span class="keyword">partition</span> <span class="keyword">table</span></span><br><span class="line">   q   quit <span class="keyword">without</span> saving changes</span><br><span class="line">   s   <span class="keyword">create</span> a <span class="keyword">new</span> <span class="keyword">empty</span> Sun disklabel</span><br><span class="line">   <span class="keyword">t</span>   <span class="keyword">change</span> a <span class="keyword">partition</span><span class="string">'s system id</span><br><span class="line">   u   change display/entry units</span><br><span class="line">   v   verify the partition table</span><br><span class="line">   w   write table to disk and exit</span><br><span class="line">   x   extra functionality (experts only)</span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   e   extended</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">p</span><br><span class="line">Partition number (1-4): 1</span><br><span class="line">First cylinder (1-60049, default 1): </span><br><span class="line">Using default value 1</span><br><span class="line">Last cylinder, +cylinders or +size&#123;K,M,G&#125; (1-60049, default 60049): </span><br><span class="line">Using default value 60049</span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span></span></span><br></pre></td></tr></table></figure></p>
-<p>###在不重启的情况下识别出来刚才创建的分区：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># partprobe </span></span><br><span class="line">Warning: WARNING: <span class="keyword">the</span> kernel failed <span class="keyword">to</span> re-<span class="command">read</span> <span class="keyword">the</span> partition table <span class="function_start"><span class="keyword">on</span></span> /dev/xvda (Device <span class="keyword">or</span> resource busy).  As a <span class="constant">result</span>, <span class="keyword">it</span> may <span class="keyword">not</span> reflect all <span class="keyword">of</span> your changes <span class="keyword">until</span> <span class="keyword">after</span> reboot.</span><br><span class="line">Warning: Unable <span class="keyword">to</span> open /dev/sr0 <span class="command">read</span>-<span class="command">write</span> (Read-only <span class="type">file</span> system).  /dev/sr0 has been opened <span class="command">read</span>-only.</span><br></pre></td></tr></table></figure></p>
-<p>###再次查看各磁盘基本情况：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="comment">@localhost ~]# fdisk -l </span></span><br><span class="line"><span class="label">Disk</span> /dev/xvda: <span class="number">42</span>.<span class="number">9</span> GB, <span class="number">42949672960</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">5221</span> cylinders</span><br><span class="line"><span class="label">Units</span> = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Sector</span> size (logical/physical): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span>I/O size (minimum/optimal): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Disk</span> identifier: <span class="number">0x00014faa</span></span><br><span class="line">    Device <span class="keyword">Boot </span>     Start         <span class="preprocessor">End</span>      <span class="keyword">Blocks </span>  Id  System</span><br><span class="line">/dev/xvda1               <span class="number">1</span>         <span class="number">523</span>     <span class="number">4194304</span>   <span class="number">82</span>  Linux swap / Solaris</span><br><span class="line"><span class="label">Partition</span> <span class="number">1</span> does not <span class="preprocessor">end</span> on cylinder <span class="keyword">boundary.</span><br><span class="line"></span>/dev/xvda2   *         <span class="number">523</span>        <span class="number">5222</span>    <span class="number">37747712</span>   <span class="number">83</span>  Linux</span><br><span class="line"><span class="label">Disk</span> /dev/xvde: <span class="number">493</span>.<span class="number">9</span> GB, <span class="number">493921239040</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">60049</span> cylinders</span><br><span class="line"><span class="label">Units</span> = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Sector</span> size (logical/physical): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span>I/O size (minimum/optimal): <span class="number">512</span> <span class="keyword">bytes </span>/ <span class="number">512</span> <span class="keyword">bytes</span><br><span class="line"></span><span class="label">Disk</span> identifier: <span class="number">0xb28f7207</span></span><br><span class="line">    Device <span class="keyword">Boot </span>     Start         <span class="preprocessor">End</span>      <span class="keyword">Blocks </span>  Id  System</span><br><span class="line">/dev/xvde1               <span class="number">1</span>       <span class="number">60049</span>   <span class="number">482343561</span>   <span class="number">83</span>  Linux <span class="comment">/*系统已接入磁盘*/</span></span><br></pre></td></tr></table></figure></p>
-<p>###以ext3的格式格式化磁盘：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="comment">@localhost ~]# mkfs.ext3 /dev/xvde1 </span></span><br><span class="line"><span class="label">mke2fs</span> <span class="number">1</span>.<span class="number">41</span>.<span class="number">12</span> (<span class="number">17</span>-May-<span class="number">2010</span>)</span><br><span class="line"><span class="label">Filesystem</span> label=</span><br><span class="line"><span class="label">OS</span> type: Linux</span><br><span class="line"><span class="keyword">Block </span>size<span class="number">=4096</span> (log<span class="number">=2</span>)</span><br><span class="line"><span class="label">Fragment</span> size<span class="number">=4096</span> (log<span class="number">=2</span>)</span><br><span class="line"><span class="keyword">Stride=0 </span><span class="keyword">blocks, </span><span class="keyword">Stripe </span>width<span class="number">=0</span> <span class="keyword">blocks</span><br><span class="line"></span><span class="number">30146560</span> inodes, <span class="number">120585890</span> <span class="keyword">blocks</span><br><span class="line"></span><span class="number">6029294</span> <span class="keyword">blocks </span>(<span class="number">5</span>.<span class="number">00</span>%) reserved for the super user</span><br><span class="line"><span class="label">First</span> <span class="preprocessor">data</span> <span class="keyword">block=0</span><br><span class="line"></span><span class="label">Maximum</span> filesystem <span class="keyword">blocks=4294967296</span><br><span class="line"></span><span class="number">3680</span> <span class="keyword">block </span>groups</span><br><span class="line"><span class="number">32768</span> <span class="keyword">blocks </span>per group, <span class="number">32768</span> fragments per group</span><br><span class="line"><span class="number">8192</span> inodes per group</span><br><span class="line"><span class="label">Superblock</span> <span class="keyword">backups </span>stored on <span class="keyword">blocks: </span></span><br><span class="line">    <span class="number">32768</span>, <span class="number">98304</span>, <span class="number">163840</span>, <span class="number">229376</span>, <span class="number">294912</span>, <span class="number">819200</span>, <span class="number">884736</span>, <span class="number">1605632</span>, <span class="number">2654208</span>, </span><br><span class="line">    <span class="number">4096000</span>, <span class="number">7962624</span>, <span class="number">11239424</span>, <span class="number">20480000</span>, <span class="number">23887872</span>, <span class="number">71663616</span>, <span class="number">78675968</span>, </span><br><span class="line">    <span class="number">102400000</span></span><br><span class="line"><span class="label">Writing</span> inode tables: done                            </span><br><span class="line"><span class="label">Creating</span> journal (<span class="number">32768</span> <span class="keyword">blocks): </span>done</span><br><span class="line"><span class="label">Writing</span> superblocks <span class="keyword">and </span>filesystem accounting information: done</span><br><span class="line"><span class="label">This</span> filesystem will <span class="keyword">be </span>automatically checked every <span class="number">25</span> mounts or</span><br><span class="line"><span class="number">180</span> days, whichever comes first.  Use tune2fs -c or -i to override.</span><br></pre></td></tr></table></figure></p>
-<p>###编辑磁盘挂载配置文件：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/fstab </span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># /etc/fstab</span></span><br><span class="line"><span class="comment"># Created by anaconda on Tue Mar 26 14:54:14 2013</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Accessible filesystems, by reference, are maintained under '/dev/disk'</span></span><br><span class="line"><span class="comment"># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="type">UUID</span>=<span class="number">5056</span>bbc2-cf00-<span class="number">4</span>f7c-<span class="number">95</span>e1-<span class="number">35</span>be323fc523 /                       ext3    defaults        <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="type">UUID</span>=c2a7b4a1-c806-<span class="number">46</span>e5-a97d-b9a964fc9e05 swap                    swap    defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">tmpfs                   /dev/shm                tmpfs   defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">devpts                  /dev/pts                devpts  gid=<span class="number">5</span>,mode=<span class="number">620</span>  <span class="number">0</span> <span class="number">0</span></span><br><span class="line">sysfs                   /sys                    sysfs   defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">proc</span>                    /<span class="keyword">proc</span>                   <span class="keyword">proc</span>    defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/dev/xvde1              /opt/                   ext3    defaults        <span class="number">0</span> <span class="number">0</span> /*增加这一行内容*/</span><br></pre></td></tr></table></figure></p>
-<p>###执行挂载：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> ~]<span class="comment"># mount -a</span></span><br></pre></td></tr></table></figure></p>
-<p>###查看各分区基本情况：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="preprocessor"># df -h </span></span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/xvda2             <span class="number">36</span>G  <span class="number">2.3</span>G   <span class="number">32</span>G   <span class="number">7</span>% /</span><br><span class="line">tmpfs                  <span class="number">15</span>G     <span class="number">0</span>   <span class="number">15</span>G   <span class="number">0</span>% /dev/shm</span><br><span class="line">/dev/xvde1            <span class="number">453</span>G  <span class="number">199</span>M  <span class="number">430</span>G   <span class="number">1</span>% /opt       <span class="comment">/*/opt分区已挂载上/dev/xvde1这个磁盘*/</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1560,7 +1560,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">144</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1577,7 +1577,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">214</span>
+                <span class="site-state-item-count">215</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1693,7 +1693,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

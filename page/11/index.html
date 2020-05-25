@@ -255,6 +255,154 @@
             
               
                 
+                <a class="post-title-link" href="/2013/04/01/" itemprop="url">
+                  CentOS下SVN服务器的搭建使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-04-01T15:20:09+08:00" content="Apr 1 2013">
+              Apr 1 2013
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/04/01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2013/04/01/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SVN作为新一代代码版本管理工具，有很多优点，管理方便，逻辑明确，安全性高，代码一致性高。SVN数据存储有两种方式，<strong>BDB（事务安全表类型）</strong>和<strong>FSFS（一种不需要数据库的存储系统）</strong>，为了避免在服务器连接中断时锁住数据，FSFS是一种更安全也更多人使用的方式。SVN的运行方式也有两种，一种是<strong>独立服务器</strong>，另一种是<strong>借助apache服务</strong>，各有利弊，下面就介绍一下这两种方式各自的部署步骤。</p>
+<p>##<strong>作为独立服务器运行：</strong></p>
+<p>①安装svn<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> svn</span><br></pre></td></tr></table></figure></p>
+<p>②创建版本库<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /svn/<span class="keyword">project</span>    <span class="comment">#创建版本库所在文件夹</span></span><br><span class="line">svnadmin create--fs-type fsfs /svn/<span class="keyword">project</span>/first   <span class="comment">#创建版本库，如果需要使用bdb方式存储，则将fsfs改成bdb即可</span></span><br></pre></td></tr></table></figure></p>
+<p>③初始化版本库，即导入文件到版本库中<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn import /home/software <span class="symbol">file:</span>/<span class="regexp">//svn</span><span class="regexp">/project/first</span>--message <span class="string">"初始化版本"</span>  <span class="comment">#将home文件夹的文件导入版本库</span></span><br><span class="line">svn list --verbose <span class="symbol">file:</span>/<span class="regexp">//svn</span><span class="regexp">/project/first</span> <span class="comment">#查看导入的文件</span></span><br></pre></td></tr></table></figure></p>
+<p>④启动svn服务，svn服务默认端口为3690，可以使用“netstat -ntlp”命令查看服务启动是否成功<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnserve -d -r <span class="regexp">/svn/</span><span class="keyword">project</span><span class="regexp">/first</span></span><br></pre></td></tr></table></figure></p>
+<p>⑤修改策略控制文件，vi authz，如果以后要添加用户，就将用户名加在相应的用户组（admin或者user）后面即可<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">### This file is an example authorization file for svnserve.</span></span><br><span class="line"><span class="preprocessor">### Its format is identical to that of mod_authz_svn authorization</span></span><br><span class="line"><span class="preprocessor">### files.</span></span><br><span class="line"><span class="preprocessor">### As shown below each section defines authorizations for the path and</span></span><br><span class="line"><span class="preprocessor">### (optional) repository specified by the sectionname.</span></span><br><span class="line"><span class="preprocessor">### The authorizations follow. An authorization line can refer to:</span></span><br><span class="line"><span class="preprocessor">### - a single user,</span></span><br><span class="line"><span class="preprocessor">### - a groupof users defined in a special [groups] section,</span></span><br><span class="line"><span class="preprocessor">### - an alias defined in a special [aliases] section,</span></span><br><span class="line"><span class="preprocessor">### - all authenticated users, using the '$authenticated' token,</span></span><br><span class="line"><span class="preprocessor">### - only anonymous users, using the '$anonymous' token,</span></span><br><span class="line"><span class="preprocessor">### - anyone, using the '*' wildcard.</span></span><br><span class="line"><span class="preprocessor">###</span></span><br><span class="line"><span class="preprocessor">### A match can be inverted by prefixing the rulewith'~'. Rules can</span></span><br><span class="line"><span class="preprocessor">### grantread ('r') access, read-write ('rw') access, orno access</span></span><br><span class="line"><span class="preprocessor">### ('').</span></span><br><span class="line">[aliases]</span><br><span class="line"><span class="preprocessor"># joe = /C=XZ/ST=Dessert/L=Snake City/O=Snake Oil, Ltd./OU=Research Institute/CN=Joe Average</span></span><br><span class="line">[groups]</span><br><span class="line"><span class="preprocessor"># harry_and_sally = harry,sally</span></span><br><span class="line"><span class="preprocessor"># harry_sally_and_joe = harry,sally,&amp;joe</span></span><br><span class="line">admin=first,second,third       #用户组admin包含的成员</span><br><span class="line">user=anyone             #用户组user包含的成员</span><br><span class="line"><span class="preprocessor"># [/foo/bar]</span></span><br><span class="line"><span class="preprocessor"># harry = rw</span></span><br><span class="line"><span class="preprocessor"># &amp;joe = r</span></span><br><span class="line"><span class="preprocessor"># * =</span></span><br><span class="line"><span class="preprocessor"># [repository:/baz/fuz]</span></span><br><span class="line"><span class="preprocessor"># @harry_and_sally = rw</span></span><br><span class="line"><span class="preprocessor"># * = r</span></span><br><span class="line">[/]</span><br><span class="line">@admin=rw             #用户组admin内成员拥有读写权限</span><br><span class="line">@user=r              #用户组user内成员拥有读权限</span><br></pre></td></tr></table></figure></p>
+<p>⑥添加svn访问用户，vi passwd，为authz里分配的用户设置密码，等号左边为用户名，等号右边是密码；<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### This file is an example password file for svnserve.</span></span><br><span class="line"><span class="comment">### Its format is similar to that of svnserve.conf. As shown in the</span></span><br><span class="line"><span class="comment">### example below it contains one section labelled [users].</span></span><br><span class="line"><span class="comment">### The nameandpasswordfor each user follow, one account per line.</span></span><br><span class="line">[users]</span><br><span class="line"><span class="comment"># harry = harryssecret</span></span><br><span class="line"><span class="comment"># sally = sallyssecret</span></span><br><span class="line"><span class="keyword">first</span>=<span class="keyword">first</span></span><br><span class="line"><span class="keyword">second</span>=<span class="keyword">second</span></span><br><span class="line"><span class="keyword">third</span>=<span class="keyword">third</span></span><br><span class="line">anyone=anyone</span><br></pre></td></tr></table></figure></p>
+<p>⑦修改svn读取的权限策略文件<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vi</span> /svn/project/<span class="keyword">first</span>/<span class="keyword">conf</span>/svnserve.<span class="keyword">conf</span>：</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">anon-access = <span class="constant">none</span>  <span class="comment">#不允许匿名用户读写</span></span><br><span class="line">auth-access = <span class="built_in">write</span></span><br><span class="line">password-db = passwd <span class="comment">#svn读取的passwd文件</span></span><br><span class="line">authz-db = authz   <span class="comment">#svn读取的权限控制文件</span></span><br></pre></td></tr></table></figure>
+<p>⑧安装svn客户端，就可以使用客户端通过如下的url就可以访问了<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">svn:</span>/<span class="regexp">/IP地址/svn</span><span class="regexp">/project/first</span></span><br></pre></td></tr></table></figure></p>
+<p>##<strong>借助apache服务器，通过web端访问svn</strong></p>
+<p>①给apache服务器安装两个svn插件，这两个插件同样可以使用yum安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> mod_dav_svn   <span class="comment">#使subversion与dav模块通信的功能</span></span><br><span class="line">yum <span class="keyword">install</span> mod_authz_svn  <span class="comment">#实现权限控制功能</span></span><br></pre></td></tr></table></figure></p>
+<p>②使用命令“httpd -M”可以查看是否加载这两个模块，如加载，则有如下回应：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">Loaded Modules:</span><br><span class="line"> core_module (<span class="keyword">static</span>)</span><br><span class="line"> mpm_prefork_module (<span class="keyword">static</span>)</span><br><span class="line"> http_module (<span class="keyword">static</span>)</span><br><span class="line"> so_module (<span class="keyword">static</span>)</span><br><span class="line"> auth_basic_module (shared)</span><br><span class="line"> auth_digest_module (shared)</span><br><span class="line"> authn_file_module (shared)</span><br><span class="line"> authn_alias_module (shared)</span><br><span class="line"> authn_anon_module (shared)</span><br><span class="line"> authn_dbm_module (shared)</span><br><span class="line"> authn_default_module (shared)</span><br><span class="line"> authz_host_module (shared)</span><br><span class="line"> authz_user_module (shared)</span><br><span class="line"> authz_owner_module (shared)</span><br><span class="line"> authz_groupfile_module (shared)</span><br><span class="line"> authz_dbm_module (shared)</span><br><span class="line"> authz_default_module (shared)</span><br><span class="line"> ldap_module (shared)</span><br><span class="line"> authnz_ldap_module (shared)</span><br><span class="line"> include_module (shared)</span><br><span class="line"> log_config_module (shared)</span><br><span class="line"> logio_module (shared)</span><br><span class="line"> env_module (shared)</span><br><span class="line"> ext_filter_module (shared)</span><br><span class="line"> mime_magic_module (shared)</span><br><span class="line"> expires_module (shared)</span><br><span class="line"> deflate_module (shared)</span><br><span class="line"> headers_module (shared)</span><br><span class="line"> usertrack_module (shared)</span><br><span class="line"> setenvif_module (shared)</span><br><span class="line"> mime_module (shared)</span><br><span class="line"> dav_module (shared)</span><br><span class="line"> status_module (shared)</span><br><span class="line"> autoindex_module (shared)</span><br><span class="line"> info_module (shared)</span><br><span class="line"> dav_fs_module (shared)</span><br><span class="line"> vhost_alias_module (shared)</span><br><span class="line"> negotiation_module (shared)</span><br><span class="line"> dir_module (shared)</span><br><span class="line"> actions_module (shared)</span><br><span class="line"> speling_module (shared)</span><br><span class="line"> userdir_module (shared)</span><br><span class="line"> alias_module (shared)</span><br><span class="line"> substitute_module (shared)</span><br><span class="line"> rewrite_module (shared)</span><br><span class="line"> proxy_module (shared)</span><br><span class="line"> proxy_balancer_module (shared)</span><br><span class="line"> proxy_ftp_module (shared)</span><br><span class="line"> proxy_http_module (shared)</span><br><span class="line"> proxy_ajp_module (shared)</span><br><span class="line"> proxy_connect_module (shared)</span><br><span class="line"> cache_module (shared)</span><br><span class="line"> suexec_module (shared)</span><br><span class="line"> disk_cache_module (shared)</span><br><span class="line"> cgi_module (shared)</span><br><span class="line"> version_module (shared)</span><br><span class="line"> authz_ldap_module (shared)</span><br><span class="line"> dav_svn_module (shared)</span><br><span class="line"> authz_svn_module (shared)</span><br><span class="line">Syntax OK</span><br></pre></td></tr></table></figure></p>
+<p>③编辑apache服务配置文件vi /etc/httpd/conf/httpd.conf，加入下面几行：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Location /svn&gt;</span><br><span class="line">DAV svn</span><br><span class="line">SVNPath /svn/project/first</span><br><span class="line">AuthzSVNAccessFile /etc/httpd/<span class="keyword">conf</span>.<span class="keyword">d</span>/authz #apache服务器读取的权限策略文件</span><br><span class="line">AuthType Basic</span><br><span class="line">AuthName <span class="string">"Project"</span></span><br><span class="line">AuthUserFile /etc/httpd/<span class="keyword">conf</span>.<span class="keyword">d</span>/passwd  #apache服务器读取的密码存储文件</span><br></pre></td></tr></table></figure></p>
+<p>④编辑文件authz放在文件夹/etc/httpd/conf.d中，文件格式同文章上面的那个authz文件，编辑文件passwd放在文件夹/etc/httpd/conf.d中，使用如下命令生成用户名和密码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c <span class="regexp">/svn/</span><span class="keyword">project</span><span class="regexp">/first admin  #命令为htpasswd，-c为参数，/</span>svn<span class="regexp">/project/</span>first为访问的版本库，admin为用户名</span><br></pre></td></tr></table></figure></p>
+<p>然后重复输入你想设置的密码就可以自动存储在文件passwd中，默认为md5存储。</p>
+<p>⑤重启apache服务，就可以在网页端使用刚才设置的用户名密码访问了，网址为<a href="http://IP地址:端口/svn" target="_blank" rel="external">http://IP地址:端口/svn</a></p>
+<p>##<strong>配置多项目创建维护:</strong></p>
+<p>其实过程也比较简单，只需要在原来的基础上修改一点信息就可以了。</p>
+<p>举个例子，比如有first和second两个项目,要实现多项目的启动管理，只需要修改对应项目配置文件authz的管理路径即可，如下：</p>
+<p>###<em>单项目：</em><br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[/]</span><br><span class="line">  <span class="annotation">@admin</span>=rw</span><br><span class="line">  <span class="annotation">@user</span>=r</span><br></pre></td></tr></table></figure></p>
+<p>启动：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnserve -d -r <span class="regexp">/svn/</span><span class="keyword">project</span><span class="regexp">/first</span></span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnserve -d -r <span class="regexp">/svn/</span><span class="keyword">project</span><span class="regexp">/second</span></span><br></pre></td></tr></table></figure></p>
+<p>无法同时启动多个项目，因此也就无法同事访问多个项目；</p>
+<p>###<em>多项目：</em><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">first:</span>/]</span><br><span class="line"><span class="annotation">@admin</span>=rw</span><br><span class="line"><span class="annotation">@user</span>=r</span><br><span class="line">[<span class="string">second:</span>/]</span><br><span class="line"><span class="annotation">@admin</span>=rw</span><br><span class="line"><span class="annotation">@user</span>=r</span><br></pre></td></tr></table></figure></p>
+<p>启动：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnserve -d -r <span class="regexp">/svn/</span><span class="keyword">project</span><span class="regexp">/</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以启动所有project下的项目了。</p>
+<p>很容易理解，但项目里的“/”代表项目根目录，可以使这样“/svn/project/first”或者“/svn/project/second”，多项目里的“/”代表“/svn/project”，在此基础上加上“first:”或者“second：”就切到对应项目里了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/03/20/" itemprop="url">
                   RedHat和CentOS使用本地yum源配置
                 </a>
@@ -2046,148 +2194,6 @@ super.方法名()    --    父类的
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/02/15/" itemprop="url">
-                  Linux下修改mysql编码为UTF-8
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-02-15T22:14:11+08:00" content="Feb 15 2012">
-              Feb 15 2012
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/DataBase/" itemprop="url" rel="index">
-                    <span itemprop="name">DataBase</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/02/15/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/02/15/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在某些时候，我们需要要修改mysql默认数据库的编码，以保证某些迁移的程序可以正常显示，可以通过编辑my.cnf文件进行编码修改实现，windows可以直接用Ｍysql Server Instance Config Wizard 进行设置。</p>
-<p>Linux下MySQL安装完成后不象SQL Server默认安装在一个目录，它的数据库文件、配置文件和命令文件分别在不同的目录，了解这些目录非常重要，尤其对于Linux的初学者，因为Linux本身的目录结构就比较复杂，如果搞不清楚MySQL的安装目录那就无从谈起深入学习。</p>
-<p>下面就介绍一下这几个目录。</p>
-<p>1、数据库目录</p>
-<p>/var/lib/mysql/，这里的mysql相当于windows下mysql的date文件夹</p>
-<p>2、配置文件</p>
-<p>/usr/share/mysql（mysql.server命令及配置文件）</p>
-<p>3、相关命令</p>
-<p>/usr/bin(mysqladmin mysqldump等命令)</p>
-<p>4、启动脚本</p>
-<p>/etc/rc.d/init.d/（启动脚本文件mysql的目录）</p>
-<p>mysql主要配置文件为/etc/my.cnf文件，相当于windows下的my.ini文件。如果/etc/目录下没有my.cnf配置文件，需要到/usr/share/mysql/下找到*.cnf文件，拷贝其中一个到/etc/并改名为my.cnf)中。命令如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test1 mysql]# cp <span class="regexp">/usr/</span>share<span class="regexp">/mysql/my</span>-medium.cnf <span class="regexp">/etc/my</span>.cnf</span><br></pre></td></tr></table></figure></p>
-<p>启动mysql后，以root登录mysql<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@test1</span> mysql]<span class="preprocessor"># mysql -u root</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'character%'</span>;</span> #执行编码显示</span><br></pre></td></tr></table></figure>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> Variable_name </span>|<span class="string"> Value </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_client </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_connection </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_database </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_filesystem </span>|<span class="string"> binary </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_results </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_server </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_system </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_sets_dir </span>|<span class="string"> /usr/share/mysql/charsets/ </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br></pre></td></tr></table></figure>
-<p>在linux下修改mysql的配置文件my.cnf，文件位置默认/etc/my.cnf文件</p>
-<p>找到客户端配置[client] 在下面添加<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default-<span class="property">character</span>-<span class="keyword">set</span>=utf8 <span class="comment">#默认字符集为utf8</span></span><br><span class="line"></span><br><span class="line">(character_set_server=utf8)</span><br></pre></td></tr></table></figure></p>
-<p>在找到[mysqld] 添加<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">default</span>-character-<span class="keyword">set</span>=utf8</span><br><span class="line"></span><br><span class="line">init_connect=<span class="string">'SET NAMES utf8'</span> <span class="preprocessor">#（设定连接mysql数据库时使用utf8编码，以让mysql数据库为utf8运行）</span></span><br></pre></td></tr></table></figure></p>
-<p>修改好后，重新启动mysql 即可，查询一下</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'character%'</span>;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> Variable_name </span>|<span class="string"> Value </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_client </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_connection </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_database </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_filesystem </span>|<span class="string"> binary </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_results </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_server </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_system </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_sets_dir </span>|<span class="string"> /usr/share/mysql/charsets/ </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br></pre></td></tr></table></figure>
-<p>即使做了以上修改如果直接数据库再创建表，然后存入中文，取出来的会是问号。解决的办法是：</p>
-<p>创建数据库的时候指明默认字符集为utf8，如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">test</span> <span class="keyword">default</span> <span class="built_in">character</span> <span class="keyword">set</span> utf8</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2233,7 +2239,7 @@ super.方法名()    --    父类的
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">144</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2250,7 +2256,7 @@ super.方法名()    --    父类的
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">214</span>
+                <span class="site-state-item-count">215</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2366,7 +2372,7 @@ super.方法名()    --    父类的
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

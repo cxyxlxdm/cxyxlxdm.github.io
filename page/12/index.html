@@ -255,6 +255,148 @@
             
               
                 
+                <a class="post-title-link" href="/2012/02/15/" itemprop="url">
+                  Linux下修改mysql编码为UTF-8
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-02-15T22:14:11+08:00" content="Feb 15 2012">
+              Feb 15 2012
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/DataBase/" itemprop="url" rel="index">
+                    <span itemprop="name">DataBase</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/02/15/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2012/02/15/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在某些时候，我们需要要修改mysql默认数据库的编码，以保证某些迁移的程序可以正常显示，可以通过编辑my.cnf文件进行编码修改实现，windows可以直接用Ｍysql Server Instance Config Wizard 进行设置。</p>
+<p>Linux下MySQL安装完成后不象SQL Server默认安装在一个目录，它的数据库文件、配置文件和命令文件分别在不同的目录，了解这些目录非常重要，尤其对于Linux的初学者，因为Linux本身的目录结构就比较复杂，如果搞不清楚MySQL的安装目录那就无从谈起深入学习。</p>
+<p>下面就介绍一下这几个目录。</p>
+<p>1、数据库目录</p>
+<p>/var/lib/mysql/，这里的mysql相当于windows下mysql的date文件夹</p>
+<p>2、配置文件</p>
+<p>/usr/share/mysql（mysql.server命令及配置文件）</p>
+<p>3、相关命令</p>
+<p>/usr/bin(mysqladmin mysqldump等命令)</p>
+<p>4、启动脚本</p>
+<p>/etc/rc.d/init.d/（启动脚本文件mysql的目录）</p>
+<p>mysql主要配置文件为/etc/my.cnf文件，相当于windows下的my.ini文件。如果/etc/目录下没有my.cnf配置文件，需要到/usr/share/mysql/下找到*.cnf文件，拷贝其中一个到/etc/并改名为my.cnf)中。命令如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@test1 mysql]# cp <span class="regexp">/usr/</span>share<span class="regexp">/mysql/my</span>-medium.cnf <span class="regexp">/etc/my</span>.cnf</span><br></pre></td></tr></table></figure></p>
+<p>启动mysql后，以root登录mysql<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="constant">@test1</span> mysql]<span class="preprocessor"># mysql -u root</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'character%'</span>;</span> #执行编码显示</span><br></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> Variable_name </span>|<span class="string"> Value </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_client </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_connection </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_database </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_filesystem </span>|<span class="string"> binary </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_results </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_server </span>|<span class="string"> latin1 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_system </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_sets_dir </span>|<span class="string"> /usr/share/mysql/charsets/ </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br></pre></td></tr></table></figure>
+<p>在linux下修改mysql的配置文件my.cnf，文件位置默认/etc/my.cnf文件</p>
+<p>找到客户端配置[client] 在下面添加<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default-<span class="property">character</span>-<span class="keyword">set</span>=utf8 <span class="comment">#默认字符集为utf8</span></span><br><span class="line"></span><br><span class="line">(character_set_server=utf8)</span><br></pre></td></tr></table></figure></p>
+<p>在找到[mysqld] 添加<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">default</span>-character-<span class="keyword">set</span>=utf8</span><br><span class="line"></span><br><span class="line">init_connect=<span class="string">'SET NAMES utf8'</span> <span class="preprocessor">#（设定连接mysql数据库时使用utf8编码，以让mysql数据库为utf8运行）</span></span><br></pre></td></tr></table></figure></p>
+<p>修改好后，重新启动mysql 即可，查询一下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'character%'</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> Variable_name </span>|<span class="string"> Value </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_client </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_connection </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_database </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_filesystem </span>|<span class="string"> binary </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_results </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_server </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_set_system </span>|<span class="string"> utf8 </span>|</span><br><span class="line"></span><br><span class="line">|<span class="string"> character_sets_dir </span>|<span class="string"> /usr/share/mysql/charsets/ </span>|</span><br><span class="line"></span><br><span class="line">+--------------------------+----------------------------+</span><br></pre></td></tr></table></figure>
+<p>即使做了以上修改如果直接数据库再创建表，然后存入中文，取出来的会是问号。解决的办法是：</p>
+<p>创建数据库的时候指明默认字符集为utf8，如：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">test</span> <span class="keyword">default</span> <span class="built_in">character</span> <span class="keyword">set</span> utf8</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/01/03/" itemprop="url">
                   Linux基本优化
                 </a>
@@ -1414,130 +1556,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2010/12/20/" itemprop="url">
-                  第一次爱的人
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2010-12-20T18:08:00+08:00" content="Dec 20 2010">
-              Dec 20 2010
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2010/12/20/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2010/12/20/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我第一次爱的人恋爱了，她能找到自己的幸福，我也为她感到高兴，祝福啊O(∩_∩)O~</p>
-<p>今天看到她更新心情：我还是决定答应了！看到这个，我就知道有情况了，但是我还是固执地回了一句：答应了什么？然后，我一好朋友，也是她的好朋友也回了一句：我也很好奇哈。呵呵，其实大家都明白怎么回事，只是还是希望她能亲口告诉我们。毕竟我们在一起度过了最美好的青春，那是那样美好的一段时光。遇到她我一直很庆幸，她应该算是这个世界上最了解我的人了，甚至比我自己都了解我自己。知道我的一切优点但是却从不盲目称赞我，了解我的一切缺点却也从不因此厌恶我。曾经我们相互喜欢，但是关系却如《山楂树之恋》里的静秋和老三，从来不曾真正在一起。</p>
-<p>青春散场，洗尽铅华，面对离别，是那么地洒脱，对于这没有结局的交往虽然有遗憾，但是却从未留恋。因为我们都明白未来的日子，没有彼此，幸福也从不会离自己远去。离别之后的相聚，也显得那么从容，从不有一丝尴尬，那一刻，我们都仿佛历尽沧桑，已然真正长大，表现的都是那么成熟。我想，这就是知己吧。看到现在有人照顾她了，我真心为她感到高兴，祝她幸福！</p>
-<p>不过虽然这样看来，我现在表现的很洒脱，但是我还是不入她呀，我仍然始终不愿提起当初。下午跟她聊天了，每次跟她聊天都觉得气氛很轻松，心里很安静。最后要说再见的时候，我还是没能忍住，借我那位“也好奇”的朋友之名（不要怨我哈）特意问了一下，尽管有心理准备了，但是当她亲口对我说出答应了做别人女朋友时，我脸上的笑容还是僵硬了，不过嘛，我还是很洒脱地表示很开心，祝她幸福。可是她却说心里没感觉，还说了一句：说实话除了你我还真没对别的男生有过很心动的感觉。我愣了一下，说了一句：再见了。唉，其实我倒更珍惜现在的关系，我相信她也是。</p>
-<p>唉，现在好了，都有人照顾了，只有我还是一个人，O(∩<em>∩)O哈！谁来照顾我啊，我的幸福在哪里？人都说“己所不欲，勿施于人”，我倒觉得“己所欲，施于人”更有人情味儿，所以我现在还是先祝福天下所有有情人都能够甜蜜，祝福天下仍然还是形单影只的人都早日找到自己的幸福和温暖吧。O(∩</em>∩)O~</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1583,7 +1601,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">144</span>
+              <span class="site-state-item-count">145</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1600,7 +1618,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">214</span>
+                <span class="site-state-item-count">215</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1716,7 +1734,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
